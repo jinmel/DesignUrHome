@@ -3,32 +3,21 @@ using System.Collections;
 
 public class Button2_listener : MonoBehaviour {
 
-	public GameObject Target_light;
+	private GameObject _block;
+	private GameObject _cam;
+
 	// Use this for initialization
 	void Start () {
-		Debug.Log ("Start Complete");
-		Target_light = GameObject.Find ("Camera Light");
+		_block = GameObject.Find ("test_block");
+		_cam = GameObject.Find ("ARCamera");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		if (Application.platform == RuntimePlatform.Android) {
-						if (Input.GetTouch (0).phase == TouchPhase.Began) {
-								//터치 ray tracing
-								Vector3 ray = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).position);
+	}
 
-								Debug.Log ("Click!!");
-								Target_light.light.color = Color.red;
-						}
-				} else {
-						if (Input.GetMouseButtonDown (0)) {
-						//터치 ray tracing
-						//Vector3 ray = Camera.main.ScreenToWorldPoint (Input.GetMouseButtonDown (0).position);
-				
-						Debug.Log ("Click!!");
-						Target_light.light.color = Color.red;
-					}
-				}
+	void OnMouseDown() {
+		Instantiate (_block, _cam.transform.position, transform.rotation); 
 	}
 }

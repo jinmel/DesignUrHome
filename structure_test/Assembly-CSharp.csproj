@@ -49,6 +49,7 @@
      <Compile Include="Assets\Button1_listener.cs" />
      <Compile Include="Assets\Button2_listener.cs" />
      <Compile Include="Assets\Button3_listener.cs" />
+     <Compile Include="Assets\Display_FPS.cs" />
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\CloudRecoBehaviour.cs" />
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\CylinderTargetBehaviour.cs" />
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\DataSetLoadBehaviour.cs" />

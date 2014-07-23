@@ -10,6 +10,8 @@ public class Button3_listener : MonoBehaviour {
 	//////////////////////////////////////////////
 
 	public GameObject main_model;
+	public Camera AR_Camera;
+	public Camera Char_Camera;
 	private int mode_checker;
 	private GameObject _Character;
 
@@ -34,8 +36,11 @@ public class Button3_listener : MonoBehaviour {
 		case 1:
 			//Create human model & not change camera
 			//Create main model & attach model controller
+			Char_Camera.gameObject.transform.position = AR_Camera.gameObject.transform.position;
+			Char_Camera.gameObject.transform.rotation = AR_Camera.gameObject.transform.rotation;
 
-			//_Character = Instantiate(main_model, , main_model.transform.rotation);
+			AR_Camera.gameObject.SetActive(false);
+			Char_Camera.gameObject.SetActive(true);
 
 			break;
 		case 2:

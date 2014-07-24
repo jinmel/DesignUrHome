@@ -82,6 +82,10 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
         }
 
         Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
+
+		// Save to singleton - TrackableBehaviour.TrackableName
+		// TrackableBehaviour.TrackableName : DataSet name.
+
     }
 
 

@@ -11,7 +11,7 @@ public class Button3_listener : MonoBehaviour {
 
 	public GameObject main_model;
 	public Camera AR_Camera;
-	public Camera Char_Camera;
+	public GameObject _GamePad;
 	private int mode_checker;
 	private GameObject _Character;
 
@@ -30,22 +30,20 @@ public class Button3_listener : MonoBehaviour {
 		switch (mode_checker) {
 		case 0:
 			//destroy all human model
-			Destroy(_Character);
 
 			break;
 		case 1:
 			//Create human model & not change camera
 			//Create main model & attach model controller
-			Char_Camera.gameObject.transform.position = AR_Camera.gameObject.transform.position;
-			Char_Camera.gameObject.transform.rotation = AR_Camera.gameObject.transform.rotation;
-
-			AR_Camera.gameObject.SetActive(false);
-			Char_Camera.gameObject.SetActive(true);
-
+			_GamePad.SetActive(true);
 			break;
 		case 2:
 			//disable ARcamera & change camera view
 			//when changeing view, camera pos & rotation => ARcamera pos to main model
+			DestroyObject(AR_Camera.gameObject);
+			//AR_Camera.gameObject.SetActive(false);
+			_GamePad.SetActive(false);
+			Application.LoadLevel("first_person_scene");
 
 			break;
 				}

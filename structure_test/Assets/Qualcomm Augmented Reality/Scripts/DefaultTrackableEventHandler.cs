@@ -80,8 +80,8 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
         {
             component.enabled = true;
         }
-
-        Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
+		Debug.Log (this.transform.name);
+        //Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
 
 		// Save to singleton - TrackableBehaviour.TrackableName
 		// TrackableBehaviour.TrackableName : DataSet name.

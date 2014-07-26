@@ -12,6 +12,7 @@ public class Button3_listener : MonoBehaviour {
 	public GameObject main_model;
 	public Camera AR_Camera;
 	public GameObject _GamePad;
+	public Camera _CAM;
 	private int mode_checker;
 	private GameObject _Character;
 
@@ -40,10 +41,12 @@ public class Button3_listener : MonoBehaviour {
 		case 2:
 			//disable ARcamera & change camera view
 			//when changeing view, camera pos & rotation => ARcamera pos to main model
-			DestroyObject(AR_Camera.gameObject);
+			//DestroyObject(AR_Camera.gameObject);
 			//AR_Camera.gameObject.SetActive(false);
 			_GamePad.SetActive(false);
-			Application.LoadLevel("first_person_scene");
+			//Application.LoadLevel("first_person_scene");
+			AR_Camera.gameObject.SetActive(false);
+			_CAM.gameObject.SetActive(true);
 
 			break;
 				}

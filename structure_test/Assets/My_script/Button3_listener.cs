@@ -43,10 +43,10 @@ public class Button3_listener : MonoBehaviour {
 			//when changeing view, camera pos & rotation => ARcamera pos to main model
 			//DestroyObject(AR_Camera.gameObject);
 			//AR_Camera.gameObject.SetActive(false);
-			_GamePad.SetActive(false);
+			//_GamePad.SetActive(false);
 			//Application.LoadLevel("first_person_scene");
-			AR_Camera.gameObject.SetActive(false);
-			_CAM.gameObject.SetActive(true);
+			//AR_Camera.gameObject.SetActive(false);
+			//_CAM.gameObject.SetActive(true);
 
 			break;
 				}

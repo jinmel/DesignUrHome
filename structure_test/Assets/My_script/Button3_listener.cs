@@ -18,10 +18,12 @@ public class Button3_listener : MonoBehaviour {
 	private int mode_checker;
 	private GameObject _Character;
 	private Object _t_Light;
+	private GameObject _BackgroundCam;
 
 	// Use this for initialization
 	void Start () {
 		mode_checker = 0;
+		_BackgroundCam = GameObject.Find ("BackgroundCamera(Clone)");
 	}
 	
 	// Update is called once per frame
@@ -38,6 +40,10 @@ public class Button3_listener : MonoBehaviour {
 			//Destroy temp Light
 			DestroyObject(_t_Light);
 
+			//Set Active Cam
+			_BackgroundCam.SetActive(true);
+			AR_Camera.gameObject.SetActive(true);
+
 			break;
 		case 1:
 			//Create human model & not change camera
@@ -53,6 +59,7 @@ public class Button3_listener : MonoBehaviour {
 			//Main Light Copy
 			_t_Light = Instantiate(_Light);
 			AR_Camera.gameObject.SetActive(false);
+			_BackgroundCam.SetActive(false);
 
 			_CAM.gameObject.SetActive(true);
 

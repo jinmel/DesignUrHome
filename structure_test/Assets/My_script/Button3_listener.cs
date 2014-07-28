@@ -41,7 +41,6 @@ public class Button3_listener : MonoBehaviour {
 			DestroyObject(_t_Light);
 
 			//Set Active Cam
-			_BackgroundCam.SetActive(true);
 			AR_Camera.gameObject.SetActive(true);
 
 			break;
@@ -57,10 +56,11 @@ public class Button3_listener : MonoBehaviour {
 			_GamePad.SetActive(false);
 
 			//Main Light Copy
-			_t_Light = Instantiate(_Light);
+			_t_Light = Instantiate(_Light, _Light.transform.position, _Light.transform.rotation);
 			AR_Camera.gameObject.SetActive(false);
-			_BackgroundCam.SetActive(false);
 
+			_CAM.transform.position = AR_Camera.transform.position;
+			_CAM.transform.rotation = AR_Camera.transform.rotation;
 			_CAM.gameObject.SetActive(true);
 
 			break;

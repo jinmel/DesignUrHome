@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Pad_Controller : MonoBehaviour
 {
-
+		public GUIStyle textStyle;
 		public GameObject Move_key;
 		public GameObject Move_board;
 		public Camera main_cam;
@@ -14,6 +14,10 @@ public class Pad_Controller : MonoBehaviour
 		private Vector3 Start_point;
 		private float Button_Dist;
 
+		//Local position
+		private Vector3 Local_start;
+		private Vector3 Local_target;
+
 		// Use this for initialization
 		void Start ()
 		{
@@ -21,7 +25,7 @@ public class Pad_Controller : MonoBehaviour
 				touch_check = false;
 				Button_Dist = 0.7f;
 
-		Move_board.gameObject.renderer.material.color = new Color (0.3f, 0.3f, 0.3f, 0.9f);
+				//Move_board.gameObject.renderer.material.color = new Color (0.3f, 0.3f, 0.3f, 0.9f);
 		}
 	
 		// Update is called once per frame
@@ -30,30 +34,32 @@ public class Pad_Controller : MonoBehaviour
 	
 				if (Time.timeSinceLevelLoad - _time > 0.5) {
 						if (Input.GetMouseButtonDown (0)) {
-								Move_key.SetActive (true);
-				Move_board.SetActive(true);
 								touch_check = true;
 								Start_point = Calculate_button_pos ();
-				Move_board.transform.position = Start_point;
+								Move_key.transform.position = Start_point;
+								Local_start = Move_key.transform.localPosition;
+								//Move_board.transform.position = Start_point;
+								Move_key.SetActive (true);
+								//Move_board.SetActive (true);
 						} else if (Input.GetMouseButtonUp (0)) {
 								Move_key.SetActive (false);
-				Move_board.SetActive(false);
+								//Move_board.SetActive (false);
 								touch_check = false;
 						}
 						
 						if (touch_check == true) {
 								//버튼 따라다니게 하기
 								Vector3 target_pos = Calculate_button_pos ();
-								float dist = Vector3.Distance (target_pos, Start_point);
+								Move_key.transform.position = target_pos;
+								Local_target = Move_key.transform.localPosition;
+								float dist = Vector3.Distance (Local_target, Local_start);
 								
 								//일정 범위 이상 안벗어 나게...
-								if (dist < Button_Dist) {
-										Move_key.transform.position = target_pos;
-								} else {
-										Vector3 Key_dir = Vector3.Normalize (target_pos - Start_point);
+								if (dist > Button_Dist) {
+										Vector3 Key_dir = Vector3.Normalize (Local_target - Local_start);
 										Key_dir = Key_dir * Button_Dist;
-										Vector3 dst_pos = Start_point + Key_dir;
-										Move_key.transform.position = dst_pos;
+										Vector3 dst_pos = Local_start + Key_dir;
+										Move_key.transform.localPosition = dst_pos;
 								}
 						}
 				}
@@ -70,6 +76,12 @@ public class Pad_Controller : MonoBehaviour
 				Vector3 dst_pos = touch_ray.GetPoint (sub_dist);
 
 				return dst_pos;
+		}
+
+		void OnGUI ()
+		{
+				Vector3 Cam_pos = main_cam.transform.position;
+				GUI.Label (new Rect (300, 300, 60, 60), "x:" + Cam_pos.x + " y:" + Cam_pos.y + " z:" + Cam_pos.z, this.textStyle);
 		}
 }
 

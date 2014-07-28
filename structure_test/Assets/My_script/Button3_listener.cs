@@ -13,8 +13,11 @@ public class Button3_listener : MonoBehaviour {
 	public Camera AR_Camera;
 	public GameObject _GamePad;
 	public Camera _CAM;
+	public GameObject _Light;
+
 	private int mode_checker;
 	private GameObject _Character;
+	private Object _t_Light;
 
 	// Use this for initialization
 	void Start () {
@@ -32,6 +35,9 @@ public class Button3_listener : MonoBehaviour {
 		case 0:
 			//destroy all human model
 
+			//Destroy temp Light
+			DestroyObject(_t_Light);
+
 			break;
 		case 1:
 			//Create human model & not change camera
@@ -41,12 +47,14 @@ public class Button3_listener : MonoBehaviour {
 		case 2:
 			//disable ARcamera & change camera view
 			//when changeing view, camera pos & rotation => ARcamera pos to main model
-			//DestroyObject(AR_Camera.gameObject);
 			//AR_Camera.gameObject.SetActive(false);
-			//_GamePad.SetActive(false);
-			//Application.LoadLevel("first_person_scene");
-			//AR_Camera.gameObject.SetActive(false);
-			//_CAM.gameObject.SetActive(true);
+			_GamePad.SetActive(false);
+
+			//Main Light Copy
+			_t_Light = Instantiate(_Light);
+			AR_Camera.gameObject.SetActive(false);
+
+			_CAM.gameObject.SetActive(true);
 
 			break;
 				}

@@ -83,6 +83,7 @@
      <Compile Include="Assets\Scripts\Button4_listener.cs" />
      <Compile Include="Assets\Scripts\ButtonController.cs" />
      <Compile Include="Assets\Scripts\Display_FPS.cs" />
+     <Compile Include="Assets\Scripts\InventoryController.cs" />
      <Compile Include="Assets\Scripts\Pad_Controller.cs" />
      <Compile Include="Assets\Scripts\Return_Listener.cs" />
      <Compile Include="Assets\Scripts\SceneManager.cs" />

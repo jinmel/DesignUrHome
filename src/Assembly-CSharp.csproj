@@ -85,7 +85,7 @@
      <Compile Include="Assets\Scripts\Display_FPS.cs" />
      <Compile Include="Assets\Scripts\Pad_Controller.cs" />
      <Compile Include="Assets\Scripts\Return_Listener.cs" />
-     <Compile Include="Assets\Scripts\Singleton.cs" />
+     <Compile Include="Assets\Scripts\SceneManager.cs" />
      <None Include="Assets\Qualcomm Augmented Reality\Shaders\VertexLitWithZ.shader" />
      <None Include="Assets\Qualcomm Augmented Reality\Shaders\RenderVideoBackground.shader" />
      <None Include="Assets\readme_SDK.txt" />

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Button2_listener : MonoBehaviour {
@@ -16,6 +16,6 @@ public class Button2_listener : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
-		Singleton.GetInstance().Mode = 2;
+		SceneManager.getInstance().Mode = 2;
 	}
 }

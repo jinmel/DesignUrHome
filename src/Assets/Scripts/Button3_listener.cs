@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Button3_listener : MonoBehaviour {
@@ -31,7 +31,7 @@ public class Button3_listener : MonoBehaviour {
   }
 	
   public void OnMouseDown() {
-    Singleton.GetInstance().Mode = 3;
+    SceneManager.getInstance().Mode = 3;
     mode_checker = (mode_checker + 1) % 3;
 
     switch (mode_checker) {

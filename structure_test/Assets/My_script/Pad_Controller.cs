@@ -25,7 +25,8 @@ public class Pad_Controller : MonoBehaviour
 				touch_check = false;
 				Button_Dist = 0.7f;
 
-				//Move_board.gameObject.renderer.material.color = new Color (0.3f, 0.3f, 0.3f, 0.9f);
+				Color _t_gray = new Color (0.2f, 0.2f, 0.2f, 1.0f);
+				Move_board.renderer.material.SetColor ("_Color", _t_gray);
 		}
 	
 		// Update is called once per frame
@@ -35,21 +36,21 @@ public class Pad_Controller : MonoBehaviour
 				if (Time.timeSinceLevelLoad - _time > 0.5) {
 						if (Input.GetMouseButtonDown (0)) {
 								touch_check = true;
-								Start_point = Calculate_button_pos ();
+								Start_point = Calculate_button_pos (10);
 								Move_key.transform.position = Start_point;
 								Local_start = Move_key.transform.localPosition;
-								//Move_board.transform.position = Start_point;
+								Move_board.transform.position = Calculate_button_pos (15);
 								Move_key.SetActive (true);
-								//Move_board.SetActive (true);
+								Move_board.SetActive (true);
 						} else if (Input.GetMouseButtonUp (0)) {
 								Move_key.SetActive (false);
-								//Move_board.SetActive (false);
+								Move_board.SetActive (false);
 								touch_check = false;
 						}
 						
 						if (touch_check == true) {
 								//버튼 따라다니게 하기
-								Vector3 target_pos = Calculate_button_pos ();
+								Vector3 target_pos = Calculate_button_pos (10);
 								Move_key.transform.position = target_pos;
 								Local_target = Move_key.transform.localPosition;
 								float dist = Vector3.Distance (Local_target, Local_start);
@@ -65,14 +66,14 @@ public class Pad_Controller : MonoBehaviour
 				}
 		}
 
-		Vector3 Calculate_button_pos ()
+		Vector3 Calculate_button_pos (int dist)
 		{
 				Vector3 screen_pos = Input.mousePosition;
 				Ray touch_ray = main_cam.ScreenPointToRay (screen_pos);
 				Vector3 Origin_ray = touch_ray.origin;
 				Vector3 Cam_ray_vec = Origin_ray - main_cam.gameObject.transform.position;
 				float cam_ray_dist = Mathf.Sqrt (Cam_ray_vec.magnitude);				//distance - cam, ray_origin
-				float sub_dist = 10 - cam_ray_dist;
+				float sub_dist = dist - cam_ray_dist;
 				Vector3 dst_pos = touch_ray.GetPoint (sub_dist);
 
 				return dst_pos;

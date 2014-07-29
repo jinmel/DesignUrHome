@@ -12,3 +12,7 @@
 /*.pidb
 /*.booproj
 *.apk
+
+# emacs crap
+
+#*

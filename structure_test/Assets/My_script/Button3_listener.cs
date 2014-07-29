@@ -30,7 +30,7 @@ public class Button3_listener : MonoBehaviour {
 	void Update () {
 	}
 	
-	void OnMouseDown() {
+	public void OnMouseDown() {
 		mode_checker = (mode_checker + 1) % 3;
 
 		switch (mode_checker) {
@@ -39,6 +39,7 @@ public class Button3_listener : MonoBehaviour {
 
 			//Destroy temp Light
 			DestroyObject(_t_Light);
+			_CAM.gameObject.SetActive(false);
 
 			//Set Active Cam
 			AR_Camera.gameObject.SetActive(true);

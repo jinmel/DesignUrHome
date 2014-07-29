@@ -26,7 +26,6 @@ public class ButtonController : MonoBehaviour
 		public GameObject Apartment2;
 		public GameObject structure1;
 
-
 		// Use this for initialization
 		void Start ()
 		{
@@ -42,8 +41,8 @@ public class ButtonController : MonoBehaviour
 
 		void OnGUI ()
 		{
-				GUI.Box (new Rect (10, 10, 100, 90), "Menu");
-				if (GUI.Button (new Rect (20, 40, 80, 20), "Button 1")) {
+				GUI.Box (new Rect (10, 10, 160, 200), "Menu");
+				if (GUI.Button (new Rect (50, 40, 80, 20), "Button 1")) {
 						Singleton.GetInstance ().Mode = 1;
 
 						counter = (counter + 1) % 3;
@@ -60,11 +59,11 @@ public class ButtonController : MonoBehaviour
 						}
 				}
 
-				if (GUI.Button (new Rect (20, 70, 80, 20), "Button 2")) {
+				if (GUI.Button (new Rect (50, 70, 80, 20), "Button 2")) {
 						Singleton.GetInstance ().Mode = 2;
 				}
 
-				if (GUI.Button (new Rect (20, 100, 80, 20), "Button 3")) {
+				if (GUI.Button (new Rect (50, 100, 80, 20), "Button 3")) {
 						Singleton.GetInstance ().Mode = 3;
 						mode_checker = (mode_checker + 1) % 3;
 
@@ -104,7 +103,7 @@ public class ButtonController : MonoBehaviour
 				}
 
 
-				if (GUI.Button (new Rect (20, 130, 80, 20), "Button 4")) {
+				if (GUI.Button (new Rect (50, 130, 80, 20), "Button 4")) {
 						Singleton.GetInstance ().Mode = 4;
 
 						if (model_render_check == true) {

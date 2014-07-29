@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{1E8DF5AC-3558-4F62-57D0-7A1EC3CAEBE9}</ProjectGuid>
+	<ProjectGuid>{4CFFDA30-0E63-039E-0DCA-DAC117CE2649}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -46,17 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\My_script\Button1_listener.cs" />
-     <Compile Include="Assets\My_script\Button2\Make_furniture.cs" />
-     <Compile Include="Assets\My_script\Button2_listener.cs" />
-     <Compile Include="Assets\My_script\Button3_listener.cs" />
-     <Compile Include="Assets\My_script\Button4_listener.cs" />
-     <Compile Include="Assets\My_script\ButtonController.cs" />
-     <Compile Include="Assets\My_script\Display_FPS.cs" />
-     <Compile Include="Assets\My_script\Pad_Controller.cs" />
-     <Compile Include="Assets\My_script\Return_Listener.cs" />
-     <Compile Include="Assets\My_script\Singleton.cs" />
-     <Compile Include="Assets\NewBehaviourScript.cs" />
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\CloudRecoBehaviour.cs" />
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\CylinderTargetBehaviour.cs" />
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\DataSetLoadBehaviour.cs" />
@@ -87,6 +76,16 @@
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\WireframeBehaviour.cs" />
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\WireframeTrackableEventHandler.cs" />
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\WordBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Button1_listener.cs" />
+     <Compile Include="Assets\Scripts\Button2\Make_furniture.cs" />
+     <Compile Include="Assets\Scripts\Button2_listener.cs" />
+     <Compile Include="Assets\Scripts\Button3_listener.cs" />
+     <Compile Include="Assets\Scripts\Button4_listener.cs" />
+     <Compile Include="Assets\Scripts\ButtonController.cs" />
+     <Compile Include="Assets\Scripts\Display_FPS.cs" />
+     <Compile Include="Assets\Scripts\Pad_Controller.cs" />
+     <Compile Include="Assets\Scripts\Return_Listener.cs" />
+     <Compile Include="Assets\Scripts\Singleton.cs" />
      <None Include="Assets\Qualcomm Augmented Reality\Shaders\VertexLitWithZ.shader" />
      <None Include="Assets\Qualcomm Augmented Reality\Shaders\RenderVideoBackground.shader" />
      <None Include="Assets\readme_SDK.txt" />

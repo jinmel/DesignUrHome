@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Button2_listener : MonoBehaviour {
 
-	public GameObject DropIt;
 
 	// Use this for initialization
 	void Start () {

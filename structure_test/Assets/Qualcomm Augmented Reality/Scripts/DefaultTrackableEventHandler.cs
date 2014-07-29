@@ -85,6 +85,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
 
 		// Save to singleton - TrackableBehaviour.TrackableName
 		// TrackableBehaviour.TrackableName : DataSet name.
+		Singleton.GetInstance ().target_name = this.transform.name;
 
     }
 

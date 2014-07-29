@@ -20,6 +20,9 @@ public class Button3_listener : MonoBehaviour {
 	private Object _t_Light;
 	private GameObject _BackgroundCam;
 
+	private GameObject _structure;
+	public GUIStyle textStyle;
+
 	// Use this for initialization
 	void Start () {
 		mode_checker = 0;
@@ -32,6 +35,8 @@ public class Button3_listener : MonoBehaviour {
 	
 	public void OnMouseDown() {
 		Singleton.GetInstance().Mode = 3;
+		GameObject _target;
+
 		mode_checker = (mode_checker + 1) % 3;
 
 		switch (mode_checker) {
@@ -40,16 +45,24 @@ public class Button3_listener : MonoBehaviour {
 
 			//Destroy temp Light
 			DestroyObject(_t_Light);
+			DestroyObject (_structure);
 			_CAM.gameObject.SetActive(false);
 
 			//Set Active Cam
 			AR_Camera.gameObject.SetActive(true);
+
+			//Model delete in renderer
+			main_model.SetActive(false);
 
 			break;
 		case 1:
 			//Create human model & not change camera
 			//Create main model & attach model controller
 			_GamePad.SetActive(true);
+
+			//Create model in tracking target
+			_target = Find_target_structure();
+
 			break;
 		case 2:
 			//disable ARcamera & change camera view
@@ -59,13 +72,31 @@ public class Button3_listener : MonoBehaviour {
 
 			//Main Light Copy
 			_t_Light = Instantiate(_Light, _Light.transform.position, _Light.transform.rotation);
-			AR_Camera.gameObject.SetActive(false);
 
 			_CAM.transform.position = AR_Camera.transform.position;
 			_CAM.transform.rotation = AR_Camera.transform.rotation;
 			_CAM.gameObject.SetActive(true);
 
+			//Copy structure
+			_target = Find_target_structure();
+			_structure = (GameObject)Instantiate(_target, _target.transform.position, _target.transform.rotation);
+			_CAM.transform.position = new Vector3(0,600,0);
+
+			AR_Camera.gameObject.SetActive(false);
 			break;
 				}
+	}
+
+	GameObject Find_target_structure(){
+		string _target_name = Singleton.GetInstance ().target_name;
+
+		GameObject _Image_target = GameObject.Find (_target_name);
+
+		return _Image_target.transform.GetChild (0).gameObject;
+	}
+
+	void OnGUI(){
+		string _target_name = Singleton.GetInstance ().target_name;
+		GUI.Label (new Rect (400, 400, 60, 60), _target_name, this.textStyle);
 	}
 }

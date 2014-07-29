@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\My_script\Button1_listener.cs" />
+     <Compile Include="Assets\My_script\Button2\Make_furniture.cs" />
      <Compile Include="Assets\My_script\Button2_listener.cs" />
      <Compile Include="Assets\My_script\Button3_listener.cs" />
      <Compile Include="Assets\My_script\Button4_listener.cs" />

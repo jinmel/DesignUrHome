@@ -17,6 +17,7 @@ public class Button4_listener : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
+		Singleton.GetInstance().Mode = 4;
 
 		if (model_render_check == true) {
 			model_render_check = false;

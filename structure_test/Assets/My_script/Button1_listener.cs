@@ -16,8 +16,9 @@ public class Button1_listener : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
-		counter = (counter + 1) % 3;
+		Singleton.GetInstance().Mode = 1;
 
+		counter = (counter + 1) % 3;
 		switch (counter) {
 		case 0:
 			_light.light.color = Color.white;

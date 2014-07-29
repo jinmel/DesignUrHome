@@ -16,6 +16,8 @@ public class Button2_listener : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
+		Singleton.GetInstance().Mode = 2;
+
 		Vector3 Pos = GameObject.Find ("ARCamera").transform.position;
 		Pos.y -= 130;
 

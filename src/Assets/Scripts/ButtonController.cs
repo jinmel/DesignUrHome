@@ -3,28 +3,22 @@ using System.Collections;
 
 public class ButtonController : MonoBehaviour
 {
+	
+		//MainScene Object
+		public Camera ARCamera;						// vuforia camera
+		public GameObject GamePad;					// GamePad. in button3
+		public Camera CAM;							// external Camera (using button3)
+		public GameObject Light;					// main Light in Camera
+		public GameObject ImageTarget;				// ImageTarget in vuforia
 
-		//view mode
-		//////////////////////////////////////////////
-		// mode 0 : default
-		// mode 1 : bird-eyes view
-		// mode 2 : target following view mode
-		//////////////////////////////////////////////
-
-		public GameObject main_model;
-		public Camera ARCamera;
-		public GameObject GamePad;
-		public Camera CAM;
-		public GameObject Light;
-		private GameObject Character;
-		private Object tLight;
-		private GameObject BackgroundCam;
-		public GameObject light;
-		private bool model_render_check;
-		public GameObject apartment1;
-		public GameObject structure2;
+		//...
+		private GameObject Character;				// Charector model
+		private Object tLight;						// Button3 - mode3. 1인칭 시점에서 사용
+		private bool model_render_check;			// Button4 - 
 		private int mode_checker;
 		private int counter;
+
+		// ... 
 		public GUIStyle container_style;
 		public GUIStyle button1_style;
 		public GUIStyle button2_style;
@@ -35,7 +29,6 @@ public class ButtonController : MonoBehaviour
 		void Start ()
 		{
 				mode_checker = 0;
-				BackgroundCam = GameObject.Find ("BackgroundCamera(Clone)");
 		}
 	
 		// Update is called once per frame
@@ -46,7 +39,7 @@ public class ButtonController : MonoBehaviour
 
 		void OnGUI ()
 		{
-				GUI.Box (new Rect (10, 10, 160, 200), "Menu",container_style);
+				GUI.Box (new Rect (10, 10, 160, 200), "Menu", container_style);
 				// Handle Light Orientation 
 				if (GUI.Button (new Rect (50, 40, 80, 20), "Button 1", button1_style)) {
 						SceneManager.getInstance ().Mode = 1;
@@ -54,13 +47,13 @@ public class ButtonController : MonoBehaviour
 						counter = (counter + 1) % 3;
 						switch (counter) {
 						case 0:
-								light.light.color = Color.white;
+								Light.light.color = Color.white;
 								break;
 						case 1:
-								light.light.color = Color.blue;
+								Light.light.color = Color.blue;
 								break;
 						case 2:
-								light.light.color = Color.green;
+								Light.light.color = Color.green;
 								break;
 						}
 				}
@@ -70,6 +63,13 @@ public class ButtonController : MonoBehaviour
 				}
 
 				if (GUI.Button (new Rect (50, 100, 80, 20), "Button 3", button3_style)) {
+						//view mode
+						//////////////////////////////////////////////
+						// mode 0 : default
+						// mode 1 : bird-eyes view
+						// mode 2 : target following view mode
+						//////////////////////////////////////////////
+
 						SceneManager.getInstance ().Mode = 3;
 						mode_checker = (mode_checker + 1) % 3;
 
@@ -114,12 +114,10 @@ public class ButtonController : MonoBehaviour
 
 						if (model_render_check == true) {
 								model_render_check = false;
-								apartment1.SetActive (false);
-								structure2.SetActive (false);
+								ImageTarget.SetActive (false);
 						} else {
 								model_render_check = true;
-								apartment1.SetActive (true);
-								structure2.SetActive (true);
+								ImageTarget.SetActive (true);
 						}
 				}
 		}

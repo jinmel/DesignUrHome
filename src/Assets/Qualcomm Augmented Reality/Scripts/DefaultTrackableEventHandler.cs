@@ -80,7 +80,9 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
         {
             component.enabled = true;
         }
-		Debug.Log (this.transform.name);
+
+		//Debug.Log (this.transform.name);
+		SceneManager.getInstance ().ImageTarget_name = this.transform.name;
         //Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
 
 		// Save to singleton - TrackableBehaviour.TrackableName

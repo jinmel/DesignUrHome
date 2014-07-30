@@ -18,12 +18,10 @@ public class Button3_listener : MonoBehaviour {
   private int mode_checker;
   private GameObject _Character;
   private Object _t_Light;
-  private GameObject _BackgroundCam;
 
   // Use this for initialization
   void Start () {
     mode_checker = 0;
-    _BackgroundCam = GameObject.Find ("BackgroundCamera(Clone)");
   }
 	
   // Update is called once per frame

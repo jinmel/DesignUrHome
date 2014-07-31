@@ -42,7 +42,7 @@ public class ButtonController : MonoBehaviour
 		{
 				GUI.Box (new Rect (10, 10, 160, 200), "Menu", container_style);
 				// Handle Light Orientation 
-				if (GUI.Button (new Rect (50, 40, 80, 20), "Button 1", button1_style)) {
+				if (GUI.Button (new Rect (50, 40, 80, 80), "Button 1", button1_style)) {
 						SceneManager.getInstance ().Mode = 1;
 
 						counter = (counter + 1) % 3;
@@ -58,12 +58,11 @@ public class ButtonController : MonoBehaviour
 								break;
 						}
 				}
-
-				if (GUI.Button (new Rect (50, 70, 80, 20), "Button 2", button2_style)) {
+				if (GUI.Button (new Rect (50, 130, 80, 80), "Button 2", button2_style)) {
 						SceneManager.getInstance ().Mode = 2;
 				}
 
-				if (GUI.Button (new Rect (50, 100, 80, 20), "Button 3", button3_style)) {
+				if (GUI.Button (new Rect (50, 220, 80, 80), "Button 3", button3_style)) {
 						//view mode
 						//////////////////////////////////////////////
 						// mode 0 : default
@@ -147,7 +146,7 @@ public class ButtonController : MonoBehaviour
 				}
 
 
-				if (GUI.Button (new Rect (50, 130, 80, 20), "Button 4", button4_style)) {
+				if (GUI.Button (new Rect (50, 310, 80, 80), "Button 4", button4_style)) {
 						SceneManager.getInstance ().Mode = 4;
 
 						if (model_render_check == true) {

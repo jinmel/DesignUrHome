@@ -74,6 +74,8 @@ public class ButtonController : MonoBehaviour
 						SceneManager.getInstance ().Mode = 3;
 						mode_checker = (mode_checker + 1) % 3;
 
+						Vector3 tttt = new Vector3(-50.88073f, 0.0f, 96.75817f);
+
 						switch (mode_checker) {
 						case 0:
        
@@ -89,6 +91,7 @@ public class ButtonController : MonoBehaviour
 
 						        //Set Active Cam
 								ARCamera.gameObject.SetActive (true);
+								ImageTarget.SetActive(true);
 
 								//killllllll Gamepad
 								GamePad.SetActive (false);
@@ -121,10 +124,23 @@ public class ButtonController : MonoBehaviour
 								//Create Structure
 								GameObject tImageTarget = GameObject.Find(SceneManager.getInstance().ImageTarget_name);
 								GameObject target_structure = tImageTarget.transform.GetChild(0).gameObject;
-								tStructure = (GameObject)Instantiate (target_structure, target_structure.transform.position, target_structure.transform.rotation);
+								tStructure = (GameObject)Instantiate (target_structure, target_structure.transform.position , target_structure.transform.rotation);
+								
+								//Set structure scale
+								Vector3 t_scale = new Vector3(target_structure.transform.localScale.x * tImageTarget.transform.localScale.x
+				                				              ,	target_structure.transform.localScale.y * tImageTarget.transform.localScale.y
+				                              					, target_structure.transform.localScale.z * tImageTarget.transform.localScale.z);
+								tStructure.transform.localScale = t_scale;
+								//////////////////////////////////////////////////////
+								//tStructure.transform.position =	tttt;
+								//CAM.transform.position = new Vector3(0.0f,600.0f,0.0f);
+								//SCAM.transform.eulerAngles = new Vector3(50.88073f, -600.0f, -96.75817f);
+								//tStructure.transform.localScale = new Vector3(0.2179955f, 0.2179955f, 0.2179955f);
+								//////////////////////////////////////////////////////
 
 								//ARCamera shut down
 								ARCamera.gameObject.SetActive (false);
+								ImageTarget.SetActive(false);
 
 								break;
 						}

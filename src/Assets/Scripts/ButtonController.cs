@@ -17,6 +17,7 @@ public class ButtonController : MonoBehaviour
 		private bool model_render_check;			// Button4 - 
 		private int mode_checker;
 		private int counter;
+		private GameObject tStructure;				// Button3 - mode3. 1인칭 시점에서 구조
 
 		// ... 
 		public GUIStyle container_style;
@@ -75,34 +76,50 @@ public class ButtonController : MonoBehaviour
 
 						switch (mode_checker) {
 						case 0:
-        //destroy all human model
+       
+								//destroy all human model
+								//TO-DO
 
-        //Destroy temp Light
+    						    //Destroy temp Light
 								DestroyObject (tLight);
 								CAM.gameObject.SetActive (false);
+								
+								//Destroy temp Structure
+								DestroyObject(tStructure);
 
-        //Set Active Cam
+						        //Set Active Cam
 								ARCamera.gameObject.SetActive (true);
 
 								break;
 						case 1:
-        //Create human model & not change camera
-        //Create main model & attach model controller
+    						    //Create human model & not change camera
+        						//Create main model & attach model controller
 								GamePad.SetActive (true);
 								break;
 						case 2:
-        //disable ARcamera & change camera view
-        //when changeing view, camera pos & rotation => ARcamera pos to main model
-        //AR_Camera.gameObject.SetActive(false);
+								//Tracking nothing - action nothing
+								if(SceneManager.getInstance().ImageTarget_name == null)
+									break;
+
+        						//disable ARcamera & change camera view
+        						//when changeing view, camera pos & rotation => ARcamera pos to main model
+        						//AR_Camera.gameObject.SetActive(false);
 								GamePad.SetActive (false);
 
-        //Main Light Copy
+        						//Main Light Copy
 								tLight = Instantiate (Light, Light.transform.position, Light.transform.rotation);
-								ARCamera.gameObject.SetActive (false);
 
 								CAM.transform.position = ARCamera.transform.position;
 								CAM.transform.rotation = ARCamera.transform.rotation;
 								CAM.gameObject.SetActive (true);
+								
+								//Create Structure
+								GameObject tImageTarget = GameObject.Find(SceneManager.getInstance().ImageTarget_name);
+								GameObject target_structure = tImageTarget.transform.GetChild(0).gameObject;
+								tStructure = (GameObject)Instantiate (target_structure, target_structure.transform.position, target_structure.transform.rotation);
+
+								//ARCamera shut down
+								ARCamera.gameObject.SetActive (false);
 
 								break;
 						}

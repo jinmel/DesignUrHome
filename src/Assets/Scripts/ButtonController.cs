@@ -90,6 +90,9 @@ public class ButtonController : MonoBehaviour
 						        //Set Active Cam
 								ARCamera.gameObject.SetActive (true);
 
+								//killllllll Gamepad
+								GamePad.SetActive (false);
+
 								break;
 						case 1:
     						    //Create human model & not change camera
@@ -97,14 +100,16 @@ public class ButtonController : MonoBehaviour
 								GamePad.SetActive (true);
 								break;
 						case 2:
-								//Tracking nothing - action nothing
-								if(SceneManager.getInstance().ImageTarget_name == null)
-									break;
-
-        						//disable ARcamera & change camera view
-        						//when changeing view, camera pos & rotation => ARcamera pos to main model
-        						//AR_Camera.gameObject.SetActive(false);
+								//disable ARcamera & change camera view
+								//when changeing view, camera pos & rotation => ARcamera pos to main model
+								//AR_Camera.gameObject.SetActive(false);
 								GamePad.SetActive (false);
+
+								//Tracking nothing - action nothing
+								if(SceneManager.getInstance().ImageTarget_name == null){
+									mode_checker = 0;
+									break;
+								}
 
         						//Main Light Copy
 								tLight = Instantiate (Light, Light.transform.position, Light.transform.rotation);

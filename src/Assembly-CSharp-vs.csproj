@@ -76,13 +76,9 @@
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\WireframeBehaviour.cs" />
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\WireframeTrackableEventHandler.cs" />
      <Compile Include="Assets\Qualcomm Augmented Reality\Scripts\WordBehaviour.cs" />
-     <Compile Include="Assets\Scripts\Button1_listener.cs" />
-     <Compile Include="Assets\Scripts\Button2\Make_furniture.cs" />
-     <Compile Include="Assets\Scripts\Button2_listener.cs" />
-     <Compile Include="Assets\Scripts\Button3_listener.cs" />
-     <Compile Include="Assets\Scripts\Button4_listener.cs" />
      <Compile Include="Assets\Scripts\ButtonController.cs" />
      <Compile Include="Assets\Scripts\Display_FPS.cs" />
+     <Compile Include="Assets\Scripts\Make_furniture.cs" />
      <Compile Include="Assets\Scripts\Pad_Controller.cs" />
      <Compile Include="Assets\Scripts\SceneManager.cs" />
      <None Include="Assets\Qualcomm Augmented Reality\Shaders\VertexLitWithZ.shader" />

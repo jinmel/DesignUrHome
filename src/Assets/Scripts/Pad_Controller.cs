@@ -90,7 +90,7 @@ public class Pad_Controller : MonoBehaviour
 		//return normalized vector.
 		private Vector3 GetModel_Direction ()
 		{
-				Vector3 Start_floor_pos = GetFloor_pos (Start_point);
+				Vector3 Start_floor_pos = GetFloor_pos (Move_board.transform.position);
 				Vector3 GameKey_floor_pos = GetFloor_pos (Move_key.transform.position);
 
 				Vector3 Dir_vec = GameKey_floor_pos - Start_floor_pos;

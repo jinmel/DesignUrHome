@@ -14,6 +14,7 @@ public class ButtonController : MonoBehaviour
 
 		//...
 		private Object tLight;						// Button3 - mode3. 1인칭 시점에서 사용
+		private GameObject tFloor;
 		private bool model_render_check;			// Button4 - 
 		private int mode_checker;
 		private int counter;
@@ -25,7 +26,7 @@ public class ButtonController : MonoBehaviour
 		public GUIStyle button2_style;
 		public GUIStyle button3_style;
 		public GUIStyle button4_style;
-	public GUIStyle tDebug;
+		public GUIStyle tDebug;
 	
 		// Use this for initialization
 		void Start ()
@@ -88,14 +89,14 @@ public class ButtonController : MonoBehaviour
 								CAM.gameObject.SetActive (false);
 								
 								//Destroy temp Structure
-								DestroyObject(tStructure);
+								DestroyObject (tStructure);
 
 								//kill character model
-								Character.SetActive(false);
+								Character.SetActive (false);
 
 						        //Set Active Cam
 								ARCamera.gameObject.SetActive (true);
-								ImageTarget.SetActive(true);
+								ImageTarget.SetActive (true);
 
 								//killllllll Gamepad
 								GamePad.SetActive (false);
@@ -103,19 +104,20 @@ public class ButtonController : MonoBehaviour
 								break;
 						case 1:
 								//Tracking nothing - action nothing
-								if(SceneManager.getInstance().ImageTarget_name == null){
-									mode_checker = 0;
-									break;
+								if (SceneManager.getInstance ().ImageTarget_name == null) {
+										mode_checker = 0;
+										break;
 								}
 
     						    //Create human model & not change camera
         						//Create main model & attach model controller
 								GamePad.SetActive (true);
 								
-								tImageTarget = GameObject.Find(SceneManager.getInstance().ImageTarget_name);
+								tImageTarget = GameObject.Find (SceneManager.getInstance ().ImageTarget_name);
 								
 								Character.transform.position = tImageTarget.transform.position;
-								Character.SetActive(true);
+								Character.SetActive (true);
+								Character.transform.parent = tImageTarget.transform.GetChild (0).gameObject.transform;
 								break;
 						case 2:
 								//disable ARcamera & change camera view
@@ -131,19 +133,24 @@ public class ButtonController : MonoBehaviour
 								CAM.gameObject.SetActive (true);
 								
 								//Create Structure
-								tImageTarget = GameObject.Find(SceneManager.getInstance().ImageTarget_name);
-								target_structure = tImageTarget.transform.GetChild(0).gameObject;
-								tStructure = (GameObject)Instantiate (target_structure, target_structure.transform.position , target_structure.transform.rotation);
-								
+								tImageTarget = GameObject.Find (SceneManager.getInstance ().ImageTarget_name);
+								target_structure = tImageTarget.transform.GetChild (0).gameObject;
+								tStructure = (GameObject)Instantiate (target_structure, target_structure.transform.position, target_structure.transform.rotation);
+
+								//Create Floor
+								//...				
+
 								//Set structure scale
-								Vector3 t_scale = new Vector3(target_structure.transform.localScale.x * tImageTarget.transform.localScale.x
-				                				              ,	target_structure.transform.localScale.y * tImageTarget.transform.localScale.y
+								Vector3 t_scale = new Vector3 (target_structure.transform.localScale.x * tImageTarget.transform.localScale.x
+				                				              , target_structure.transform.localScale.y * tImageTarget.transform.localScale.y
 				                              					, target_structure.transform.localScale.z * tImageTarget.transform.localScale.z);
 								tStructure.transform.localScale = t_scale;
 
 								//ARCamera shut down
 								ARCamera.gameObject.SetActive (false);
-								ImageTarget.SetActive(false);
+								ImageTarget.SetActive (false);
+
+								
 
 								break;
 						}
@@ -161,6 +168,6 @@ public class ButtonController : MonoBehaviour
 								ImageTarget.SetActive (true);
 						}
 				}
-		GUI.Label (new Rect (200, 5, 30, 30), SceneManager.getInstance().ImageTarget_name, tDebug);
+				GUI.Label (new Rect (200, 5, 30, 30), SceneManager.getInstance ().ImageTarget_name, tDebug);
 		}
 }

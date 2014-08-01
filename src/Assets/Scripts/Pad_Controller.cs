@@ -8,8 +8,6 @@ public class Pad_Controller : MonoBehaviour
 		public GameObject Move_board;
 		public GameObject Charecter;
 		public Camera main_cam;
-
-
 		private float _time;
 		private bool touch_check;
 
@@ -67,6 +65,10 @@ public class Pad_Controller : MonoBehaviour
 										Vector3 dst_pos = Local_start + Key_dir;
 										Move_key.transform.localPosition = dst_pos;
 								}
+
+								//Move Charecter
+								Vector3 Char_dir = GetModel_Direction ();
+								Charecter.transform.position += Char_dir;
 						}
 				}
 		}
@@ -86,27 +88,30 @@ public class Pad_Controller : MonoBehaviour
 
 		//Get Model move direction
 		//return normalized vector.
-		private Vector3 GetModel_Direction(){
-			Vector3 Start_floor_pos = GetFloor_pos (Start_point);
-			Vector3 GameKey_floor_pos = GetFloor_pos (Move_key.transform.position);
+		private Vector3 GetModel_Direction ()
+		{
+				Vector3 Start_floor_pos = GetFloor_pos (Start_point);
+				Vector3 GameKey_floor_pos = GetFloor_pos (Move_key.transform.position);
 
-			Vector3 Dir_vec = GameKey_floor_pos - Start_floor_pos;
-			return Dir_vec.normalized;
+				Vector3 Dir_vec = GameKey_floor_pos - Start_floor_pos;
+				return Dir_vec.normalized;
 		}
 
 		//Gamepad_pos + Ray_vec*t = floor_pos.
 		//This fuction calculate t.
-		private float GetScreentoFloor_Const(Vector3 p){
-			Vector3 t_Ray = p - main_cam.transform.position;
+		private float GetScreentoFloor_Const (Vector3 p)
+		{
+				Vector3 t_Ray = p - main_cam.transform.position;
 			
-			return p.y / (-t_Ray.y);
+				return p.y / (-t_Ray.y);
 		}
 
-		private Vector3 GetFloor_pos(Vector3 p){
-			Vector3 t_Ray = p - main_cam.transform.position;
-			float t_const = GetScreentoFloor_Const (p);	
+		private Vector3 GetFloor_pos (Vector3 p)
+		{
+				Vector3 t_Ray = p - main_cam.transform.position;
+				float t_const = GetScreentoFloor_Const (p);	
 
-			return p + t_const * t_Ray;
+				return p + t_const * t_Ray;
 		}
 
 		void OnGUI ()

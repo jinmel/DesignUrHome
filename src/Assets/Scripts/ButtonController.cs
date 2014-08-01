@@ -10,9 +10,9 @@ public class ButtonController : MonoBehaviour
 		public Camera CAM;							// external Camera (using button3)
 		public GameObject Light;					// main Light in Camera
 		public GameObject ImageTarget;				// ImageTarget in vuforia
+		public GameObject Character;				// Charector model
 
 		//...
-		private GameObject Character;				// Charector model
 		private Object tLight;						// Button3 - mode3. 1인칭 시점에서 사용
 		private bool model_render_check;			// Button4 - 
 		private int mode_checker;
@@ -74,7 +74,8 @@ public class ButtonController : MonoBehaviour
 						SceneManager.getInstance ().Mode = 3;
 						mode_checker = (mode_checker + 1) % 3;
 
-						Vector3 tttt = new Vector3(-50.88073f, 0.0f, 96.75817f);
+						GameObject tImageTarget;					//SceneManger -> ImageTarget find
+						GameObject target_structure;				//Imagetarget first child component.(first son is structure)
 
 						switch (mode_checker) {
 						case 0:
@@ -88,6 +89,9 @@ public class ButtonController : MonoBehaviour
 								
 								//Destroy temp Structure
 								DestroyObject(tStructure);
+
+								//kill character model
+								Character.SetActive(false);
 
 						        //Set Active Cam
 								ARCamera.gameObject.SetActive (true);
@@ -107,6 +111,11 @@ public class ButtonController : MonoBehaviour
     						    //Create human model & not change camera
         						//Create main model & attach model controller
 								GamePad.SetActive (true);
+								
+								tImageTarget = GameObject.Find(SceneManager.getInstance().ImageTarget_name);
+								
+								Character.transform.position = tImageTarget.transform.position;
+								Character.SetActive(true);
 								break;
 						case 2:
 								//disable ARcamera & change camera view
@@ -122,8 +131,8 @@ public class ButtonController : MonoBehaviour
 								CAM.gameObject.SetActive (true);
 								
 								//Create Structure
-								GameObject tImageTarget = GameObject.Find(SceneManager.getInstance().ImageTarget_name);
-								GameObject target_structure = tImageTarget.transform.GetChild(0).gameObject;
+								tImageTarget = GameObject.Find(SceneManager.getInstance().ImageTarget_name);
+								target_structure = tImageTarget.transform.GetChild(0).gameObject;
 								tStructure = (GameObject)Instantiate (target_structure, target_structure.transform.position , target_structure.transform.rotation);
 								
 								//Set structure scale
@@ -131,12 +140,6 @@ public class ButtonController : MonoBehaviour
 				                				              ,	target_structure.transform.localScale.y * tImageTarget.transform.localScale.y
 				                              					, target_structure.transform.localScale.z * tImageTarget.transform.localScale.z);
 								tStructure.transform.localScale = t_scale;
-								//////////////////////////////////////////////////////
-								//tStructure.transform.position =	tttt;
-								//CAM.transform.position = new Vector3(0.0f,600.0f,0.0f);
-								//SCAM.transform.eulerAngles = new Vector3(50.88073f, -600.0f, -96.75817f);
-								//tStructure.transform.localScale = new Vector3(0.2179955f, 0.2179955f, 0.2179955f);
-								//////////////////////////////////////////////////////
 
 								//ARCamera shut down
 								ARCamera.gameObject.SetActive (false);

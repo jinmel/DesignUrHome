@@ -109,6 +109,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
         }
 
         Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
+		SceneManager.getInstance ().ImageTarget_name = null;
     }
 
     #endregion // PRIVATE_METHODS

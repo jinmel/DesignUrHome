@@ -25,6 +25,7 @@ public class ButtonController : MonoBehaviour
 		public GUIStyle button2_style;
 		public GUIStyle button3_style;
 		public GUIStyle button4_style;
+	public GUIStyle tDebug;
 	
 		// Use this for initialization
 		void Start ()
@@ -97,6 +98,12 @@ public class ButtonController : MonoBehaviour
 
 								break;
 						case 1:
+								//Tracking nothing - action nothing
+								if(SceneManager.getInstance().ImageTarget_name == null){
+									mode_checker = 0;
+									break;
+								}
+
     						    //Create human model & not change camera
         						//Create main model & attach model controller
 								GamePad.SetActive (true);
@@ -106,12 +113,6 @@ public class ButtonController : MonoBehaviour
 								//when changeing view, camera pos & rotation => ARcamera pos to main model
 								//AR_Camera.gameObject.SetActive(false);
 								GamePad.SetActive (false);
-
-								//Tracking nothing - action nothing
-								if(SceneManager.getInstance().ImageTarget_name == null){
-									mode_checker = 0;
-									break;
-								}
 
         						//Main Light Copy
 								tLight = Instantiate (Light, Light.transform.position, Light.transform.rotation);
@@ -157,5 +158,6 @@ public class ButtonController : MonoBehaviour
 								ImageTarget.SetActive (true);
 						}
 				}
+		GUI.Label (new Rect (200, 5, 30, 30), SceneManager.getInstance().ImageTarget_name, tDebug);
 		}
 }

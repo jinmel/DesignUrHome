@@ -6,13 +6,17 @@ public class Pad_Controller : MonoBehaviour
 		public GUIStyle textStyle;
 		public GameObject Move_key;
 		public GameObject Move_board;
+		public GameObject Charecter;
 		public Camera main_cam;
+
+
 		private float _time;
 		private bool touch_check;
 
 		//Move Key pad
-		private Vector3 Start_point;
+		private Vector3 Start_point;		//Initial Start point
 		private float Button_Dist;
+		private float Model_acceleration;
 
 		//Local position
 		private Vector3 Local_start;
@@ -24,6 +28,7 @@ public class Pad_Controller : MonoBehaviour
 				_time = Time.timeSinceLevelLoad;
 				touch_check = false;
 				Button_Dist = 0.7f;
+				Model_acceleration = 0.5;
 
 				Color _t_gray = new Color (0.2f, 0.2f, 0.2f, 1.0f);
 				Move_board.renderer.material.SetColor ("_Color", _t_gray);
@@ -77,6 +82,31 @@ public class Pad_Controller : MonoBehaviour
 				Vector3 dst_pos = touch_ray.GetPoint (sub_dist);
 
 				return dst_pos;
+		}
+
+		//Get Model move direction
+		//return normalized vector.
+		private Vector3 GetModel_Direction(){
+			Vector3 Start_floor_pos = GetFloor_pos (Start_point);
+			Vector3 GameKey_floor_pos = GetFloor_pos (Move_key.transform.position);
+
+			Vector3 Dir_vec = GameKey_floor_pos - Start_floor_pos;
+			return Dir_vec.normalized;
+		}
+
+		//Gamepad_pos + Ray_vec*t = floor_pos.
+		//This fuction calculate t.
+		private float GetScreentoFloor_Const(Vector3 p){
+			Vector3 t_Ray = p - main_cam.transform.position;
+			
+			return p.y / (-t_Ray.y);
+		}
+
+		private Vector3 GetFloor_pos(Vector3 p){
+			Vector3 t_Ray = p - main_cam.transform.position;
+			float t_const = GetScreentoFloor_Const (p);	
+
+			return p + t_const * t_Ray;
 		}
 
 		void OnGUI ()

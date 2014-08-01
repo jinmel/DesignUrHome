@@ -66,6 +66,9 @@ public class Pad_Controller : MonoBehaviour
 										Move_key.transform.localPosition = dst_pos;
 								}
 
+								//Rotate Charecter
+								//axis-z is main direction
+
 								//Move Charecter
 								Vector3 Char_dir = GetModel_Direction ();
 								Charecter.transform.position += Char_dir;

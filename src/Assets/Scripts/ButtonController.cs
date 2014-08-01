@@ -6,19 +6,21 @@ public class ButtonController : MonoBehaviour
 	
 		//MainScene Object
 		public Camera ARCamera;						// vuforia camera
-		public GameObject GamePad;					// GamePad. in button3
 		public Camera CAM;							// external Camera (using button3)
 		public GameObject Light;					// main Light in Camera
+		public GameObject GamePad;					// GamePad. in button3
 		public GameObject ImageTarget;				// ImageTarget in vuforia
 		public GameObject Character;				// Charector model
 
 		//...
-		private Object tLight;						// Button3 - mode3. 1인칭 시점에서 사용
 		private GameObject tFloor;
+		private GameObject tStructure;				// Button3 - mode3. 1인칭 시점에서 구조
+		private Object tLight;						// Button3 - mode3. 1인칭 시점에서 사용
 		private bool model_render_check;			// Button4 - 
 		private int mode_checker;
 		private int counter;
-		private GameObject tStructure;				// Button3 - mode3. 1인칭 시점에서 구조
+		private string prev_Target_name;
+		
 
 		// ... 
 		public GUIStyle container_style;
@@ -32,6 +34,7 @@ public class ButtonController : MonoBehaviour
 		void Start ()
 		{
 				mode_checker = 0;
+				prev_Target_name = null;
 		}
 	
 		// Update is called once per frame
@@ -77,34 +80,22 @@ public class ButtonController : MonoBehaviour
 
 						GameObject tImageTarget;					//SceneManger -> ImageTarget find
 						GameObject target_structure;				//Imagetarget first child component.(first son is structure)
+						string t_name = SceneManager.getInstance ().ImageTarget_name;
+						
+						if (t_name != null && !t_name.Equals (prev_Target_name)) {
+								Mode3_Initialize ();
+								mode_checker = 1;
+						}
 
 						switch (mode_checker) {
 						case 0:
-       
 								//destroy all human model
-								//TO-DO
-
-    						    //Destroy temp Light
-								DestroyObject (tLight);
-								CAM.gameObject.SetActive (false);
-								
-								//Destroy temp Structure
-								DestroyObject (tStructure);
-
-								//kill character model
-								Character.SetActive (false);
-
-						        //Set Active Cam
-								ARCamera.gameObject.SetActive (true);
-								ImageTarget.SetActive (true);
-
-								//killllllll Gamepad
-								GamePad.SetActive (false);
-
+								Mode3_Initialize ();
+					
 								break;
 						case 1:
 								//Tracking nothing - action nothing
-								if (SceneManager.getInstance ().ImageTarget_name == null) {
+								if (t_name == null) {
 										mode_checker = 0;
 										break;
 								}
@@ -113,8 +104,8 @@ public class ButtonController : MonoBehaviour
         						//Create main model & attach model controller
 								GamePad.SetActive (true);
 								
-								tImageTarget = GameObject.Find (SceneManager.getInstance ().ImageTarget_name);
-								
+								tImageTarget = GameObject.Find (t_name);
+				
 								Character.transform.position = tImageTarget.transform.position;
 								Character.SetActive (true);
 								Character.transform.parent = tImageTarget.transform.GetChild (0).gameObject.transform;
@@ -133,7 +124,7 @@ public class ButtonController : MonoBehaviour
 								CAM.gameObject.SetActive (true);
 								
 								//Create Structure
-								tImageTarget = GameObject.Find (SceneManager.getInstance ().ImageTarget_name);
+								tImageTarget = GameObject.Find (t_name);
 								target_structure = tImageTarget.transform.GetChild (0).gameObject;
 								tStructure = (GameObject)Instantiate (target_structure, target_structure.transform.position, target_structure.transform.rotation);
 
@@ -154,6 +145,9 @@ public class ButtonController : MonoBehaviour
 
 								break;
 						}
+
+						//Store prev target name
+						prev_Target_name = t_name;
 				}
 
 
@@ -169,5 +163,26 @@ public class ButtonController : MonoBehaviour
 						}
 				}
 				GUI.Label (new Rect (200, 5, 30, 30), SceneManager.getInstance ().ImageTarget_name, tDebug);
+				GUI.Label (new Rect (200, 25, 30, 30), prev_Target_name, tDebug);
+		}
+
+		private void Mode3_Initialize ()
+		{
+				//Destroy temp Light
+				DestroyObject (tLight);
+				CAM.gameObject.SetActive (false);
+		
+				//Destroy temp Structure
+				DestroyObject (tStructure);
+		
+				//kill character model
+				Character.SetActive (false);
+		
+				//Set Active Cam
+				ARCamera.gameObject.SetActive (true);
+				ImageTarget.SetActive (true);
+		
+				//killllllll Gamepad
+				GamePad.SetActive (false);
 		}
 }

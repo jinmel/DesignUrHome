@@ -68,9 +68,18 @@ public class Pad_Controller : MonoBehaviour
 
 								//Rotate Charecter
 								//axis-z is main direction
+								float t_angle;
+								Vector3 z_axis = new Vector3 (0, 0, 1);
+								Vector3 Char_dir = GetModel_Direction ();
+								Vector3 t_cross_result = Vector3.Cross (z_axis, Char_dir);
+								t_angle = Vector3.Angle (z_axis, Char_dir);
+
+								if (t_cross_result.y < 0)
+										t_angle *= -1.0f;
+
+								Charecter.transform.rotation = Quaternion.AngleAxis (t_angle, Vector3.up);
 
 								//Move Charecter
-								Vector3 Char_dir = GetModel_Direction ();
 								Charecter.transform.position += Char_dir;
 						}
 				}

@@ -107,8 +107,8 @@ public class ButtonController : MonoBehaviour
 								tImageTarget = GameObject.Find (t_name);
 				
 								Character.transform.position = tImageTarget.transform.position;
-								Character.SetActive (true);
 								Character.transform.parent = tImageTarget.transform.GetChild (0).gameObject.transform;
+								Character.SetActive (true);
 								break;
 						case 2:
 								//disable ARcamera & change camera view

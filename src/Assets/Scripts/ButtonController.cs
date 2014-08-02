@@ -42,10 +42,9 @@ public class ButtonController : MonoBehaviour
 
 		void OnGUI ()
 		{
-				GUI.Box (new Rect (10, 10, 160, 200), "Menu", container_style);
 				// Handle Light Orientation 
 				if (GUI.Button (new Rect (50, 40, 80, 80), "Button 1", button1_style)) {
-						SceneManager.getInstance ().Mode = 1;
+						ContentManager.getInstance ().Mode = 1;
 
 						counter = (counter + 1) % 3;
 						switch (counter) {
@@ -61,7 +60,7 @@ public class ButtonController : MonoBehaviour
 						}
 				}
 				if (GUI.Button (new Rect (50, 130, 80, 80), "Button 2", button2_style)) {
-						SceneManager.getInstance ().Mode = 2;
+						ContentManager.getInstance ().Mode = 2;
 				}
 
 				if (GUI.Button (new Rect (50, 220, 80, 80), "Button 3", button3_style)) {
@@ -72,7 +71,7 @@ public class ButtonController : MonoBehaviour
 						// mode 2 : target following view mode
 						//////////////////////////////////////////////
 
-						SceneManager.getInstance ().Mode = 3;
+						ContentManager.getInstance ().Mode = 3;
 						mode_checker = (mode_checker + 1) % 3;
 
 						GameObject tImageTarget;					//SceneManger -> ImageTarget find
@@ -104,7 +103,7 @@ public class ButtonController : MonoBehaviour
 								break;
 						case 1:
 								//Tracking nothing - action nothing
-								if (SceneManager.getInstance ().ImageTarget_name == null) {
+								if (ContentManager.getInstance ().imageTargetName == null) {
 										mode_checker = 0;
 										break;
 								}
@@ -113,7 +112,7 @@ public class ButtonController : MonoBehaviour
         						//Create main model & attach model controller
 								GamePad.SetActive (true);
 								
-								tImageTarget = GameObject.Find (SceneManager.getInstance ().ImageTarget_name);
+								tImageTarget = GameObject.Find (ContentManager.getInstance ().imageTargetName);
 								
 								Character.transform.position = tImageTarget.transform.position;
 								Character.SetActive (true);
@@ -133,7 +132,7 @@ public class ButtonController : MonoBehaviour
 								CAM.gameObject.SetActive (true);
 								
 								//Create Structure
-								tImageTarget = GameObject.Find (SceneManager.getInstance ().ImageTarget_name);
+								tImageTarget = GameObject.Find (ContentManager.getInstance ().imageTargetName);
 								target_structure = tImageTarget.transform.GetChild (0).gameObject;
 								tStructure = (GameObject)Instantiate (target_structure, target_structure.transform.position, target_structure.transform.rotation);
 
@@ -158,7 +157,7 @@ public class ButtonController : MonoBehaviour
 
 
 				if (GUI.Button (new Rect (50, 310, 80, 80), "Button 4", button4_style)) {
-						SceneManager.getInstance ().Mode = 4;
+						ContentManager.getInstance ().Mode = 4;
 
 						if (model_render_check == true) {
 								model_render_check = false;
@@ -168,6 +167,6 @@ public class ButtonController : MonoBehaviour
 								ImageTarget.SetActive (true);
 						}
 				}
-				GUI.Label (new Rect (200, 5, 30, 30), SceneManager.getInstance ().ImageTarget_name, tDebug);
+				GUI.Label (new Rect (200, 5, 30, 30), ContentManager.getInstance ().imageTargetName, tDebug);
 		}
 }

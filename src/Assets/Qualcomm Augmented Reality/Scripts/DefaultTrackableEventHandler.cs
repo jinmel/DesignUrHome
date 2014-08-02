@@ -82,7 +82,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
         }
 
 		//Debug.Log (this.transform.name);
-		SceneManager.getInstance ().ImageTarget_name = this.transform.name;
+		ContentManager.getInstance ().imageTargetName = this.transform.name;
         //Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
 
 		// Save to singleton - TrackableBehaviour.TrackableName
@@ -109,7 +109,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
         }
 
         Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
-		SceneManager.getInstance ().ImageTarget_name = null;
+		ContentManager.getInstance ().imageTargetName = null;
     }
 
     #endregion // PRIVATE_METHODS

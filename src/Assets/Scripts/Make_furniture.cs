@@ -10,7 +10,7 @@ public class Make_furniture : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(SceneManager.getInstance().Mode == 2){
+		if(ContentManager.getInstance().Mode == 2){
 			//		if(Input.touchCount != 0){
 			//			Vector2 V2 = Input.GetTouch(0).position;
 			//			Ray ray = Camera.main.ScreenPointToRay(new Vector3(V2.x,V2.y,0));

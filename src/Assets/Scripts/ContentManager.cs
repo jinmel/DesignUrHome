@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SceneManager : MonoBehaviour
+public class ContentManager : MonoBehaviour
 {
-		private static SceneManager instance = new SceneManager ();
+		private static ContentManager instance = null;
 		public int Mode = 0; // 0 = default, button mode.
 		public string ImageTarget_name;	//present tracking ImageTarget name.
 
-		public static SceneManager getInstance ()
+		public static ContentManager getInstance ()
 		{
 				return instance;
 		}
@@ -15,6 +15,7 @@ public class SceneManager : MonoBehaviour
 		void Start ()
 		{
 				//prevent destruction of singleton instance
+				instance = this;	
 				DontDestroyOnLoad (this);
 		}
 

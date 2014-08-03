@@ -3,9 +3,14 @@ using System.Collections;
 
 public class Make_furniture : MonoBehaviour {
 
+	public GameObject FurnitureMovingPad;
+
+
 	// Use this for initialization
 	int count = 0;
 	bool able_to_make_furniture = true;
+
+	public
 	void Start () {
 	
 	}
@@ -33,12 +38,16 @@ public class Make_furniture : MonoBehaviour {
 							rot.y *= -1;
 							crush = Quaternion.Euler(rot) * crush;
 							Debug.Log(targets.transform.GetChild(i).name + " is Clicked");
+
 							MakeObject(crush,targets.transform.GetChild (i));
 						}
 					}
 					if(hit.transform.name.Contains("furniture")){
-						this.GetComponent<Move_furniture>().name_SelectedFurniture = hit.transform.name;
+//						this.GetComponent<Move_furniture>().name_SelectedFurniture = hit.transform.name;
 						able_to_make_furniture = false;
+						//GameObject.Find ("FurnitureMovingPad").SetActive(true);
+						FurnitureMovingPad.SetActive(true);
+						FurnitureMovingPad.GetComponent<Furniture_Moving_Controller>().selected_furniture = hit.transform.name;
 					}
 				}
 			}

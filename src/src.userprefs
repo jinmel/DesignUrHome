@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Move_furniture.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Make_furniture.cs">
     <Files>
-      <File FileName="Assets/Scripts/Make_furniture.cs" Line="37" Column="8" />
-      <File FileName="Assets/Scripts/Move_furniture.cs" Line="71" Column="20" />
+      <File FileName="Assets/Scripts/Furniture_Moving_Controller.cs" Line="73" Column="77" />
+      <File FileName="Assets/Scripts/Make_furniture.cs" Line="54" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ContentManager : MonoBehaviour
 {
-		private static ContentManager instance = null;
+		private static ContentManager instance = new ContentManager();
 		public int Mode = 0; // 0 = default, button mode.
 		public string imageTargetName;	//present tracking ImageTarget name.
 
@@ -16,7 +16,6 @@ public class ContentManager : MonoBehaviour
 		{
 				//prevent destruction of singleton instance
 				Debug.Log ("called");
-				instance = (ContentManager)this;	
 				DontDestroyOnLoad (this);
 		}
 

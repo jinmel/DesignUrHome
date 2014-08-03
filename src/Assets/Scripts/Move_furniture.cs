@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 
 public class Move_furniture : MonoBehaviour {
-	int count = 0;
 	bool is_MovingIconLoad = false;
 	public string name_SelectedFurniture = null;
 	GameObject selected_furniture;

@@ -4,16 +4,16 @@ using System.Collections;
 public class Make_furniture : MonoBehaviour {
 
 	// Use this for initialization
+	int count = 0;
+	bool able_to_make_furniture = true;
 	void Start () {
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(ContentManager.getInstance().Mode == 2){
-			//		if(Input.touchCount != 0){
-			//			Vector2 V2 = Input.GetTouch(0).position;
-			//			Ray ray = Camera.main.ScreenPointToRay(new Vector3(V2.x,V2.y,0));
+		if(ContentManager.getInstance().Mode == 2 &&
+		   able_to_make_furniture){
 			if(Input.GetButtonDown("Fire1")){
 				GameObject targets = GameObject.Find ("Targets"); 
 				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -36,6 +36,10 @@ public class Make_furniture : MonoBehaviour {
 							MakeObject(crush,targets.transform.GetChild (i));
 						}
 					}
+					if(hit.transform.name.Contains("furniture")){
+						this.GetComponent<Move_furniture>().name_SelectedFurniture = hit.transform.name;
+						able_to_make_furniture = false;
+					}
 				}
 			}
 		}
@@ -46,11 +50,12 @@ public class Make_furniture : MonoBehaviour {
 		position /= parent.transform.localScale.x;
 		position.y = 0.02f;
 		Rock = (GameObject)Instantiate(Resources.Load ("teapot"));
-		Rock.name = "teapot";
+		Rock.name = "furniture_"+count.ToString ();
 		Rock.transform.parent = parent;
 		Rock.transform.localPosition = position;
 		Rock.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
 		Rigidbody rigid = Rock.AddComponent<Rigidbody>();
 		rigid.useGravity = false;
+		count ++;
 	}
 }

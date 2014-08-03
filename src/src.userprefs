@@ -1,11 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ButtonController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ContentManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\ButtonController.cs" Line="113" Column="34" />
-      <File FileName="Assets\Scripts\Display_FPS.cs" Line="9" Column="9" />
-      <File FileName="Assets\Scripts\Pad_Controller.cs" Line="119" Column="1" />
-      <File FileName="Assets\Qualcomm Augmented Reality\Scripts\DefaultTrackableEventHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/InventoryController.cs" Line="33" Column="1" />
+      <File FileName="Assets/Scripts/ContentManager.cs" Line="19" Column="30" />
+      <File FileName="Assets/Scripts/InventoryController.cs" Line="22" Column="4" />
+      <File FileName="Assets/Scripts/Make_furniture.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Pad_Controller.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/ButtonController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

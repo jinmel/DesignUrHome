@@ -123,6 +123,9 @@ public class ButtonController : MonoBehaviour
 								CAM.transform.rotation = ARCamera.transform.rotation;
 								CAM.gameObject.SetActive (true);
 								
+								//Camera moving start;
+								CAM.gameObject.transform.GetComponent<Set_CamPos>().Cam_posSet();
+								
 								//Create Structure
 								tImageTarget = GameObject.Find (t_name);
 								target_structure = tImageTarget.transform.GetChild (0).gameObject;

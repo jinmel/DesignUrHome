@@ -81,6 +81,7 @@
      <Compile Include="Assets\Scripts\Make_furniture.cs" />
      <Compile Include="Assets\Scripts\Pad_Controller.cs" />
      <Compile Include="Assets\Scripts\SceneManager.cs" />
+     <Compile Include="Assets\Scripts\Set_CamPos.cs" />
      <None Include="Assets\Qualcomm Augmented Reality\Shaders\VertexLitWithZ.shader" />
      <None Include="Assets\Qualcomm Augmented Reality\Shaders\RenderVideoBackground.shader" />
      <None Include="Assets\readme_SDK.txt" />

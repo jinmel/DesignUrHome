@@ -69,9 +69,18 @@ public class Furniture_Moving_Controller : MonoBehaviour
 								//Move Charecter
 //								Vector3 Char_dir = GetModel_Direction ();
 //								Charecter.transform.position += Char_dir;
+								float t_angle;
+								Vector3 z_axis = new Vector3 (0, 0, 1);
 								Vector3 Char_dir = GetModel_Direction ();
+								Vector3 t_cross_result = Vector3.Cross (z_axis, Char_dir);
+								t_angle = Vector3.Angle (z_axis, Char_dir);
+								
+								if (t_cross_result.y < 0)
+									t_angle *= -1.0f;
+								
+//								GameObject.Find (selected_furniture).transform.rotation = Quaternion.AngleAxis (t_angle, Vector3.up);
 								GameObject.Find (selected_furniture).transform.position += Char_dir;
-								Debug.Log (Char_dir);
+								
 						}
 				}
 		}
@@ -93,11 +102,11 @@ public class Furniture_Moving_Controller : MonoBehaviour
 		//return normalized vector.
 		private Vector3 GetModel_Direction ()
 		{
-				Vector3 Start_floor_pos = GetFloor_pos (Start_point);
-				Vector3 GameKey_floor_pos = GetFloor_pos (Move_key.transform.position);
-
-				Vector3 Dir_vec = GameKey_floor_pos - Start_floor_pos;
-				return Dir_vec.normalized;
+			Vector3 Start_floor_pos = GetFloor_pos (Move_board.transform.position);
+			Vector3 GameKey_floor_pos = GetFloor_pos (Move_key.transform.position);
+			
+			Vector3 Dir_vec = GameKey_floor_pos - Start_floor_pos;
+			return Dir_vec.normalized;
 		}
 
 		//Gamepad_pos + Ray_vec*t = floor_pos.

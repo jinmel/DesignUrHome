@@ -79,8 +79,14 @@ public class Furniture_Moving_Controller : MonoBehaviour
 									t_angle *= -1.0f;
 								
 //								GameObject.Find (selected_furniture).transform.rotation = Quaternion.AngleAxis (t_angle, Vector3.up);
-								GameObject.Find (selected_furniture).transform.position += Char_dir;
-								
+								if(Mathf.Abs(Char_dir.x) > Mathf.Abs(Char_dir.z)){
+									Char_dir.z = 0;
+									GameObject.Find (selected_furniture).transform.position += Char_dir;
+								}	
+								else{
+									Char_dir.x = 0;
+									GameObject.Find (selected_furniture).transform.position += Char_dir;
+								}
 						}
 				}
 		}

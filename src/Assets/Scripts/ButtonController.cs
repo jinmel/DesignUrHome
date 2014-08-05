@@ -34,7 +34,7 @@ public class ButtonController : MonoBehaviour
 		// Use this for initialization
 		void Start ()
 		{
-				mode_checker = 0;
+				mode_checker = ContentManager.DEFAULT_MODE;
 				prev_Target_name = null;
 
 				//UI Size store
@@ -54,7 +54,7 @@ public class ButtonController : MonoBehaviour
 		{
 				// Handle Light Orientation 
 				if (GUI.Button (new Rect (50, 40, 80, 80), "Button 1", button1_style)) {
-						ContentManager.getInstance ().Mode = 1;
+						ContentManager.getInstance ().Mode = ContentManager.LIGHT_MODE;
 
 						counter = (counter + 1) % 3;
 						switch (counter) {
@@ -70,7 +70,7 @@ public class ButtonController : MonoBehaviour
 						}
 				}
 				if (GUI.Button (new Rect (50, 130, 80, 80), "Button 2", button2_style)) {
-						ContentManager.getInstance ().Mode = 2;
+						ContentManager.getInstance ().Mode = ContentManager.FURNITURE_MODE;
 						ContentManager.getInstance ().Flag = 0;
 				}
 
@@ -82,7 +82,7 @@ public class ButtonController : MonoBehaviour
 						// mode 2 : target following view mode
 						//////////////////////////////////////////////
 			
-						ContentManager.getInstance ().Mode = 3;
+						ContentManager.getInstance ().Mode = ContentManager.CHARACTER_MODE;
 						mode_checker = (mode_checker + 1) % 3;
 			
 						GameObject tImageTarget;					//SceneManger -> ImageTarget find
@@ -134,10 +134,6 @@ public class ButtonController : MonoBehaviour
 								CAM.gameObject.transform.GetComponent<Set_CamPos> ().Cam_posSet ();
 				
 								//Create Structure
-								/*tImageTarget = GameObject.Find (t_name);
-								target_structure = tImageTarget.transform.GetChild (0).gameObject;
-								tStructure = (GameObject)Instantiate (target_structure, target_structure.transform.position, target_structure.transform.rotation);*/
-
 								tImageTarget = GameObject.Find (t_name);
 								for (int i = 0; i < tImageTarget.transform.childCount; i++) {
 										GameObject t_GameObj = tImageTarget.transform.GetChild (i).gameObject;
@@ -153,12 +149,6 @@ public class ButtonController : MonoBehaviour
 								//Create Floor
 								//...				
 				
-								/*//Set structure scale
-								Vector3 t_scale = new Vector3 (target_structure.transform.localScale.x * tImageTarget.transform.localScale.x
-				                               , target_structure.transform.localScale.y * tImageTarget.transform.localScale.y
-				                               , target_structure.transform.localScale.z * tImageTarget.transform.localScale.z);
-								tStructure.transform.localScale = t_scale;*/
-				
 								//ARCamera shut down
 								ARCamera.gameObject.SetActive (false);
 								ImageTarget.SetActive (false);
@@ -173,7 +163,7 @@ public class ButtonController : MonoBehaviour
 				}
 
 				if (GUI.Button (new Rect (50, 310, 80, 80), "Button 4", button4_style)) {
-						ContentManager.getInstance ().Mode = 4;
+						ContentManager.getInstance ().Mode = ContentManager.RENDER_ONOFF_MODE;
 
 						if (model_render_check == true) {
 								model_render_check = false;
@@ -185,19 +175,19 @@ public class ButtonController : MonoBehaviour
 				}
 				
 				GUI.Label (new Rect (200, 5, 30, 30), ContentManager.getInstance ().imageTargetName, tDebug);
-				if (ContentManager.getInstance ().Mode == 2 && 
+				if (ContentManager.getInstance ().Mode == ContentManager.FURNITURE_MODE && 
 						ContentManager.getInstance ().Flag == 1) {
 						GUIStyle Exit_Button = new GUIStyle ();
 						Exit_Button.normal.background = (Texture2D)Resources.Load ("Exit", typeof(Texture2D));
 						if (GUI.Button (new Rect (150, 50, 100, 100), "Exit", Exit_Button)) {
-								ContentManager.getInstance ().Mode = 2;
+				ContentManager.getInstance ().Mode = ContentManager.FURNITURE_MODE;
 								ContentManager.getInstance ().Flag = 0;
 						}
 
 						GUIStyle Delete_Button = new GUIStyle ();
 						Delete_Button.normal.background = (Texture2D)Resources.Load ("Delete", typeof(Texture2D));
 						if (GUI.Button (new Rect (150, 150, 100, 100), "Delete", Delete_Button)) {
-								ContentManager.getInstance ().Mode = 2;
+				ContentManager.getInstance ().Mode = ContentManager.FURNITURE_MODE;
 								ContentManager.getInstance ().Flag = 0;
 								string selected_furniture_name = GameObject.Find ("FurnitureMovingPad").GetComponent<Furniture_Moving_Controller> ().selected_furniture;
 								GameObject.Destroy (GameObject.Find (selected_furniture_name));

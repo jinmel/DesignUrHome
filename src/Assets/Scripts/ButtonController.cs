@@ -34,6 +34,9 @@ public class ButtonController : MonoBehaviour
 		{
 				mode_checker = 0;
 				prev_Target_name = null;
+
+				//UI Size store
+				ContentManager.getInstance ().UI_Domain = new Rect (50, 40, 80, 350);
 		}
 	
 		// Update is called once per frame
@@ -151,7 +154,6 @@ public class ButtonController : MonoBehaviour
 						prev_Target_name = t_name;
 				}
 
-
 				if (GUI.Button (new Rect (50, 310, 80, 80), "Button 4", button4_style)) {
 						ContentManager.getInstance ().Mode = 4;
 
@@ -163,6 +165,7 @@ public class ButtonController : MonoBehaviour
 								ImageTarget.SetActive (true);
 						}
 				}
+				
 				GUI.Label (new Rect (200, 5, 30, 30), ContentManager.getInstance ().imageTargetName, tDebug);
 		}
 

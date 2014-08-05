@@ -8,7 +8,6 @@ public class Pad_Controller : MonoBehaviour
 		public GameObject Move_board;
 		public GameObject Charecter;
 		public Camera main_cam;
-		private float _time;
 		private bool touch_check;
 	
 		//Move Key pad
@@ -19,11 +18,13 @@ public class Pad_Controller : MonoBehaviour
 		//Local position
 		private Vector3 Local_start;
 		private Vector3 Local_target;
+
+		//UI Domain
+		private Rect UI_size;
 	
 		// Use this for initialization
 		void Start ()
 		{
-				_time = Time.timeSinceLevelLoad;
 				touch_check = false;
 				Button_Dist = 0.7f;
 				Model_acceleration = 0.5f;
@@ -35,9 +36,8 @@ public class Pad_Controller : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-		
-				if (Time.timeSinceLevelLoad - _time > 0.5) {
-						if (Input.GetMouseButtonDown (0)) {
+				if (Input.GetMouseButtonDown (0)) {
+						if (!InRectCheck (ContentManager.getInstance ().UI_Domain)) {
 								touch_check = true;
 								Start_point = Calculate_button_pos (10);
 								Move_key.transform.position = Start_point;
@@ -45,43 +45,43 @@ public class Pad_Controller : MonoBehaviour
 								Move_board.transform.position = Calculate_button_pos (15);
 								Move_key.SetActive (true);
 								Move_board.SetActive (true);
-						} else if (Input.GetMouseButtonUp (0)) {
-								Move_key.SetActive (false);
-								Move_board.SetActive (false);
-								touch_check = false;
 						}
+				} else if (Input.GetMouseButtonUp (0)) {
+						Move_key.SetActive (false);
+						Move_board.SetActive (false);
+						touch_check = false;
+				}
 			
-						if (touch_check == true) {
-								//버튼 따라다니게 하기
-								Vector3 target_pos = Calculate_button_pos (10);
-								Move_key.transform.position = target_pos;
-								Local_target = Move_key.transform.localPosition;
-								float dist = Vector3.Distance (Local_target, Local_start);
+				if (touch_check == true) {
+						//버튼 따라다니게 하기
+						Vector3 target_pos = Calculate_button_pos (10);
+						Move_key.transform.position = target_pos;
+						Local_target = Move_key.transform.localPosition;
+						float dist = Vector3.Distance (Local_target, Local_start);
 				
-								//일정 범위 이상 안벗어 나게...
-								if (dist > Button_Dist) {
-										Vector3 Key_dir = Vector3.Normalize (Local_target - Local_start);
-										Key_dir = Key_dir * Button_Dist;
-										Vector3 dst_pos = Local_start + Key_dir;
-										Move_key.transform.localPosition = dst_pos;
-								}
-				
-								//Rotate Charecter
-								//axis-z is main direction
-								float t_angle;
-								Vector3 z_axis = new Vector3 (0, 0, 1);
-								Vector3 Char_dir = GetModel_Direction ();
-								Vector3 t_cross_result = Vector3.Cross (z_axis, Char_dir);
-								t_angle = Vector3.Angle (z_axis, Char_dir);
-				
-								if (t_cross_result.y < 0)
-										t_angle *= -1.0f;
-				
-								Charecter.transform.rotation = Quaternion.AngleAxis (t_angle, Vector3.up);
-				
-								//Move Charecter
-								Charecter.transform.position += Char_dir;
+						//일정 범위 이상 안벗어 나게...
+						if (dist > Button_Dist) {
+								Vector3 Key_dir = Vector3.Normalize (Local_target - Local_start);
+								Key_dir = Key_dir * Button_Dist;
+								Vector3 dst_pos = Local_start + Key_dir;
+								Move_key.transform.localPosition = dst_pos;
 						}
+				
+						//Rotate Charecter
+						//axis-z is main direction
+						float t_angle;
+						Vector3 z_axis = new Vector3 (0, 0, 1);
+						Vector3 Char_dir = GetModel_Direction ();
+						Vector3 t_cross_result = Vector3.Cross (z_axis, Char_dir);
+						t_angle = Vector3.Angle (z_axis, Char_dir);
+				
+						if (t_cross_result.y < 0)
+								t_angle *= -1.0f;
+				
+						Charecter.transform.rotation = Quaternion.AngleAxis (t_angle, Vector3.up);
+				
+						//Move Charecter
+						Charecter.transform.position += Char_dir;
 				}
 		}
 	
@@ -124,6 +124,17 @@ public class Pad_Controller : MonoBehaviour
 				float t_const = GetScreentoFloor_Const (p);	
 		
 				return p + t_const * t_Ray;
+		}
+
+		private bool InRectCheck (Rect UI)
+		{
+				Vector3 Mouse_pos = Input.mousePosition;
+		Mouse_pos.y = Screen.height - Mouse_pos.y;
+				if (UI.x <= Mouse_pos.x && Mouse_pos.x <= UI.x + UI.width) {
+						if (UI.y <= Mouse_pos.y && Mouse_pos.y <= UI.y + UI.height)
+								return true;
+				}
+				return false;
 		}
 	
 		void OnGUI ()

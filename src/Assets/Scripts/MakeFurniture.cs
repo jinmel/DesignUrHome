@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Make_furniture : MonoBehaviour
+public class MakeFurniture : MonoBehaviour
 {
 
 		public GameObject FurnitureMovingPad;
@@ -47,7 +47,7 @@ public class Make_furniture : MonoBehaviour
 //						this.GetComponent<Move_furniture>().name_SelectedFurniture = hit.transform.name;
 												//GameObject.Find ("FurnitureMovingPad").SetActive(true);
 												FurnitureMovingPad.SetActive (true);
-												FurnitureMovingPad.GetComponent<Furniture_Moving_Controller> ().selected_furniture = hit.transform.name;
+												FurnitureMovingPad.GetComponent<FurnitureMovingController> ().selected_furniture = hit.transform.name;
 												ContentManager.getInstance ().Flag = 1;
 										}
 								}

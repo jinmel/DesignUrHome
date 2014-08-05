@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Display_FPS : MonoBehaviour {
+public class DisplayFPS : MonoBehaviour {
 
 	float timeA;
 	public int fps;

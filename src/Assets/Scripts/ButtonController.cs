@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -129,7 +129,7 @@ public class ButtonController : MonoBehaviour
 								CAM.gameObject.SetActive (true);
 				
 								//Camera moving start;
-								CAM.gameObject.transform.GetComponent<Set_CamPos> ().Cam_posSet ();
+								CAM.gameObject.transform.GetComponent<SetCamPos> ().Cam_posSet ();
 				
 								//Create Structure
 								tImageTarget = GameObject.Find (t_name);
@@ -187,7 +187,7 @@ public class ButtonController : MonoBehaviour
 						if (GUI.Button (new Rect (150, 150, 100, 100), "Delete", Delete_Button)) {
 								ContentManager.getInstance ().Mode = ContentManager.FURNITURE_MODE;
 								ContentManager.getInstance ().Flag = 0;
-								string selected_furniture_name = GameObject.Find ("FurnitureMovingPad").GetComponent<Furniture_Moving_Controller> ().selected_furniture;
+								string selected_furniture_name = GameObject.Find ("FurnitureMovingPad").GetComponent<FurnitureMovingController> ().selected_furniture;
 								GameObject.Destroy (GameObject.Find (selected_furniture_name));
 						}
 				}	

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Furniture_Moving_Controller : MonoBehaviour
+public class FurnitureMovingController : MonoBehaviour
 {
 		public GUIStyle textStyle;
 		public GameObject Move_key;
@@ -46,7 +46,7 @@ public class Furniture_Moving_Controller : MonoBehaviour
 				if (Time.timeSinceLevelLoad - _time > 0.1) {
 					if (touch_check == true) {
 						//버튼 따라다니게 하기
-						Vector3 target_pos = Calculate_button_pos (10);
+						Vector3 target_pos = CalculateButtonPos (10);
 						Move_key.transform.position = target_pos;
 						Local_target = Move_key.transform.localPosition;
 						float dist = Vector3.Distance (Local_target, Local_start);
@@ -65,7 +65,7 @@ public class Furniture_Moving_Controller : MonoBehaviour
 		//								Charecter.transform.position += Char_dir;
 							float t_angle;
 							Vector3 z_axis = new Vector3 (0, 0, 1);
-							Vector3 Char_dir = GetModel_Direction ();
+							Vector3 Char_dir = GetModelDirection ();
 							Vector3 t_cross_result = Vector3.Cross (z_axis, Char_dir);
 							t_angle = Vector3.Angle (z_axis, Char_dir);
 							
@@ -85,10 +85,10 @@ public class Furniture_Moving_Controller : MonoBehaviour
 					}
 					if (Input.GetMouseButtonDown (0)) {
 						touch_check = true;
-						Start_point = Calculate_button_pos (10);
+						Start_point = CalculateButtonPos (10);
 						Move_key.transform.position = Start_point;
 						Local_start = Move_key.transform.localPosition;
-						Move_board.transform.position = Calculate_button_pos (15);
+						Move_board.transform.position = CalculateButtonPos (15);
 						Move_key.SetActive (true);
 						Move_board.SetActive (true);
 						_time = Time.timeSinceLevelLoad;
@@ -100,7 +100,7 @@ public class Furniture_Moving_Controller : MonoBehaviour
 			}
 		}
 
-		Vector3 Calculate_button_pos (int dist)
+		Vector3 CalculateButtonPos (int dist)
 		{
 				Vector3 screen_pos = Input.mousePosition;
 				Ray touch_ray = main_cam.ScreenPointToRay (screen_pos);
@@ -115,10 +115,10 @@ public class Furniture_Moving_Controller : MonoBehaviour
 
 		//Get Model move direction
 		//return normalized vector.
-		private Vector3 GetModel_Direction ()
+		private Vector3 GetModelDirection ()
 		{
-			Vector3 Start_floor_pos = GetFloor_pos (Move_board.transform.position);
-			Vector3 GameKey_floor_pos = GetFloor_pos (Move_key.transform.position);
+			Vector3 Start_floor_pos = GetFloorPos (Move_board.transform.position);
+			Vector3 GameKey_floor_pos = GetFloorPos (Move_key.transform.position);
 			
 			Vector3 Dir_vec = GameKey_floor_pos - Start_floor_pos;
 			return Dir_vec.normalized;
@@ -126,17 +126,17 @@ public class Furniture_Moving_Controller : MonoBehaviour
 
 		//Gamepad_pos + Ray_vec*t = floor_pos.
 		//This fuction calculate t.
-		private float GetScreentoFloor_Const (Vector3 p)
+		private float GetScreentoFloorConst (Vector3 p)
 		{
 				Vector3 t_Ray = p - main_cam.transform.position;
 			
 				return p.y / (-t_Ray.y);
 		}
 
-		private Vector3 GetFloor_pos (Vector3 p)
+		private Vector3 GetFloorPos (Vector3 p)
 		{
 				Vector3 t_Ray = p - main_cam.transform.position;
-				float t_const = GetScreentoFloor_Const (p);	
+				float t_const = GetScreentoFloorConst (p);	
 
 				return p + t_const * t_Ray;
 		}

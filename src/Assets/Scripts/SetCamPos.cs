@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Set_CamPos : MonoBehaviour
+public class SetCamPos : MonoBehaviour
 {
 
 		private static bool Start_set = false;

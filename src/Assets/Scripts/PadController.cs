@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pad_Controller : MonoBehaviour
+public class PadController : MonoBehaviour
 {
 		public GUIStyle textStyle;
 		public GameObject Move_key;

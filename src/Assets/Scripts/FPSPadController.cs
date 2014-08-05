@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class fpsPad_Controller : MonoBehaviour {
+public class FPSPadController : MonoBehaviour {
 
 	public GUIStyle textStyle;
 	public GameObject Move_key;

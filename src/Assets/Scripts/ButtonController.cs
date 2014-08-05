@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ButtonController : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class ButtonController : MonoBehaviour
 		//...
 		private GameObject tFloor;
 		private GameObject tStructure;				// Button3 - mode3. 1인칭 시점에서 구조
+		private List<GameObject> t_ObjList;				// Button3 - mode3. 가구 및 구조물 저장;
 		private Object tLight;						// Button3 - mode3. 1인칭 시점에서 사용
 		private bool model_render_check;			// Button4 - 
 		private int mode_checker;
@@ -37,6 +39,9 @@ public class ButtonController : MonoBehaviour
 
 				//UI Size store
 				ContentManager.getInstance ().UI_Domain = new Rect (50, 40, 80, 350);
+
+				//list init
+				t_ObjList = new List<GameObject> ();
 		}
 	
 		// Update is called once per frame
@@ -128,18 +133,30 @@ public class ButtonController : MonoBehaviour
 								CAM.gameObject.transform.GetComponent<Set_CamPos> ().Cam_posSet ();
 				
 								//Create Structure
-								tImageTarget = GameObject.Find (t_name);
+								/*tImageTarget = GameObject.Find (t_name);
 								target_structure = tImageTarget.transform.GetChild (0).gameObject;
-								tStructure = (GameObject)Instantiate (target_structure, target_structure.transform.position, target_structure.transform.rotation);
+								tStructure = (GameObject)Instantiate (target_structure, target_structure.transform.position, target_structure.transform.rotation);*/
+
+								tImageTarget = GameObject.Find (t_name);
+								for (int i = 0; i < tImageTarget.transform.childCount; i++) {
+										GameObject t_GameObj = tImageTarget.transform.GetChild (i).gameObject;
+										t_ObjList.Add ((GameObject)Instantiate (t_GameObj, t_GameObj.transform.position, t_GameObj.transform.rotation));
+
+										//Set structure scale
+										Vector3 t_scale = new Vector3 (t_GameObj.transform.localScale.x * tImageTarget.transform.localScale.x
+					                               , t_GameObj.transform.localScale.y * tImageTarget.transform.localScale.y
+					                               , t_GameObj.transform.localScale.z * tImageTarget.transform.localScale.z);
+										tStructure.transform.localScale = t_scale;
+								}
 				
 								//Create Floor
 								//...				
 				
-								//Set structure scale
+								/*//Set structure scale
 								Vector3 t_scale = new Vector3 (target_structure.transform.localScale.x * tImageTarget.transform.localScale.x
 				                               , target_structure.transform.localScale.y * tImageTarget.transform.localScale.y
 				                               , target_structure.transform.localScale.z * tImageTarget.transform.localScale.z);
-								tStructure.transform.localScale = t_scale;
+								tStructure.transform.localScale = t_scale;*/
 				
 								//ARCamera shut down
 								ARCamera.gameObject.SetActive (false);
@@ -187,5 +204,8 @@ public class ButtonController : MonoBehaviour
 		
 				//killllllll Gamepad
 				GamePad.SetActive (false);
+
+				//List clear
+				t_ObjList.Clear ();
 		}
 }

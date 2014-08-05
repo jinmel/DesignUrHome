@@ -15,7 +15,6 @@ public class ButtonController : MonoBehaviour
 	
 		//...
 		private GameObject tFloor;
-		private GameObject tStructure;				// Button3 - mode3. 1인칭 시점에서 구조
 		private List<GameObject> t_ObjList;				// Button3 - mode3. 가구 및 구조물 저장;
 		private Object tLight;						// Button3 - mode3. 1인칭 시점에서 사용
 		private bool model_render_check;			// Button4 - 
@@ -86,7 +85,6 @@ public class ButtonController : MonoBehaviour
 						mode_checker = (mode_checker + 1) % 3;
 			
 						GameObject tImageTarget;					//SceneManger -> ImageTarget find
-						GameObject target_structure;				//Imagetarget first child component.(first son is structure)
 						string t_name = ContentManager.getInstance ().imageTargetName;
 			
 						if (t_name != null && !t_name.Equals (prev_Target_name)) {
@@ -200,9 +198,6 @@ public class ButtonController : MonoBehaviour
 				//Destroy temp Light
 				DestroyObject (tLight);
 				CAM.gameObject.SetActive (false);
-		
-				//Destroy temp Structure
-				DestroyObject (tStructure);
 		
 				//kill character model
 				Character.SetActive (false);

@@ -178,14 +178,14 @@ public class ButtonController : MonoBehaviour
 						GUIStyle Exit_Button = new GUIStyle ();
 						Exit_Button.normal.background = (Texture2D)Resources.Load ("Exit", typeof(Texture2D));
 						if (GUI.Button (new Rect (150, 50, 100, 100), "Exit", Exit_Button)) {
-				ContentManager.getInstance ().Mode = ContentManager.FURNITURE_MODE;
+								ContentManager.getInstance ().Mode = ContentManager.FURNITURE_MODE;
 								ContentManager.getInstance ().Flag = 0;
 						}
 
 						GUIStyle Delete_Button = new GUIStyle ();
 						Delete_Button.normal.background = (Texture2D)Resources.Load ("Delete", typeof(Texture2D));
 						if (GUI.Button (new Rect (150, 150, 100, 100), "Delete", Delete_Button)) {
-				ContentManager.getInstance ().Mode = ContentManager.FURNITURE_MODE;
+								ContentManager.getInstance ().Mode = ContentManager.FURNITURE_MODE;
 								ContentManager.getInstance ().Flag = 0;
 								string selected_furniture_name = GameObject.Find ("FurnitureMovingPad").GetComponent<Furniture_Moving_Controller> ().selected_furniture;
 								GameObject.Destroy (GameObject.Find (selected_furniture_name));

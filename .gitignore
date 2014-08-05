@@ -11,7 +11,7 @@
 *.userprefs
 *.pidb
 *.booproj
-.apk
+*.apk
 
 # emacs crap
 

@@ -8,7 +8,6 @@ public class Make_furniture : MonoBehaviour {
 
 	// Use this for initialization
 	int count = 0;
-	bool able_to_make_furniture = true;
 
 	public
 	void Start () {
@@ -18,12 +17,11 @@ public class Make_furniture : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(ContentManager.getInstance().Mode == 2 &&
-		   able_to_make_furniture){
+		   ContentManager.getInstance().Flag == 0){
 			if(Input.GetButtonDown("Fire1")){
 				GameObject targets = GameObject.Find ("Targets"); 
 				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 				RaycastHit hit = new RaycastHit();
-				Debug.Log ("Fire1");
 				
 				//			if(Physics.Raycast(ray, out hit)) {
 				if(Physics.Raycast(ray.origin,ray.direction,out hit)){
@@ -44,10 +42,10 @@ public class Make_furniture : MonoBehaviour {
 					}
 					if(hit.transform.name.Contains("furniture")){
 //						this.GetComponent<Move_furniture>().name_SelectedFurniture = hit.transform.name;
-						able_to_make_furniture = false;
 						//GameObject.Find ("FurnitureMovingPad").SetActive(true);
 						FurnitureMovingPad.SetActive(true);
 						FurnitureMovingPad.GetComponent<Furniture_Moving_Controller>().selected_furniture = hit.transform.name;
+						ContentManager.getInstance().Flag = 1;
 					}
 				}
 			}

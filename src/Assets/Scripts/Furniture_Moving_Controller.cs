@@ -12,8 +12,9 @@ public class Furniture_Moving_Controller : MonoBehaviour
 		private bool touch_check;
 
 		//Move Key pad
-		private Vector3 Start_point;		//Initial Start point
-		private float Button_Dist;
+		private Vector3 Start_point;		
+		private float Button_Dist_Max;	
+		private float Button_Dist_Min;
 		private float Model_acceleration;
 
 		//Local position
@@ -25,7 +26,8 @@ public class Furniture_Moving_Controller : MonoBehaviour
 		{
 				_time = Time.timeSinceLevelLoad;
 				touch_check = false;
-				Button_Dist = 0.7f;
+				Button_Dist_Max = 0.7f;
+				Button_Dist_Min = 0.1f;
 				Model_acceleration = 0.5f;
 
 				Color _t_gray = new Color (0.2f, 0.2f, 0.2f, 1.0f);
@@ -35,60 +37,67 @@ public class Furniture_Moving_Controller : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-	
-				if (Time.timeSinceLevelLoad - _time > 0.5) {
-						if (Input.GetMouseButtonDown (0)) {
-								touch_check = true;
-								Start_point = Calculate_button_pos (10);
-								Move_key.transform.position = Start_point;
-								Local_start = Move_key.transform.localPosition;
-								Move_board.transform.position = Calculate_button_pos (15);
-								Move_key.SetActive (true);
-								Move_board.SetActive (true);
-						} else if (Input.GetMouseButtonUp (0)) {
-								Move_key.SetActive (false);
-								Move_board.SetActive (false);
-								touch_check = false;
+			if(Input.GetMouseButtonUp(0)){
+				Move_key.SetActive (false);
+				Move_board.SetActive (false);
+				touch_check = false;
+			}
+			if(ContentManager.getInstance().Flag == 1){
+				if (Time.timeSinceLevelLoad - _time > 0.1) {
+					if (touch_check == true) {
+						//버튼 따라다니게 하기
+						Vector3 target_pos = Calculate_button_pos (10);
+						Move_key.transform.position = target_pos;
+						Local_target = Move_key.transform.localPosition;
+						float dist = Vector3.Distance (Local_target, Local_start);
+						
+						//일정 범위 이상 안벗어 나게...
+						if (dist > Button_Dist_Max) {
+							Vector3 Key_dir = Vector3.Normalize (Local_target - Local_start);
+							Key_dir = Key_dir * Button_Dist_Max;
+							Vector3 dst_pos = Local_start + Key_dir;
+							Move_key.transform.localPosition = dst_pos;
 						}
 						
-						if (touch_check == true) {
-								//버튼 따라다니게 하기
-								Vector3 target_pos = Calculate_button_pos (10);
-								Move_key.transform.position = target_pos;
-								Local_target = Move_key.transform.localPosition;
-								float dist = Vector3.Distance (Local_target, Local_start);
-								
-								//일정 범위 이상 안벗어 나게...
-								if (dist > Button_Dist) {
-										Vector3 Key_dir = Vector3.Normalize (Local_target - Local_start);
-										Key_dir = Key_dir * Button_Dist;
-										Vector3 dst_pos = Local_start + Key_dir;
-										Move_key.transform.localPosition = dst_pos;
-								}
-
-								//Move Charecter
-//								Vector3 Char_dir = GetModel_Direction ();
-//								Charecter.transform.position += Char_dir;
-								float t_angle;
-								Vector3 z_axis = new Vector3 (0, 0, 1);
-								Vector3 Char_dir = GetModel_Direction ();
-								Vector3 t_cross_result = Vector3.Cross (z_axis, Char_dir);
-								t_angle = Vector3.Angle (z_axis, Char_dir);
-								
-								if (t_cross_result.y < 0)
-									t_angle *= -1.0f;
-								
-//								GameObject.Find (selected_furniture).transform.rotation = Quaternion.AngleAxis (t_angle, Vector3.up);
-								if(Mathf.Abs(Char_dir.x) > Mathf.Abs(Char_dir.z)){
-									Char_dir.z = 0;
-									GameObject.Find (selected_furniture).transform.position += Char_dir;
-								}	
-								else{
-									Char_dir.x = 0;
-									GameObject.Find (selected_furniture).transform.position += Char_dir;
-								}
+						if(dist > Button_Dist_Min){
+							//Move Charecter
+		//								Vector3 Char_dir = GetModel_Direction ();
+		//								Charecter.transform.position += Char_dir;
+							float t_angle;
+							Vector3 z_axis = new Vector3 (0, 0, 1);
+							Vector3 Char_dir = GetModel_Direction ();
+							Vector3 t_cross_result = Vector3.Cross (z_axis, Char_dir);
+							t_angle = Vector3.Angle (z_axis, Char_dir);
+							
+							if (t_cross_result.y < 0)
+								t_angle *= -1.0f;
+							
+		//					GameObject.Find (selected_furniture).transform.rotation = Quaternion.AngleAxis (t_angle, Vector3.up);
+							if(Mathf.Abs(Char_dir.x) > Mathf.Abs(Char_dir.z)){
+								Char_dir.z = 0;
+								GameObject.Find (selected_furniture).transform.position += Char_dir;
+							}	
+							else{
+								Char_dir.x = 0;
+								GameObject.Find (selected_furniture).transform.position += Char_dir;
+							}
 						}
+					}
+					if (Input.GetMouseButtonDown (0)) {
+						touch_check = true;
+						Start_point = Calculate_button_pos (10);
+						Move_key.transform.position = Start_point;
+						Local_start = Move_key.transform.localPosition;
+						Move_board.transform.position = Calculate_button_pos (15);
+						Move_key.SetActive (true);
+						Move_board.SetActive (true);
+						_time = Time.timeSinceLevelLoad;
+						
+					}
 				}
+			}else{
+				_time = Time.timeSinceLevelLoad;
+			}
 		}
 
 		Vector3 Calculate_button_pos (int dist)

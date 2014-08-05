@@ -71,6 +71,7 @@ public class ButtonController : MonoBehaviour
 				}
 				if (GUI.Button (new Rect (50, 130, 80, 80), "Button 2", button2_style)) {
 						ContentManager.getInstance ().Mode = 2;
+						ContentManager.getInstance ().Flag = 0;
 				}
 
 				if (GUI.Button (new Rect (50, 220, 80, 80), "Button 3", button3_style)) {
@@ -184,6 +185,24 @@ public class ButtonController : MonoBehaviour
 				}
 				
 				GUI.Label (new Rect (200, 5, 30, 30), ContentManager.getInstance ().imageTargetName, tDebug);
+				if(ContentManager.getInstance().Mode == 2 && 
+		   			ContentManager.getInstance().Flag == 1){
+					GUIStyle Exit_Button = new GUIStyle();
+					Exit_Button.normal.background = (Texture2D)Resources.Load ("Exit",typeof(Texture2D));
+					if (GUI.Button  (new Rect(150,50,100,100),"Exit",Exit_Button)){
+						ContentManager.getInstance ().Mode = 2;
+						ContentManager.getInstance ().Flag = 0;
+					}
+
+					GUIStyle Delete_Button = new GUIStyle();
+					Delete_Button.normal.background = (Texture2D)Resources.Load ("Delete",typeof(Texture2D));
+					if (GUI.Button  (new Rect(150,150,100,100),"Delete",Delete_Button)){
+						ContentManager.getInstance ().Mode = 2;
+						ContentManager.getInstance ().Flag = 0;
+						string selected_furniture_name = GameObject.Find ("FurnitureMovingPad").GetComponent<Furniture_Moving_Controller>().selected_furniture;
+						GameObject.Destroy (GameObject.Find(selected_furniture_name));
+					}
+				}	
 		}
 
 		private void Mode3_Initialize ()

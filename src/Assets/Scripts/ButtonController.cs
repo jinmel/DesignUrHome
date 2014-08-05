@@ -147,7 +147,7 @@ public class ButtonController : MonoBehaviour
 										Vector3 t_scale = new Vector3 (t_GameObj.transform.localScale.x * tImageTarget.transform.localScale.x
 					                               , t_GameObj.transform.localScale.y * tImageTarget.transform.localScale.y
 					                               , t_GameObj.transform.localScale.z * tImageTarget.transform.localScale.z);
-										tStructure.transform.localScale = t_scale;
+										t_ObjList [i].transform.localScale = t_scale;
 								}
 				
 								//Create Floor
@@ -185,23 +185,23 @@ public class ButtonController : MonoBehaviour
 				}
 				
 				GUI.Label (new Rect (200, 5, 30, 30), ContentManager.getInstance ().imageTargetName, tDebug);
-				if(ContentManager.getInstance().Mode == 2 && 
-		   			ContentManager.getInstance().Flag == 1){
-					GUIStyle Exit_Button = new GUIStyle();
-					Exit_Button.normal.background = (Texture2D)Resources.Load ("Exit",typeof(Texture2D));
-					if (GUI.Button  (new Rect(150,50,100,100),"Exit",Exit_Button)){
-						ContentManager.getInstance ().Mode = 2;
-						ContentManager.getInstance ().Flag = 0;
-					}
+				if (ContentManager.getInstance ().Mode == 2 && 
+						ContentManager.getInstance ().Flag == 1) {
+						GUIStyle Exit_Button = new GUIStyle ();
+						Exit_Button.normal.background = (Texture2D)Resources.Load ("Exit", typeof(Texture2D));
+						if (GUI.Button (new Rect (150, 50, 100, 100), "Exit", Exit_Button)) {
+								ContentManager.getInstance ().Mode = 2;
+								ContentManager.getInstance ().Flag = 0;
+						}
 
-					GUIStyle Delete_Button = new GUIStyle();
-					Delete_Button.normal.background = (Texture2D)Resources.Load ("Delete",typeof(Texture2D));
-					if (GUI.Button  (new Rect(150,150,100,100),"Delete",Delete_Button)){
-						ContentManager.getInstance ().Mode = 2;
-						ContentManager.getInstance ().Flag = 0;
-						string selected_furniture_name = GameObject.Find ("FurnitureMovingPad").GetComponent<Furniture_Moving_Controller>().selected_furniture;
-						GameObject.Destroy (GameObject.Find(selected_furniture_name));
-					}
+						GUIStyle Delete_Button = new GUIStyle ();
+						Delete_Button.normal.background = (Texture2D)Resources.Load ("Delete", typeof(Texture2D));
+						if (GUI.Button (new Rect (150, 150, 100, 100), "Delete", Delete_Button)) {
+								ContentManager.getInstance ().Mode = 2;
+								ContentManager.getInstance ().Flag = 0;
+								string selected_furniture_name = GameObject.Find ("FurnitureMovingPad").GetComponent<Furniture_Moving_Controller> ().selected_furniture;
+								GameObject.Destroy (GameObject.Find (selected_furniture_name));
+						}
 				}	
 		}
 
@@ -225,6 +225,10 @@ public class ButtonController : MonoBehaviour
 				GamePad.SetActive (false);
 
 				//List clear
+				for (int i = 0; i < t_ObjList.Count; i++) {
+						DestroyObject (t_ObjList [i]);
+				}
+
 				t_ObjList.Clear ();
 		}
 }

@@ -2,11 +2,11 @@
 using System.Collections;
 
 public class FPSPadController : MonoBehaviour {
-
+	
 	public GUIStyle textStyle;
 	public GameObject Move_key;
 	public GameObject Move_board;
-	public GameObject Charecter;
+	public GameObject Character;
 	public Camera main_cam;
 	private bool touch_check;
 	
@@ -14,6 +14,7 @@ public class FPSPadController : MonoBehaviour {
 	private Vector3 Start_point;		//Initial Start point
 	private float Button_Dist;
 	private float Model_acceleration;
+	private Vector3 Screen_Start;
 	
 	//Local position
 	private Vector3 Local_start;
@@ -21,6 +22,10 @@ public class FPSPadController : MonoBehaviour {
 	
 	//UI Domain
 	private Rect UI_size;
+	
+	//rotation parameter
+	float rot_threshold = 45.0f;
+	float rot_const = 1.0f;
 	
 	// Use this for initialization
 	void Start ()
@@ -41,6 +46,7 @@ public class FPSPadController : MonoBehaviour {
 				if (!InRectCheck (ContentManager.getInstance ().UI_Domain)) {
 					touch_check = true;
 					Start_point = Calculate_button_pos (10);
+					Screen_Start = Input.mousePosition;
 					Move_key.transform.position = Start_point;
 					Local_start = Move_key.transform.localPosition;
 					Move_board.transform.position = Calculate_button_pos (15);
@@ -69,11 +75,25 @@ public class FPSPadController : MonoBehaviour {
 				}
 				
 				//Rotate Charecter
-				//axis-z is main direction
 				Vector3 Char_dir = GetModel_Direction ();
+				Vector3 z_axis = new Vector3(0,1,0);
+				Vector3 Screen_vec = Input.mousePosition - Screen_Start;
+				float t_angle = Vector3.Angle (z_axis, Screen_vec);
 				
 				//Move Charecter
-				Charecter.transform.position += Char_dir;
+				if(t_angle <= rot_threshold || (180 - rot_threshold) <= t_angle)
+					Character.transform.position += Char_dir;
+				else{
+					Vector3 t_cross_result = Vector3.Cross (z_axis, Screen_vec);
+					Vector3 Present_angle = Character.transform.eulerAngles;
+					if (t_cross_result.z < 0){
+						//t_angle *= -1.0f;
+						Present_angle.y += rot_const;
+					}else{
+						Present_angle.y -= rot_const;
+					}
+					Character.transform.rotation = Quaternion.Euler(Present_angle);
+				}
 			}
 		}
 	}
@@ -129,5 +149,5 @@ public class FPSPadController : MonoBehaviour {
 		}
 		return false;
 	}
-
+	
 }

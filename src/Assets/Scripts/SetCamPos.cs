@@ -10,7 +10,7 @@ public class SetCamPos : MonoBehaviour
 		private Vector3 src_pos;
 		private Vector3 src_rot;
 		private Vector3 dst_pos = new Vector3 (0.0f, 2.0f, 0.0f);		//local coordinate
-		private Vector3 dst_rot = new Vector3 (20.0f, 0.0f, 0.0f);
+		private Vector3 dst_rot = new Vector3 (10.0f, 0.0f, 0.0f);
 		private Vector3 dir_vec;
 		private Vector3 dir_rot;
 		// Use this for initialization

@@ -89,7 +89,7 @@ public class InventoryController : MonoBehaviour
         GUI.EndGroup();
 
         Event curEvent = Event.current;
-        Debug.Log(curEvent);
+//        Debug.Log(curEvent);
 
         if(curEvent.type == EventType.mouseDown && button1Box.Contains(Input.mousePosition)){
             inventoryItemSelected = true;

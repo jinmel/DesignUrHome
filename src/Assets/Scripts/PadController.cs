@@ -6,7 +6,7 @@ public class PadController : MonoBehaviour
 		public GUIStyle textStyle;
 		public GameObject Move_key;
 		public GameObject Move_board;
-		public GameObject Charecter;
+		public GameObject Character;
 		public Camera main_cam;
 		private bool touch_check;
 	
@@ -46,11 +46,19 @@ public class PadController : MonoBehaviour
 										Move_board.transform.position = Calculate_button_pos (15);
 										Move_key.SetActive (true);
 										Move_board.SetActive (true);
+
+										//Character Moving animation
+										RuntimeAnimatorController walk_anim = (RuntimeAnimatorController)Resources.Load ("Walk",typeof(RuntimeAnimatorController));
+										Character.GetComponent<Animator>().runtimeAnimatorController = walk_anim;
 								}
 						} else if (Input.GetMouseButtonUp (0)) {
 								Move_key.SetActive (false);
 								Move_board.SetActive (false);
 								touch_check = false;
+								
+								//Character Idle animation
+								RuntimeAnimatorController idle_anim = (RuntimeAnimatorController)Resources.Load ("Idle",typeof(RuntimeAnimatorController));
+								Character.GetComponent<Animator>().runtimeAnimatorController = idle_anim;
 						}
 			
 						if (touch_check == true) {
@@ -79,10 +87,10 @@ public class PadController : MonoBehaviour
 								if (t_cross_result.y < 0)
 										t_angle *= -1.0f;
 				
-								Charecter.transform.rotation = Quaternion.AngleAxis (t_angle, Vector3.up);
+								Character.transform.rotation = Quaternion.AngleAxis (t_angle, Vector3.up);
 				
 								//Move Charecter
-								Charecter.transform.position += Char_dir;
+								Character.transform.position += Char_dir;
 						}
 				}
 		}

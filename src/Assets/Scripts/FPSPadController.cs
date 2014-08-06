@@ -81,8 +81,13 @@ public class FPSPadController : MonoBehaviour {
 				float t_angle = Vector3.Angle (z_axis, Screen_vec);
 				
 				//Move Charecter
-				if(t_angle <= rot_threshold || (180 - rot_threshold) <= t_angle)
+				if(t_angle <= rot_threshold || (180 - rot_threshold) <= t_angle){
 					Character.transform.position += Char_dir;
+
+					//Character Moving animation
+					RuntimeAnimatorController walk_anim = (RuntimeAnimatorController)Resources.Load ("Walk",typeof(RuntimeAnimatorController));
+					Character.GetComponent<Animator>().runtimeAnimatorController = walk_anim;
+				}
 				else{
 					Vector3 t_cross_result = Vector3.Cross (z_axis, Screen_vec);
 					Vector3 Present_angle = Character.transform.eulerAngles;
@@ -93,7 +98,17 @@ public class FPSPadController : MonoBehaviour {
 						Present_angle.y -= rot_const;
 					}
 					Character.transform.rotation = Quaternion.Euler(Present_angle);
+
+					//Character Idle animation
+					RuntimeAnimatorController idle_anim = (RuntimeAnimatorController)Resources.Load ("Idle",typeof(RuntimeAnimatorController));
+					Character.GetComponent<Animator>().runtimeAnimatorController = idle_anim;
 				}
+			}
+			else{
+
+				//Character Idle animation
+				RuntimeAnimatorController idle_anim = (RuntimeAnimatorController)Resources.Load ("Idle",typeof(RuntimeAnimatorController));
+				Character.GetComponent<Animator>().runtimeAnimatorController = idle_anim;
 			}
 		}
 	}

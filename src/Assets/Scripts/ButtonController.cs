@@ -190,6 +190,12 @@ public class ButtonController : MonoBehaviour
 								string selected_furniture_name = GameObject.Find ("FurnitureMovingPad").GetComponent<FurnitureController> ().selected_furniture;
 								GameObject.Destroy (GameObject.Find (selected_furniture_name));
 						}
+
+						GUIStyle Rotate_Button = new GUIStyle();	
+						Rotate_Button.normal.background = (Texture2D)Resources.Load ("Rotate", typeof(Texture2D));
+						if (GUI.Button (new Rect (150, 250, 100, 100), "Delete", Rotate_Button)) {
+							GameObject.Find ("FurnitureMovingPad").GetComponent<FurnitureController> ().rotateFurniture();
+						}
 				}	
 		}
 

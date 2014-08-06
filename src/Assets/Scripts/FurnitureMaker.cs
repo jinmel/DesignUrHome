@@ -61,6 +61,7 @@ public class FurnitureMaker : MonoBehaviour
 				newFurniture.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
 				newFurniture.GetComponent<MeshCollider>().convex = true;
 				Rigidbody rigid = newFurniture.AddComponent<Rigidbody> ();
+				newFurniture.AddComponent<FurnitureCollider>();
 				rigid.useGravity = false;
 				count ++;
 		}

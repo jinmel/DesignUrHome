@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MakeFurniture : MonoBehaviour
+public class FurnitureMaker : MonoBehaviour
 {
 
 		public GameObject FurnitureMovingPad;
@@ -10,8 +10,7 @@ public class MakeFurniture : MonoBehaviour
 		// Use this for initialization
 		int count = 0;
 
-		public
-	void Start ()
+		public void Start ()
 		{
 	
 		}
@@ -19,17 +18,13 @@ public class MakeFurniture : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-				if (ContentManager.getInstance ().Mode == ContentManager.FURNITURE_MODE &&
+				if (ContentManager.getInstance ().Mode == ContentManager.MODE.FURNITURE_MODE &&
 						ContentManager.getInstance ().Flag == 0) {
 						if (Input.GetButtonDown ("Fire1")) {
 								GameObject targets = GameObject.Find ("Targets"); 
 								Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 								RaycastHit hit = new RaycastHit ();
-				
-								//			if(Physics.Raycast(ray, out hit)) {
 								if (Physics.Raycast (ray.origin, ray.direction, out hit)) {
-										//				Debug.Log(hit.transform.ToString()+" but \n"+this.transform.ToString());
-
 										for (int i=0; i<targets.transform.childCount; i++) {
 												if (hit.transform == targets.transform.GetChild (i)) {
 														Vector3 crush = hit.point;
@@ -40,14 +35,12 @@ public class MakeFurniture : MonoBehaviour
 														crush = Quaternion.Euler (rot) * crush;
 														Debug.Log (targets.transform.GetChild (i).name + " is Clicked");
 
-														MakeObject (crush, targets.transform.GetChild (i));
+														makeObject (crush, targets.transform.GetChild (i));
 												}
 										}
 										if (hit.transform.name.Contains ("furniture")) {
-//						this.GetComponent<Move_furniture>().name_SelectedFurniture = hit.transform.name;
-												//GameObject.Find ("FurnitureMovingPad").SetActive(true);
 												FurnitureMovingPad.SetActive (true);
-												FurnitureMovingPad.GetComponent<FurnitureMovingController> ().selected_furniture = hit.transform.name;
+												FurnitureMovingPad.GetComponent<FurnitureController> ().selected_furniture = hit.transform.name;
 												ContentManager.getInstance ().Flag = 1;
 										}
 								}
@@ -55,18 +48,19 @@ public class MakeFurniture : MonoBehaviour
 				}
 		}
 
-		void MakeObject (Vector3 position, Transform parent)
+		void makeObject (Vector3 position, Transform parent)
 		{
 				Debug.Log ("Make Object!");
-				GameObject Rock; 
+				GameObject newFurniture; 
 				position /= parent.transform.localScale.x;
 				position.y = 0.02f;
-				Rock = (GameObject)Instantiate (Resources.Load ("teapot"));
-				Rock.name = "furniture_" + count.ToString ();
-				Rock.transform.parent = parent;
-				Rock.transform.localPosition = position;
-				Rock.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
-				Rigidbody rigid = Rock.AddComponent<Rigidbody> ();
+				newFurniture = (GameObject)Instantiate (Resources.Load ("teapot"));
+				newFurniture.name = "furniture_" + count.ToString ();
+				newFurniture.transform.parent = parent;
+				newFurniture.transform.localPosition = position;
+				newFurniture.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
+				newFurniture.GetComponent<MeshCollider>().convex = true;
+				Rigidbody rigid = newFurniture.AddComponent<Rigidbody> ();
 				rigid.useGravity = false;
 				count ++;
 		}

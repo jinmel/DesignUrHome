@@ -36,7 +36,7 @@ public class PadController : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-			if (ContentManager.getInstance ().Mode == ContentManager.CHARACTER_MODE) {
+			if (ContentManager.getInstance ().Mode == ContentManager.MODE.CHARACTER_MODE) {
 						if (Input.GetMouseButtonDown (0)) {
 								if (!InRectCheck (ContentManager.getInstance ().UI_Domain)) {
 										touch_check = true;

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FurnitureMovingController : MonoBehaviour
+public class FurnitureController : MonoBehaviour
 {
 		public GUIStyle textStyle;
 		public GameObject Move_key;
@@ -42,11 +42,12 @@ public class FurnitureMovingController : MonoBehaviour
 				Move_board.SetActive (false);
 				touch_check = false;
 			}
-			if(ContentManager.getInstance().Flag == 1){
+			if(ContentManager.getInstance ().Mode == ContentManager.MODE.FURNITURE_MODE &&
+			   ContentManager.getInstance().Flag == 1){
 				if (Time.timeSinceLevelLoad - _time > 0.1) {
 					if (touch_check == true) {
 						//버튼 따라다니게 하기
-						Vector3 target_pos = CalculateButtonPos (10);
+						Vector3 target_pos = calculateButtonPos (10);
 						Move_key.transform.position = target_pos;
 						Local_target = Move_key.transform.localPosition;
 						float dist = Vector3.Distance (Local_target, Local_start);
@@ -65,7 +66,7 @@ public class FurnitureMovingController : MonoBehaviour
 		//								Charecter.transform.position += Char_dir;
 							float t_angle;
 							Vector3 z_axis = new Vector3 (0, 0, 1);
-							Vector3 Char_dir = GetModelDirection ();
+							Vector3 Char_dir = getModelDirection ();
 							Vector3 t_cross_result = Vector3.Cross (z_axis, Char_dir);
 							t_angle = Vector3.Angle (z_axis, Char_dir);
 							
@@ -85,10 +86,10 @@ public class FurnitureMovingController : MonoBehaviour
 					}
 					if (Input.GetMouseButtonDown (0)) {
 						touch_check = true;
-						Start_point = CalculateButtonPos (10);
+						Start_point = calculateButtonPos (10);
 						Move_key.transform.position = Start_point;
 						Local_start = Move_key.transform.localPosition;
-						Move_board.transform.position = CalculateButtonPos (15);
+						Move_board.transform.position = calculateButtonPos (15);
 						Move_key.SetActive (true);
 						Move_board.SetActive (true);
 						_time = Time.timeSinceLevelLoad;
@@ -100,7 +101,7 @@ public class FurnitureMovingController : MonoBehaviour
 			}
 		}
 
-		Vector3 CalculateButtonPos (int dist)
+		Vector3 calculateButtonPos (int dist)
 		{
 				Vector3 screen_pos = Input.mousePosition;
 				Ray touch_ray = main_cam.ScreenPointToRay (screen_pos);
@@ -115,10 +116,10 @@ public class FurnitureMovingController : MonoBehaviour
 
 		//Get Model move direction
 		//return normalized vector.
-		private Vector3 GetModelDirection ()
+		private Vector3 getModelDirection ()
 		{
-			Vector3 Start_floor_pos = GetFloorPos (Move_board.transform.position);
-			Vector3 GameKey_floor_pos = GetFloorPos (Move_key.transform.position);
+			Vector3 Start_floor_pos = getFloorPos (Move_board.transform.position);
+			Vector3 GameKey_floor_pos = getFloorPos (Move_key.transform.position);
 			
 			Vector3 Dir_vec = GameKey_floor_pos - Start_floor_pos;
 			return Dir_vec.normalized;
@@ -126,17 +127,17 @@ public class FurnitureMovingController : MonoBehaviour
 
 		//Gamepad_pos + Ray_vec*t = floor_pos.
 		//This fuction calculate t.
-		private float GetScreentoFloorConst (Vector3 p)
+		private float getScreentoFloorConst (Vector3 p)
 		{
 				Vector3 t_Ray = p - main_cam.transform.position;
 			
 				return p.y / (-t_Ray.y);
 		}
 
-		private Vector3 GetFloorPos (Vector3 p)
+		private Vector3 getFloorPos (Vector3 p)
 		{
 				Vector3 t_Ray = p - main_cam.transform.position;
-				float t_const = GetScreentoFloorConst (p);	
+				float t_const = getScreentoFloorConst (p);	
 
 				return p + t_const * t_Ray;
 		}

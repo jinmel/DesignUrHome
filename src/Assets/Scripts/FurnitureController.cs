@@ -72,15 +72,14 @@ public class FurnitureController : MonoBehaviour
 						
 						if (t_cross_result.y < 0)
 							t_angle *= -1.0f;
-						
-	//					GameObject.Find (selected_furniture).transform.rotation = Quaternion.AngleAxis (t_angle, Vector3.up);
+
 						if(Mathf.Abs(Char_dir.x) > Mathf.Abs(Char_dir.z)){
 							Char_dir.z = 0;
-							GameObject.Find (selected_furniture).transform.position += Char_dir;
+							GameObject.Find (selected_furniture).GetComponent<FurnitureCollider>().moveFurniture(Char_dir);
 						}	
 						else{
 							Char_dir.x = 0;
-							GameObject.Find (selected_furniture).transform.position += Char_dir;
+							GameObject.Find (selected_furniture).GetComponent<FurnitureCollider>().moveFurniture(Char_dir);
 						}
 					}
 				}
@@ -146,12 +145,6 @@ public class FurnitureController : MonoBehaviour
 	{
 			Vector3 Cam_pos = main_cam.transform.position;
 			GUI.Label (new Rect (300, 300, 60, 60), "x:" + Cam_pos.x + " y:" + Cam_pos.y + " z:" + Cam_pos.z, this.textStyle);
-	}
-	public void rotateFurniture(){
-		GameObject rotated_furniture = GameObject.Find (selected_furniture);
-		Vector3 rotate = rotated_furniture.transform.localEulerAngles;
-		rotate = new Vector3(rotate.x,rotate.y-10.0f,rotate.z);
-		rotated_furniture.transform.localEulerAngles = rotate;
 	}
 }
 

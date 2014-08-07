@@ -60,8 +60,8 @@ public class FurnitureMaker : MonoBehaviour
 				newFurniture.transform.localPosition = position;
 				newFurniture.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
 				newFurniture.GetComponent<MeshCollider>().convex = true;
-				Rigidbody rigid = newFurniture.AddComponent<Rigidbody> ();
 				newFurniture.AddComponent<FurnitureCollider>();
+				Rigidbody rigid = newFurniture.AddComponent<Rigidbody> ();
 				rigid.useGravity = false;
 				count ++;
 		}

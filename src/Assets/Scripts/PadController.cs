@@ -13,7 +13,6 @@ public class PadController : MonoBehaviour
 		//Move Key pad
 		private Vector3 Start_point;		//Initial Start point
 		private float Button_Dist;
-		private float Model_acceleration;
 	
 		//Local position
 		private Vector3 Local_start;
@@ -27,7 +26,6 @@ public class PadController : MonoBehaviour
 		{
 				touch_check = false;
 				Button_Dist = 0.7f;
-				Model_acceleration = 0.5f;
 		}
 	
 		// Update is called once per frame

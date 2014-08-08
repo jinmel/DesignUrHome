@@ -59,10 +59,12 @@ public class ButtonController : MonoBehaviour
 
 						//Create SUN
 						if (SunMode == 1) {
+								Light.SetActive (false);
 								Sun.SetActive (true);
 						}
 			//Delete SUN
 			else {
+								Light.SetActive (true);
 								Sun.SetActive (false);
 						}
 				}

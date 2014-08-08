@@ -8,6 +8,7 @@ public class SetSunPos : MonoBehaviour
 		public Camera MainCamera;
 		private Vector3 StructureCenterPos;
 		private bool MouseDownCheck = false;
+	float RevolutionRadius = 100.0f;
 
 		// Use this for initialization
 		void Start ()
@@ -22,7 +23,9 @@ public class SetSunPos : MonoBehaviour
 
 						if (Input.GetMouseButtonDown (0)) {
 								MouseDownCheck = true;
-								StructureCenterPos = GameObject.Find ((ContentManager.getInstance ().imageTargetName)).transform.GetChild (0).position;
+								GameObject ImgTarget = GameObject.Find ((ContentManager.getInstance ().imageTargetName));
+								this.transform.parent = ImgTarget.transform.GetChild (0);
+								StructureCenterPos = ImgTarget.transform.GetChild (0).position;
 						} else if (Input.GetMouseButtonUp (0)) {
 								MouseDownCheck = false;
 						}
@@ -30,8 +33,10 @@ public class SetSunPos : MonoBehaviour
 						//Follow finger
 						if (MouseDownCheck == true) {
 								Vector3 TouchPos = CalculatePlanePos (Input.mousePosition);
-								Debug.Log (TouchPos);
 								this.transform.position = TouchPos;
+
+								//Change Light Direction
+				RotateSunLight ();
 						} else {
 								//Auto movement
 						}
@@ -46,6 +51,9 @@ public class SetSunPos : MonoBehaviour
 				return MouseRay.origin + t * MouseRay.direction;
 		}
 
-		//private Vector3 CalculateSunPos(Vector3 PlanePos){
-		//}
+		private void RotateSunLight(){
+			Vector3 TargetDir = StructureCenterPos - this.transform.position;
+			// local z-axis <= TargetDir
+		SunLight.transform.forward = TargetDir.normalized;
+	}
 }

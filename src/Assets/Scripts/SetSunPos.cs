@@ -6,9 +6,12 @@ public class SetSunPos : MonoBehaviour
 
 		public GameObject SunLight;					//Control sun light direction.
 		public Camera MainCamera;
-		private Vector3 StructureCenterPos;
+		private Vector3 StructureCenterPos;			//Tracking Target Center
+		private Vector3 TouchPos;
 		private bool MouseDownCheck = false;
-	float RevolutionRadius = 100.0f;
+		private float RevolutionRadius = 100.0f;	//공전 반지름
+		private int RevolutionFrame = 2000;			//공전 주기(frame)
+		private int FrameCount;						//frame store
 
 		// Use this for initialization
 		void Start ()
@@ -26,19 +29,22 @@ public class SetSunPos : MonoBehaviour
 								GameObject ImgTarget = GameObject.Find ((ContentManager.getInstance ().imageTargetName));
 								this.transform.parent = ImgTarget.transform.GetChild (0);
 								StructureCenterPos = ImgTarget.transform.GetChild (0).position;
+								FrameCount = 0;
 						} else if (Input.GetMouseButtonUp (0)) {
 								MouseDownCheck = false;
 						}
 						
 						//Follow finger
 						if (MouseDownCheck == true) {
-								Vector3 TouchPos = CalculatePlanePos (Input.mousePosition);
-								this.transform.position = TouchPos;
+								TouchPos = CalculatePlanePos (Input.mousePosition);
+								this.transform.position = new Vector3 (TouchPos.x, TouchPos.y + RevolutionRadius, TouchPos.z);
 
 								//Change Light Direction
-				RotateSunLight ();
+								RotateSunLight ();
 						} else {
 								//Auto movement
+								//this.transform.position = CalculateSunPos ();
+								RotateSunLight ();
 						}
 
 				}
@@ -51,9 +57,17 @@ public class SetSunPos : MonoBehaviour
 				return MouseRay.origin + t * MouseRay.direction;
 		}
 
-		private void RotateSunLight(){
-			Vector3 TargetDir = StructureCenterPos - this.transform.position;
-			// local z-axis <= TargetDir
-		SunLight.transform.forward = TargetDir.normalized;
-	}
+		private void RotateSunLight ()
+		{
+				Vector3 TargetDir = StructureCenterPos - this.transform.position;
+				// local z-axis <= TargetDir
+				SunLight.transform.forward = TargetDir.normalized;
+		}
+
+		private Vector3 CalculateSunPos ()
+		{
+				FrameCount = (FrameCount + 1) % RevolutionFrame;
+
+				return new Vector3 ();
+		}
 }

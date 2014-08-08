@@ -28,9 +28,6 @@ public class PadController : MonoBehaviour
 				touch_check = false;
 				Button_Dist = 0.7f;
 				Model_acceleration = 0.5f;
-		
-				Color _t_gray = new Color (0.2f, 0.2f, 0.2f, 1.0f);
-				Move_board.renderer.material.SetColor ("_Color", _t_gray);
 		}
 	
 		// Update is called once per frame

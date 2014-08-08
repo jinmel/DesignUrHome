@@ -13,7 +13,6 @@ public class FPSPadController : MonoBehaviour {
 	//Move Key pad
 	private Vector3 Start_point;		//Initial Start point
 	private float Button_Dist;
-	private float Model_acceleration;
 	private Vector3 Screen_Start;
 	
 	//Local position
@@ -32,10 +31,6 @@ public class FPSPadController : MonoBehaviour {
 	{
 		touch_check = false;
 		Button_Dist = 0.7f;
-		Model_acceleration = 0.5f;
-		
-		Color _t_gray = new Color (0.0f, 0.0f, 0.0f, 1.0f);
-		Move_board.renderer.material.SetColor ("_Color", _t_gray);
 	}
 	
 	// Update is called once per frame

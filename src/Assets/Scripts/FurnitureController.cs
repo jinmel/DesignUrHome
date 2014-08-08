@@ -28,10 +28,6 @@ public class FurnitureController : MonoBehaviour
 			touch_check = false;
 			Button_Dist_Max = 0.7f;
 			Button_Dist_Min = 0.1f;
-			Model_acceleration = 0.5f;
-
-			Color _t_gray = new Color (0.2f, 0.2f, 0.2f, 1.0f);
-			Move_board.renderer.material.SetColor ("_Color", _t_gray);
 	}
 
 	// Update is called once per frame

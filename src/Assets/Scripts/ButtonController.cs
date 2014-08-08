@@ -12,6 +12,7 @@ public class ButtonController : MonoBehaviour
 		public GameObject GamePad;					// GamePad. in button3
 		public GameObject ImageTarget;				// ImageTarget in vuforia
 		public GameObject Character;				// Charector model
+		public GameObject Sun;						// mode 1 - SUN					
 	
 		//...
 		private GameObject tFloor;
@@ -19,7 +20,7 @@ public class ButtonController : MonoBehaviour
 		private Object tLight;						// Button3 - mode3. 1인칭 시점에서 사용
 		private bool model_render_check;			// Button4 - 
 		private int mode_checker;
-		private int counter;
+		private int SunMode = -1;
 		private string prev_Target_name;
 
 		// ... 
@@ -54,18 +55,15 @@ public class ButtonController : MonoBehaviour
 				// Handle Light Orientation 
 				if (GUI.Button (new Rect (50, 40, 80, 80), "Button 1", button1_style)) {
 						ContentManager.getInstance ().Mode = ContentManager.MODE.LIGHT_MODE;
+						SunMode *= -1;
 
-						counter = (counter + 1) % 3;
-						switch (counter) {
-						case 0:
-								Light.light.color = Color.white;
-								break;
-						case 1:
-								Light.light.color = Color.blue;
-								break;
-						case 2:
-								Light.light.color = Color.green;
-								break;
+						//Create SUN
+						if (SunMode == 1) {
+								Sun.SetActive (true);
+						}
+			//Delete SUN
+			else {
+								Sun.SetActive (false);
 						}
 				}
 				if (GUI.Button (new Rect (50, 130, 80, 80), "Button 2", button2_style)) {
@@ -191,11 +189,11 @@ public class ButtonController : MonoBehaviour
 								GameObject.Destroy (GameObject.Find (selected_furniture_name));
 						}
 
-						GUIStyle Rotate_Button = new GUIStyle();	
+						GUIStyle Rotate_Button = new GUIStyle ();	
 						Rotate_Button.normal.background = (Texture2D)Resources.Load ("Rotate", typeof(Texture2D));
 						if (GUI.Button (new Rect (150, 250, 100, 100), "Delete", Rotate_Button)) {
-							string selected_furniture_name = GameObject.Find ("FurnitureMovingPad").GetComponent<FurnitureController> ().selected_furniture;
-							GameObject.Find (selected_furniture_name).GetComponent<FurnitureCollider>().rotateFurniture(-10.0f);
+								string selected_furniture_name = GameObject.Find ("FurnitureMovingPad").GetComponent<FurnitureController> ().selected_furniture;
+								GameObject.Find (selected_furniture_name).GetComponent<FurnitureCollider> ().rotateFurniture (-10.0f);
 						}
 				}	
 		}

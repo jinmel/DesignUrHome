@@ -14,6 +14,7 @@ public class SetSunPos : MonoBehaviour
 		private float PresentAngle;					//현재 각도
 		private float AlphaAngle;
 		private GameObject ImgTarget;
+		public GUIStyle textStyle;
 
 		// Use this for initialization
 		void Start ()
@@ -30,7 +31,6 @@ public class SetSunPos : MonoBehaviour
 								MouseDownCheck = true;
 								ImgTarget = GameObject.Find ((ContentManager.getInstance ().imageTargetName));
 								this.transform.parent = ImgTarget.transform.GetChild (0);
-								StructureCenterPos = ImgTarget.transform.GetChild (0).position;
 
 								PresentAngle = 0.0f;
 						} else if (Input.GetMouseButtonUp (0)) {
@@ -46,16 +46,15 @@ public class SetSunPos : MonoBehaviour
 								AlphaAngle = Vector3.Angle (Vector3.right, CenterToTouch);
 								if (Vector3.Cross (CenterToTouch, Vector3.right).y < 0)
 										AlphaAngle = 360.0f - AlphaAngle;
-								Debug.Log (RevolutionRadius);
+								//Debug.Log (RevolutionRadius);
 								AlphaAngle = Mathf.PI * AlphaAngle / 180.0f;
 
 								this.transform.position = TouchPos;
 								//Change Light Direction
 								RotateSunLight ();
 						} else {
-								//Auto movement
-								if (RevolutionRadius > 0.0f)
-										this.transform.position = CalculateSunPos ();
+								//Auto movement\
+								this.transform.position = CalculateSunPos ();
 								RotateSunLight ();
 						}
 
@@ -88,5 +87,10 @@ public class SetSunPos : MonoBehaviour
 				Vector3 TargetDir = StructureCenterPos - this.transform.position;
 				// local z-axis <= TargetDir
 				SunLight.transform.forward = TargetDir.normalized;
+		}
+
+		void OnGUI ()
+		{
+				GUI.Label (new Rect (800, 5, 30, 30), ContentManager.getInstance ().imageTargetName, this.textStyle);
 		}
 }

@@ -9,9 +9,9 @@ public class SetSunPos : MonoBehaviour
 		private Vector3 StructureCenterPos;			//Tracking Target Center
 		private Vector3 CenterToTouch;
 		private bool MouseDownCheck = false;
-		private float RevolutionRadius = 500.0f;	//공전 반지름
+		private float RevolutionRadius = -1.0f;	//공전 반지름
 		private float RevolutionVelocity = 1.0f;		//각 속도
-		private float PresentAngle;					//터치 때는 시점의 각도
+		private float PresentAngle;					//현재 각도
 		private float AlphaAngle;
 		private GameObject ImgTarget;
 
@@ -31,6 +31,8 @@ public class SetSunPos : MonoBehaviour
 								ImgTarget = GameObject.Find ((ContentManager.getInstance ().imageTargetName));
 								this.transform.parent = ImgTarget.transform.GetChild (0);
 								StructureCenterPos = ImgTarget.transform.GetChild (0).position;
+
+								PresentAngle = 0.0f;
 						} else if (Input.GetMouseButtonUp (0)) {
 								MouseDownCheck = false;
 						}
@@ -39,36 +41,39 @@ public class SetSunPos : MonoBehaviour
 						if (MouseDownCheck == true) {
 								Vector3 TouchPos = CalculatePlanePos (Input.mousePosition);
 								CenterToTouch = TouchPos - ImgTarget.transform.position;
-								if (CenterToTouch.magnitude / RevolutionRadius > 1.0f)
-										PresentAngle = 0.0f;
-								else
-										PresentAngle = Mathf.Acos (CenterToTouch.magnitude / RevolutionRadius);
-								PresentAngle = 180 * PresentAngle / Mathf.PI;
+								RevolutionRadius = CenterToTouch.magnitude;
 
-								AlphaAngle = Vector3.Angle (CenterToTouch, Vector3.left);
+								AlphaAngle = Vector3.Angle (Vector3.right, CenterToTouch);
+								if (Vector3.Cross (CenterToTouch, Vector3.right).y < 0)
+										AlphaAngle = 360.0f - AlphaAngle;
+								Debug.Log (RevolutionRadius);
+								AlphaAngle = Mathf.PI * AlphaAngle / 180.0f;
 
-								this.transform.position = CalculateSunPos (PresentAngle, CenterToTouch);
+								this.transform.position = TouchPos;
 								//Change Light Direction
 								RotateSunLight ();
 						} else {
 								//Auto movement
-								//this.transform.position = CalculateSunPos ();
+								if (RevolutionRadius > 0.0f)
+										this.transform.position = CalculateSunPos ();
 								RotateSunLight ();
 						}
 
 				}
 		}
 
-		private Vector3 CalculateSunPos (float angle, Vector3 Direction)
+		private Vector3 CalculateSunPos ()
 		{
-				Vector3 t_SunPos = new Vector3 ();
-				t_SunPos.y = RevolutionRadius * Mathf.Sin (angle);
+				Vector3 SunPos = new Vector3 ();
+				PresentAngle += RevolutionVelocity % 360;
 
-				float temp = RevolutionRadius * Mathf.Cos (angle);
-				t_SunPos.x = temp * Mathf.Cos (AlphaAngle);
-				t_SunPos.x = temp * Mathf.Sin (AlphaAngle);
+				float R_Angle = Mathf.PI * PresentAngle / 180.0f;
 
-				return t_SunPos;
+				SunPos.y = RevolutionRadius * Mathf.Sin (R_Angle);
+				SunPos.x = RevolutionRadius * Mathf.Cos (R_Angle) * Mathf.Cos (AlphaAngle);
+				SunPos.z = RevolutionRadius * Mathf.Cos (R_Angle) * Mathf.Sin (AlphaAngle);
+
+				return SunPos;
 		}
 
 		private Vector3 CalculatePlanePos (Vector3 MousePos)

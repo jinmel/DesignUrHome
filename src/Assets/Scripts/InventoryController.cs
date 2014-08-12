@@ -99,6 +99,7 @@ public class InventoryController : MonoBehaviour
             itemSelected = true;
             curModel = (GameObject)Instantiate(models [0]);
             curModel.SetActive(true);
+			curModel.transform.localScale = new Vector3(10.0f,10.0f,10.0f);
         }
     }
 

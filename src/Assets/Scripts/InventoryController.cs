@@ -14,47 +14,50 @@ public class InventoryController : MonoBehaviour
     //privat variables
     private GameObject curModel;
     private List<GameObject> objectInstanceList; // keep the list of instance of inventory items created by user. 
-    private bool inventoryItemSelected;
-
+    private bool itemSelected; //status variable for if user is holding the item. 
+    public Camera ar_camera;
 
   
     // Use this for initialization
     void Start()
     {
         objectInstanceList = new List<GameObject>();
-        inventoryItemSelected = false;
-
+        itemSelected = false;
     }
     
     // Update is called once per frame
     void Update()
     {
-
-        if (curModel){
-            Debug.Log(curModel.name);
-        }
-        if (inventoryItemSelected)
+        if (curModel)
         {
             //follow cursor 
-            curModel.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        } else //release
-        {
-            inventoryItemSelected = false;
+            if (itemSelected && Input.GetMouseButton(0))
+            {
+                Debug.Log(Camera.main.name);
+                curModel.transform.position = CalculateButtonPos(580);
+                Debug.Log("cursor position:" + Input.mousePosition.ToString() + "item position:" + curModel.transform.position.x.ToString());
+            } else //release
+            {
+                Vector3 curPos = curModel.transform.position;
+                curModel.transform.position = new Vector3(curPos.x, 0, curPos.z);
+                Debug.Log("release item on: " + curModel.transform.position.ToString());
+                itemSelected = false;
+                curModel = null; 
+            }
         }
-     
     }
 
-    Vector3 ScreenPointToRealPosition(Vector3 screenpos, int distance)
+    Vector3 CalculateButtonPos(int dist)
     {
-        if (Camera.main)
-        {
-            Ray ray = Camera.current.ScreenPointToRay(screenpos);
-            Debug.Log("Camera Position : " + Camera.current.transform.position + "Ray origin: " + ray.origin);
-            return ray.origin + ray.direction * distance;
-        } else
-            return screenpos;
-           
+        Vector3 screen_pos = Input.mousePosition;
+        Ray touch_ray = ar_camera.ScreenPointToRay(screen_pos);
+        Vector3 Origin_ray = touch_ray.origin;
+        Vector3 Cam_ray_vec = Origin_ray - ar_camera.gameObject.transform.position;
+        float cam_ray_dist = Mathf.Sqrt(Cam_ray_vec.magnitude);                //distance - cam, ray_origin
+        float sub_dist = dist - cam_ray_dist;
+        Vector3 dst_pos = touch_ray.GetPoint(sub_dist);
+        
+        return dst_pos;
     }
 
     void OnGUI()
@@ -89,11 +92,13 @@ public class InventoryController : MonoBehaviour
         GUI.EndGroup();
 
         Event curEvent = Event.current;
-//        Debug.Log(curEvent);
 
-        if(curEvent.type == EventType.mouseDown && button1Box.Contains(Input.mousePosition)){
-            inventoryItemSelected = true;
-            curModel = (GameObject)Instantiate(models[0]);
+        //handle box 1 event
+        if (curEvent.type == EventType.mouseDown && button1Box.Contains(Input.mousePosition))
+        {
+            itemSelected = true;
+            curModel = (GameObject)Instantiate(models [0]);
+            curModel.SetActive(true);
         }
     }
 

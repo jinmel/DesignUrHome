@@ -106,7 +106,7 @@ public class FPSPadController : MonoBehaviour {
 		Ray touch_ray = main_cam.ScreenPointToRay (screen_pos);
 		Vector3 Origin_ray = touch_ray.origin;
 		Vector3 Cam_ray_vec = Origin_ray - main_cam.gameObject.transform.position;
-		float cam_ray_dist = Mathf.Sqrt (Cam_ray_vec.magnitude);				//distance - cam, ray_origin
+		float cam_ray_dist = Cam_ray_vec.magnitude;				//distance - cam, ray_origin
 		float sub_dist = dist - cam_ray_dist;
 		Vector3 dst_pos = touch_ray.GetPoint (sub_dist);
 		

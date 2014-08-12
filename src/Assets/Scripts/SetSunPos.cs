@@ -91,6 +91,6 @@ public class SetSunPos : MonoBehaviour
 
 		void OnGUI ()
 		{
-				GUI.Label (new Rect (800, 5, 30, 30), ContentManager.getInstance ().imageTargetName, this.textStyle);
+				//GUI.Label (new Rect (800, 5, 30, 30), this.transform.parent.gameObjeparent.ToString(), this.textStyle);
 		}
 }

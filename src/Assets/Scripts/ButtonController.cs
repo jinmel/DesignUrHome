@@ -16,7 +16,7 @@ public class ButtonController : MonoBehaviour
 	
 		//...
 		private GameObject tFloor;
-		private List<GameObject> t_ObjList;				// Button3 - mode3. 가구 및 구조물 저장;
+		private GameObject t_ObjList;				// Button3 - mode3. 가구 및 구조물 저장;
 		private Object tLight;						// Button3 - mode3. 1인칭 시점에서 사용
 		private bool model_render_check;			// Button4 - 
 		private int mode_checker;
@@ -39,9 +39,6 @@ public class ButtonController : MonoBehaviour
 
 				//UI Size store
 				ContentManager.getInstance ().UI_Domain = new Rect (50, 40, 80, 350);
-
-				//list init
-				t_ObjList = new List<GameObject> ();
 		}
 	
 		// Update is called once per frame
@@ -55,6 +52,7 @@ public class ButtonController : MonoBehaviour
 				// Handle Light Orientation 
 				if (GUI.Button (new Rect (50, 40, 80, 80), "Button 1", button1_style)) {
 						ContentManager.getInstance ().Mode = ContentManager.MODE.LIGHT_MODE;
+
 						SunMode *= -1;
 
 						//Create SUN
@@ -62,8 +60,8 @@ public class ButtonController : MonoBehaviour
 								Light.SetActive (false);
 								Sun.SetActive (true);
 						}
-			//Delete SUN
-			else {
+						//Delete SUN
+						else {
 								Light.SetActive (true);
 								Sun.SetActive (false);
 						}
@@ -133,16 +131,14 @@ public class ButtonController : MonoBehaviour
 				
 								//Create Structure
 								tImageTarget = GameObject.Find (t_name);
-								for (int i = 0; i < tImageTarget.transform.childCount; i++) {
-										GameObject t_GameObj = tImageTarget.transform.GetChild (i).gameObject;
-										t_ObjList.Add ((GameObject)Instantiate (t_GameObj, t_GameObj.transform.position, t_GameObj.transform.rotation));
-
-										//Set structure scale
-										Vector3 t_scale = new Vector3 (t_GameObj.transform.localScale.x * tImageTarget.transform.localScale.x
-					                               , t_GameObj.transform.localScale.y * tImageTarget.transform.localScale.y
-					                               , t_GameObj.transform.localScale.z * tImageTarget.transform.localScale.z);
-										t_ObjList [i].transform.localScale = t_scale;
-								}
+								GameObject t_GameObj = tImageTarget.transform.GetChild (0).gameObject;
+								t_ObjList = (GameObject)Instantiate (t_GameObj, t_GameObj.transform.position, t_GameObj.transform.rotation);
+								
+								//Set structure scale
+								Vector3 t_scale = new Vector3 (t_GameObj.transform.localScale.x * tImageTarget.transform.localScale.x
+				                               , t_GameObj.transform.localScale.y * tImageTarget.transform.localScale.y
+				                               , t_GameObj.transform.localScale.z * tImageTarget.transform.localScale.z);
+								t_ObjList.transform.localScale = t_scale;
 				
 								//Create Floor
 								//...				
@@ -217,10 +213,6 @@ public class ButtonController : MonoBehaviour
 				GamePad.SetActive (false);
 
 				//List clear
-				for (int i = 0; i < t_ObjList.Count; i++) {
-						DestroyObject (t_ObjList [i]);
-				}
-
-				t_ObjList.Clear ();
+				DestroyObject (t_ObjList);
 		}
 }

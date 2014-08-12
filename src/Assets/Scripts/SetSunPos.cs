@@ -6,7 +6,7 @@ public class SetSunPos : MonoBehaviour
 
 		public GameObject SunLight;					//Control sun light direction.
 		public Camera MainCamera;
-		private Vector3 StructureCenterPos;			//Tracking Target Center
+		private Vector3 StructureCenterPos = new Vector3 (0.0f, 0.0f, 0.0f);			//Tracking Target Center
 		private Vector3 CenterToTouch;
 		private bool MouseDownCheck = false;
 		private float RevolutionRadius = -1.0f;	//공전 반지름
@@ -40,7 +40,8 @@ public class SetSunPos : MonoBehaviour
 						//Follow finger
 						if (MouseDownCheck == true) {
 								Vector3 TouchPos = CalculatePlanePos (Input.mousePosition);
-								CenterToTouch = TouchPos - ImgTarget.transform.position;
+								StructureCenterPos = ImgTarget.transform.position;
+								CenterToTouch = TouchPos - StructureCenterPos;
 								RevolutionRadius = CenterToTouch.magnitude;
 
 								AlphaAngle = Vector3.Angle (Vector3.right, CenterToTouch);
@@ -71,6 +72,8 @@ public class SetSunPos : MonoBehaviour
 				SunPos.y = RevolutionRadius * Mathf.Sin (R_Angle);
 				SunPos.x = RevolutionRadius * Mathf.Cos (R_Angle) * Mathf.Cos (AlphaAngle);
 				SunPos.z = RevolutionRadius * Mathf.Cos (R_Angle) * Mathf.Sin (AlphaAngle);
+
+				SunPos += StructureCenterPos;
 
 				return SunPos;
 		}

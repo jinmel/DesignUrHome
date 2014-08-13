@@ -15,12 +15,13 @@ public class InventoryController : MonoBehaviour
     private GameObject curModel;
     private List<GameObject> objectInstanceList; // keep the list of instance of inventory items created by user. 
     private bool itemSelected; //status variable for if user is holding the item. 
-    public Camera ar_camera;
-
+	private Camera ar_camera;
+	private int making_furniture_count = 1;
   
     // Use this for initialization
     void Start()
     {
+		ar_camera = Camera.main;
         objectInstanceList = new List<GameObject>();
         itemSelected = false;
     }
@@ -39,9 +40,23 @@ public class InventoryController : MonoBehaviour
             } else //release
             {
                 Vector3 curPos = curModel.transform.position;
-                curModel.transform.position = new Vector3(curPos.x, 0, curPos.z);
+                curModel.transform.position = new Vector3(curPos.x, 0.1f, curPos.z);
                 Debug.Log("release item on: " + curModel.transform.position.ToString());
                 itemSelected = false;
+				if(ContentManager.getInstance().imageTargetName != null){
+					GameObject parent = GameObject.Find(ContentManager.getInstance().imageTargetName);
+					curModel.transform.parent = parent.transform.FindChild("ObjectList");
+					curModel.transform.name = "furniture_" + making_furniture_count;
+					making_furniture_count ++;
+					FurnitureCollider FC = curModel.AddComponent<FurnitureCollider>();
+					FC.now_position = curModel.transform.localPosition;
+					FC.now_rotation = curModel.transform.localEulerAngles;
+					Rigidbody rigid = curModel.AddComponent<Rigidbody> ();
+					rigid.useGravity = true;
+				}
+				else{
+					GameObject.Destroy(curModel);
+				}
                 curModel = null; 
             }
         }
@@ -62,45 +77,48 @@ public class InventoryController : MonoBehaviour
 
     void OnGUI()
     {   
-        //Inventory Layout - determined dynamically according to screen size
-        int guiContainerLeftMargin = 10;
-        int guiContainerTopMargin = Screen.height / 4 * 3;
-        int guiContainerWidth = Screen.width - guiContainerLeftMargin * 2;
-        int guiContainerHeight = Screen.height / 4 - 10;
+		if(ContentManager.getInstance().Mode == ContentManager.MODE.FURNITURE_MODE &&
+		   ContentManager.getInstance().Flag == 0){
+	        //Inventory Layout - determined dynamically according to screen size
+	        int guiContainerLeftMargin = 10;
+	        int guiContainerTopMargin = Screen.height / 4 * 3;
+	        int guiContainerWidth = Screen.width - guiContainerLeftMargin * 2;
+	        int guiContainerHeight = Screen.height / 4 - 10;
 
-        int itemBoxWidth = guiContainerWidth / 5 - 10;
-        int itemBoxHeight = guiContainerHeight - 20;
+	        int itemBoxWidth = guiContainerWidth / 5 - 10;
+	        int itemBoxHeight = guiContainerHeight - 20;
 
-        GUI.BeginGroup(new Rect(guiContainerLeftMargin, guiContainerTopMargin, guiContainerWidth, guiContainerHeight));
-        
-        int itemBoxLeftMargin = 10;
-        int itemBoxTopMargin = 10;
+	        GUI.BeginGroup(new Rect(guiContainerLeftMargin, guiContainerTopMargin, guiContainerWidth, guiContainerHeight));
+	        
+	        int itemBoxLeftMargin = 10;
+	        int itemBoxTopMargin = 10;
 
-        Rect button1Box = new Rect(itemBoxLeftMargin, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-        Rect button2Box = new Rect(itemBoxLeftMargin * 2 + itemBoxWidth, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-        Rect button3Box = new Rect(itemBoxLeftMargin * 3 + itemBoxWidth * 2, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-        Rect button4Box = new Rect(itemBoxLeftMargin * 4 + itemBoxWidth * 3, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-        Rect button5Box = new Rect(itemBoxLeftMargin * 5 + itemBoxWidth * 4, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
+	        Rect button1Box = new Rect(itemBoxLeftMargin, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
+	        Rect button2Box = new Rect(itemBoxLeftMargin * 2 + itemBoxWidth, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
+	        Rect button3Box = new Rect(itemBoxLeftMargin * 3 + itemBoxWidth * 2, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
+	        Rect button4Box = new Rect(itemBoxLeftMargin * 4 + itemBoxWidth * 3, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
+	        Rect button5Box = new Rect(itemBoxLeftMargin * 5 + itemBoxWidth * 4, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
 
-        GUI.Box(button1Box, new GUIContent(images [0]), itemBoxStyle);
-        GUI.Box(button2Box, "item2", itemBoxStyle);
-        GUI.Box(button3Box, "item3", itemBoxStyle);
-        GUI.Box(button4Box, "item4", itemBoxStyle);
-        GUI.Box(button5Box, "item5", itemBoxStyle);
+	        GUI.Box(button1Box, new GUIContent(images [0]), itemBoxStyle);
+	        GUI.Box(button2Box, "item2", itemBoxStyle);
+	        GUI.Box(button3Box, "item3", itemBoxStyle);
+	        GUI.Box(button4Box, "item4", itemBoxStyle);
+	        GUI.Box(button5Box, "item5", itemBoxStyle);
 
- 
-        GUI.EndGroup();
+	 
+	        GUI.EndGroup();
 
-        Event curEvent = Event.current;
+	        Event curEvent = Event.current;
 
-        //handle box 1 event
-        if (curEvent.type == EventType.mouseDown && button1Box.Contains(Input.mousePosition))
-        {
-            itemSelected = true;
-            curModel = (GameObject)Instantiate(models [0]);
-            curModel.SetActive(true);
-			curModel.transform.localScale = new Vector3(10.0f,10.0f,10.0f);
-        }
+	        //handle box 1 event
+	        if (curEvent.type == EventType.mouseDown && button1Box.Contains(Input.mousePosition))
+	        {
+	            itemSelected = true;
+	            curModel = (GameObject)Instantiate(models [0]);
+	            curModel.SetActive(true);
+				curModel.transform.localScale = new Vector3(5.0f,5.0f,5.0f);
+	        }
+		}
     }
 
     private Texture2D plainColor2DTexture(int width, int height, Color color)

@@ -53,10 +53,16 @@ public class SetSunPos : MonoBehaviour
 								this.transform.position = TouchPos;
 								//Change Light Direction
 								RotateSunLight ();
+
+								//Change Light Color
+								ChangeSunColor ();
 						} else {
 								//Auto movement\
 								this.transform.position = CalculateSunPos ();
 								RotateSunLight ();
+
+								//Change Light Color
+								ChangeSunColor ();
 						}
 
 				}
@@ -90,6 +96,16 @@ public class SetSunPos : MonoBehaviour
 				Vector3 TargetDir = StructureCenterPos - this.transform.position;
 				// local z-axis <= TargetDir
 				SunLight.transform.forward = TargetDir.normalized;
+		}
+
+		private void ChangeSunColor ()
+		{
+				const float Ybasis = 0.2f;
+				const float Ymax = 0.4f;
+				float tAdder = (1.0f - Ybasis - Ymax) / RevolutionRadius;
+				Color PresentColor = SunLight.light.color;
+				
+				SunLight.light.color = new Color (1.0f, Ybasis + Mathf.Abs (this.transform.position.y) * tAdder, 0.0f);
 		}
 
 		void OnGUI ()

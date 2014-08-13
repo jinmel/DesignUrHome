@@ -83,6 +83,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
 
 		//Debug.Log (this.transform.name);
 		ContentManager.getInstance ().imageTargetName = this.transform.name;
+		//ContentManager.getInstance ().imageTargetName = "ImageTarget_apartment2";
         //Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
 
 		// Save to singleton - TrackableBehaviour.TrackableName

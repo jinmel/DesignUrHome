@@ -79,8 +79,6 @@ public class SetSunPos : MonoBehaviour
 				SunPos.x = RevolutionRadius * Mathf.Cos (R_Angle) * Mathf.Cos (AlphaAngle);
 				SunPos.z = RevolutionRadius * Mathf.Cos (R_Angle) * Mathf.Sin (AlphaAngle);
 
-				SunPos += StructureCenterPos;
-
 				return SunPos;
 		}
 
@@ -103,9 +101,17 @@ public class SetSunPos : MonoBehaviour
 				const float Ybasis = 0.2f;
 				const float Ymax = 0.4f;
 				float tAdder = (1.0f - Ybasis - Ymax) / RevolutionRadius;
-				Color PresentColor = SunLight.light.color;
 				
-				SunLight.light.color = new Color (1.0f, Ybasis + Mathf.Abs (this.transform.position.y) * tAdder, 0.0f);
+				float yellow, red;
+				if (this.transform.position.y < 0) {
+						red = 0.2f;
+						yellow = 0.1f;
+				} else {
+						red = 1.0f;
+						yellow = Ybasis + this.transform.position.y * tAdder;
+				}
+				
+				SunLight.light.color = new Color (red, yellow, 0.0f);
 		}
 
 		void OnGUI ()

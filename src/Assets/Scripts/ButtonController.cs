@@ -12,7 +12,8 @@ public class ButtonController : MonoBehaviour
 		public GameObject GamePad;					// GamePad. in button3
 		public GameObject ImageTarget;				// ImageTarget in vuforia
 		public GameObject Character;				// Charector model
-		public GameObject Sun;						// mode 1 - SUN					
+		public GameObject Sun;						// mode 1 - SUN
+		public GameObject PlanePrefab;
 	
 		//...
 		private GameObject tFloor;
@@ -22,6 +23,7 @@ public class ButtonController : MonoBehaviour
 		private int mode_checker;
 		private int SunMode = -1;
 		private string prev_Target_name;
+		private GameObject tPlane;
 
 		// ... 
 		public GUIStyle container_style;
@@ -59,11 +61,17 @@ public class ButtonController : MonoBehaviour
 						if (SunMode == 1) {
 								Light.SetActive (false);
 								Sun.SetActive (true);
+								
+								//Make plane
+								tPlane = (GameObject)Instantiate (PlanePrefab);
 						}
 						//Delete SUN
 						else {
 								Light.SetActive (true);
 								Sun.SetActive (false);
+
+								//Destroy Plane
+								DestroyObject (tPlane);
 						}
 				}
 				if (GUI.Button (new Rect (50, 130, 80, 80), "Button 2", button2_style)) {

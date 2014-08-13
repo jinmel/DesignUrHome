@@ -63,7 +63,10 @@ public class ButtonController : MonoBehaviour
 								Sun.SetActive (true);
 								
 								//Make plane
-								tPlane = (GameObject)Instantiate (PlanePrefab);
+								//tPlane = (GameObject)Instantiate (PlanePrefab);
+								//GameObject tImgTarget = GameObject.Find (ContentManager.getInstance ().imageTargetName);
+								//tPlane.transform.parent = tImgTarget.transform.GetChild (0);
+								//tPlane.transform.position = tImgTarget.transform.position;
 						}
 						//Delete SUN
 						else {
@@ -71,7 +74,7 @@ public class ButtonController : MonoBehaviour
 								Sun.SetActive (false);
 
 								//Destroy Plane
-								DestroyObject (tPlane);
+								//DestroyObject (tPlane);
 						}
 				}
 				if (GUI.Button (new Rect (50, 130, 80, 80), "Button 2", button2_style)) {

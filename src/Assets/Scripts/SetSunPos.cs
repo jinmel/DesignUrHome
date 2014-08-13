@@ -100,7 +100,7 @@ public class SetSunPos : MonoBehaviour
 
 		private void ChangeSunColor ()
 		{
-				const float Ybasis = 0.2f;
+				const float Ybasis = 0.1f;
 				const float Ymax = 0.4f;
 				float tAdder = (0.8f - Ybasis - Ymax) / RevolutionRadius;
 				

@@ -97,14 +97,14 @@ public class ButtonController : MonoBehaviour
 						string t_name = ContentManager.getInstance ().imageTargetName;
 			
 						if (t_name != null && !t_name.Equals (prev_Target_name)) {
-								Mode3_Initialize ();
+								Mode3Initialize ();
 								mode_checker = 1;
 						}
 			
 						switch (mode_checker) {
 						case 0:
 								//destroy all human model
-								Mode3_Initialize ();
+								Mode3Initialize ();
 				
 								break;
 						case 1:
@@ -158,8 +158,6 @@ public class ButtonController : MonoBehaviour
 								ARCamera.gameObject.SetActive (false);
 								ImageTarget.SetActive (false);
 				
-				
-				
 								break;
 						}
 			
@@ -200,14 +198,14 @@ public class ButtonController : MonoBehaviour
 
 						GUIStyle Rotate_Button = new GUIStyle ();	
 						Rotate_Button.normal.background = (Texture2D)Resources.Load ("Rotate", typeof(Texture2D));
-						if (GUI.Button (new Rect (150, 250, 100, 100), "Delete", Rotate_Button)) {
+						if (GUI.Button (new Rect (150, 250, 100, 100), "Rotate", Rotate_Button)) {
 								string selected_furniture_name = GameObject.Find ("FurnitureMovingPad").GetComponent<FurnitureController> ().selected_furniture;
 								GameObject.Find (selected_furniture_name).GetComponent<FurnitureCollider> ().rotateFurniture (-10.0f);
 						}
 				}	
 		}
 
-		private void Mode3_Initialize ()
+		private void Mode3Initialize ()
 		{
 				//Destroy temp Light
 				DestroyObject (tLight);

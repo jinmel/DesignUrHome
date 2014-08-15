@@ -32,7 +32,6 @@ public class InventoryController : MonoBehaviour
 				if (curModel) {
 						//follow cursor 
 						if (itemSelected && Input.GetMouseButton (0)) {
-								Debug.Log (Camera.main.name);
 								curModel.transform.position = CalculateButtonPos (580);
 								Debug.Log ("cursor position:" + Input.mousePosition.ToString () + "item position:" + curModel.transform.position.x.ToString ());
 						} else { //release

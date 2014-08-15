@@ -40,11 +40,11 @@ public class FPSPadController : MonoBehaviour {
 			if (Input.GetMouseButtonDown (0)) {
 				if (!InRectCheck (ContentManager.getInstance ().UI_Domain)) {
 					touch_check = true;
-					Start_point = Calculate_button_pos (10);
+					Start_point = CalculateButtonPos (10);
 					Screen_Start = Input.mousePosition;
 					Move_key.transform.position = Start_point;
 					Local_start = Move_key.transform.localPosition;
-					Move_board.transform.position = Calculate_button_pos (15);
+					Move_board.transform.position = CalculateButtonPos (15);
 					Move_key.SetActive (true);
 					Move_board.SetActive (true);
 				}
@@ -56,7 +56,7 @@ public class FPSPadController : MonoBehaviour {
 			
 			if (touch_check == true) {
 				//버튼 따라다니게 하기
-				Vector3 target_pos = Calculate_button_pos (10);
+				Vector3 target_pos = CalculateButtonPos (10);
 				Move_key.transform.position = target_pos;
 				Local_target = Move_key.transform.localPosition;
 				float dist = Vector3.Distance (Local_target, Local_start);
@@ -70,20 +70,18 @@ public class FPSPadController : MonoBehaviour {
 				}
 				
 				//Rotate Charecter
-				Vector3 Char_dir = GetModel_Direction ();
-				Vector3 z_axis = new Vector3(0,1,0);
+				Vector3 Char_dir = GetModelDirection ();
 				Vector3 Screen_vec = Input.mousePosition - Screen_Start;
-				float t_angle = Vector3.Angle (z_axis, Screen_vec);
+				float t_angle = Vector3.Angle (Vector3.up, Screen_vec);
 				
 				//Move Charecter
 				if(t_angle <= rot_threshold || (180 - rot_threshold) <= t_angle){
 					Character.transform.position += Char_dir;
 				}
 				else{
-					Vector3 t_cross_result = Vector3.Cross (z_axis, Screen_vec);
+					Vector3 t_cross_result = Vector3.Cross (Vector3.up, Screen_vec);
 					Vector3 Present_angle = Character.transform.eulerAngles;
 					if (t_cross_result.z < 0){
-						//t_angle *= -1.0f;
 						Present_angle.y += rot_const;
 					}else{
 						Present_angle.y -= rot_const;
@@ -92,7 +90,6 @@ public class FPSPadController : MonoBehaviour {
 				}
 			}
 			else{
-
 				//Character Idle animation
 				RuntimeAnimatorController idle_anim = (RuntimeAnimatorController)Resources.Load ("Idle",typeof(RuntimeAnimatorController));
 				Character.GetComponent<Animator>().runtimeAnimatorController = idle_anim;
@@ -100,7 +97,7 @@ public class FPSPadController : MonoBehaviour {
 		}
 	}
 	
-	Vector3 Calculate_button_pos (int dist)
+	Vector3 CalculateButtonPos (int dist)
 	{
 		Vector3 screen_pos = Input.mousePosition;
 		Ray touch_ray = main_cam.ScreenPointToRay (screen_pos);
@@ -115,10 +112,10 @@ public class FPSPadController : MonoBehaviour {
 	
 	//Get Model move direction
 	//return normalized vector.
-	private Vector3 GetModel_Direction ()
+	private Vector3 GetModelDirection ()
 	{
-		Vector3 Start_floor_pos = GetFloor_pos (Move_board.transform.position);
-		Vector3 GameKey_floor_pos = GetFloor_pos (Move_key.transform.position);
+		Vector3 Start_floor_pos = GetFloorPos (Move_board.transform.position);
+		Vector3 GameKey_floor_pos = GetFloorPos (Move_key.transform.position);
 		
 		Vector3 Dir_vec = GameKey_floor_pos - Start_floor_pos;
 		return Dir_vec.normalized;
@@ -126,17 +123,17 @@ public class FPSPadController : MonoBehaviour {
 	
 	//Gamepad_pos + Ray_vec*t = floor_pos.
 	//This fuction calculate t.
-	private float GetScreentoFloor_Const (Vector3 p)
+	private float GetScreentoFloorConst (Vector3 p)
 	{
 		Vector3 t_Ray = p - main_cam.transform.position;
 		
 		return p.y / (-t_Ray.y);
 	}
 	
-	private Vector3 GetFloor_pos (Vector3 p)
+	private Vector3 GetFloorPos (Vector3 p)
 	{
 		Vector3 t_Ray = p - main_cam.transform.position;
-		float t_const = GetScreentoFloor_Const (p);	
+		float t_const = GetScreentoFloorConst (p);	
 		
 		return p + t_const * t_Ray;
 	}

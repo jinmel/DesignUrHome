@@ -30,6 +30,7 @@ public class FurnitureMaker : MonoBehaviour
 							FurnitureMovingPad.GetComponent<FurnitureController> ().selected_furniture = hit.transform.name;
 							selected_furniture = hit.transform.name;
 							GameObject.Find (selected_furniture).GetComponent<FurnitureCollider>().isMoving = true;
+							setFurnitureLayer(GameObject.Find (selected_furniture),"FurnitureSelectedLayer");
 							ContentManager.getInstance ().Flag = 1;
 						}
 					}
@@ -39,7 +40,13 @@ public class FurnitureMaker : MonoBehaviour
 			   ContentManager.getInstance().Mode != ContentManager.MODE.FURNITURE_MODE) && 
 			   selected_furniture != null){
 				GameObject.Find (selected_furniture).GetComponent<FurnitureCollider>().isMoving = false;
+				setFurnitureLayer(GameObject.Find (selected_furniture),"Default");
 				selected_furniture = null;
 			}
+		}
+	void setFurnitureLayer(GameObject n_furniture,string layer){
+		foreach(Transform child in n_furniture.transform){
+			child.gameObject.layer = LayerMask.NameToLayer(layer);
+		}
 	}
 }

@@ -20,7 +20,6 @@ public class FurnitureController : MonoBehaviour
 	private float Button_Dist_Min;
 	//Rotate Key pad
 	private float Start_angle;
-
 	//Local position
 	private Vector3 Local_start;
 	private Vector3 Local_target;
@@ -105,8 +104,17 @@ public class FurnitureController : MonoBehaviour
 						Move_key2.transform.position = target_pos[1];
 
 
-						float angle = setAngle(Move_key.transform.position,Move_key2.transform.position);
-						
+						float now_angle = setAngle(target_pos[0],target_pos[1]);
+
+						float diff_angle = now_angle - Start_angle;
+						if(diff_angle > 360) diff_angle -= 360;
+						if(diff_angle < -360) diff_angle += 360;
+						if(Mathf.Abs (diff_angle) > 1.0f){
+							if(diff_angle > 0) diff_angle = -1.0f;
+							else diff_angle = 1.0f;
+							GameObject.Find (selected_furniture).GetComponent<FurnitureCollider>().rotateFurniture(diff_angle*9.0f);
+							Start_angle = now_angle;
+						}
 					}
 					else{
 						touch_check = 2;
@@ -129,7 +137,7 @@ public class FurnitureController : MonoBehaviour
 		first.y = 0;
 		second.y = 0;
 		Vector3 sub = first - second;
-		return Mathf.Atan2(sub.y,sub.x)*Mathf.Rad2Deg;
+		return Mathf.Atan2(sub.z,sub.x)*Mathf.Rad2Deg;
 	}
 	Vector3 calculateButtonPos (int dist, Vector3 input)
 	{
@@ -174,7 +182,8 @@ public class FurnitureController : MonoBehaviour
 	void OnGUI ()
 	{
 			Vector3 Cam_pos = main_cam.transform.position;
-			GUI.Label (new Rect (300, 300, 60, 60), "x:" + Cam_pos.x + " y:" + Cam_pos.y + " z:" + Cam_pos.z, this.textStyle);
+//			this.textStyle.fontSize = 30;
+//			GUI.Label (new Rect (300, 300, 60, 60), diff_angle.ToString(), this.textStyle);
 	}
 }
 

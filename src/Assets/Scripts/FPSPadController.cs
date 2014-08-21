@@ -25,20 +25,24 @@ public class FPSPadController : MonoBehaviour {
 	//rotation parameter
 	float rot_threshold = 45.0f;
 	float rot_const = 1.0f;
+
+    private ContentManager contentManager;
 	
 	// Use this for initialization
 	void Start ()
 	{
 		touch_check = false;
 		Button_Dist = 0.7f;
+        contentManager = ContentManager.getInstance();
+
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		if (ContentManager.getInstance ().Mode == ContentManager.MODE.CHARACTER_MODE) {
+		if (contentManager.Mode == ContentManager.MODE.CHARACTER_MODE) {
 			if (Input.GetMouseButtonDown (0)) {
-				if (!InRectCheck (ContentManager.getInstance ().UI_Domain)) {
+				if (!InRectCheck (contentManager.UI_Domain)) {
 					touch_check = true;
 					Start_point = CalculateButtonPos (10);
 					Screen_Start = Input.mousePosition;

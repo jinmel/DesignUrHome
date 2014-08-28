@@ -25,12 +25,14 @@ public class ButtonController : MonoBehaviour
     private string prev_Target_name;
     private GameObject tPlane;
 
-    // ... 
     public GUIStyle container_style;
-    public GUIStyle button1_style;
-    public GUIStyle button2_style;
-    public GUIStyle button3_style;
-    public GUIStyle button4_style;
+	public Texture button1_image;
+	public Texture button2_image;
+	public Texture button3_image;
+	public Texture button4_image;
+
+	private Texture button_on_image;
+	private Texture button_off_image;
     public GUIStyle tDebug;
 
     private ContentManager contentManager;
@@ -44,6 +46,9 @@ public class ButtonController : MonoBehaviour
         //UI Size store
         contentManager = ContentManager.getInstance();
         contentManager.UI_Domain = new Rect(50, 40, 80, 350);
+
+		button_on_image = Resources.Load ("button_on") as Texture;
+		button_off_image = Resources.Load ("button_off") as Texture;
     }
     
     // Update is called once per frame
@@ -55,7 +60,7 @@ public class ButtonController : MonoBehaviour
     void OnGUI()
     {
         // Handle Light Orientation 
-        if (GUI.Button(new Rect(50, 40, 80, 80), "Button 1", button1_style))
+        if (GUI.Button(new Rect(50, 40, 80, 80),button1_image))
         {
             contentManager.Mode = ContentManager.MODE.LIGHT_MODE;
 
@@ -83,13 +88,13 @@ public class ButtonController : MonoBehaviour
                 //DestroyObject (tPlane);
             }
         }
-        if (GUI.Button(new Rect(50, 130, 80, 80), "Button 2", button2_style))
+        if (GUI.Button(new Rect(50, 130, 80, 80), button2_image))
         {
             contentManager.Mode = ContentManager.MODE.FURNITURE_MODE;
             contentManager.Flag = 0;
         }
 
-        if (GUI.Button(new Rect(50, 220, 80, 80), "Button 3", button3_style))
+        if (GUI.Button(new Rect(50, 220, 80, 80), button3_image))
         {
             //view mode
             //////////////////////////////////////////////
@@ -176,16 +181,18 @@ public class ButtonController : MonoBehaviour
             prev_Target_name = t_name;
         }
 
-        if (GUI.Button(new Rect(50, 310, 80, 80), "Button 4", button4_style))
+        if (GUI.Button(new Rect(50, 310, 80, 80), button4_image))
         {
             contentManager.Mode = ContentManager.MODE.RENDER_ONOFF_MODE;
 
             if (model_render_check == true)
             {
+				button4_image = button_off_image;
                 model_render_check = false;
                 ImageTarget.SetActive(false);
             } else
             {
+				button4_image = button_on_image;
                 model_render_check = true;
                 ImageTarget.SetActive(true);
             }

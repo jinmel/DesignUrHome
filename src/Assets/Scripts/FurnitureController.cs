@@ -128,7 +128,7 @@ public class FurnitureController : MonoBehaviour
                                 diff_angle = -1.0f;
                             else
                                 diff_angle = 1.0f;
-                            GameObject.Find(selected_furniture).GetComponent<FurnitureCollider>().rotateFurniture(diff_angle * 9.0f);
+                            GameObject.Find(selected_furniture).GetComponent<FurnitureCollider>().rotateFurniture(diff_angle * 10.0f);
                             Start_angle = now_angle;
                         }
                     } else

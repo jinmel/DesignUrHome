@@ -18,9 +18,6 @@ public class FurnitureCollider : MonoBehaviour {
 			rigid.velocity = Vector3.zero;
 			rigid.angularVelocity = Vector3.zero;
 			Vector3 rotation = gameObject.transform.localEulerAngles;
-			float y = rotation.y;
-			int a = (int)(y/5.0f);
-			y = a * 5;
 			gameObject.transform.localEulerAngles = new Vector3(now_rotation.x,rotation.y,now_rotation.z);
 			now_rotation = gameObject.transform.localEulerAngles;
 

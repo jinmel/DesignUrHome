@@ -54,7 +54,8 @@ public class ButtonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+		Screen.orientation = ScreenOrientation.LandscapeRight;
+	
     }
 
     void OnGUI()
@@ -199,33 +200,19 @@ public class ButtonController : MonoBehaviour
         }
                 
         GUI.Label(new Rect(200, 5, 30, 30), contentManager.imageTargetName, tDebug);
+
         if (contentManager.Mode == ContentManager.MODE.FURNITURE_MODE && 
             contentManager.Flag == 1)
         {
-            GUIStyle Exit_Button = new GUIStyle();
-            Exit_Button.normal.background = (Texture2D)Resources.Load("Exit", typeof(Texture2D));
-            if (GUI.Button(new Rect(150, 50, 100, 100), "Exit", Exit_Button))
-            {
-                contentManager.Mode = ContentManager.MODE.FURNITURE_MODE;
-                contentManager.Flag = 0;
-            }
+            Texture Delete_Button = new Texture();
+            Delete_Button = (Texture)Resources.Load("Delete", typeof(Texture));
 
-            GUIStyle Delete_Button = new GUIStyle();
-            Delete_Button.normal.background = (Texture2D)Resources.Load("Delete", typeof(Texture2D));
-            if (GUI.Button(new Rect(150, 150, 100, 100), "Delete", Delete_Button))
+            if (GUI.Button(new Rect(1150, 40, 80, 80), Delete_Button))
             {
                 contentManager.Mode = ContentManager.MODE.FURNITURE_MODE;
                 contentManager.Flag = 0;
                 string selected_furniture_name = GameObject.Find("FurnitureMovingPad").GetComponent<FurnitureController>().selected_furniture;
                 GameObject.Destroy(GameObject.Find(selected_furniture_name));
-            }
-
-            GUIStyle Rotate_Button = new GUIStyle();    
-            Rotate_Button.normal.background = (Texture2D)Resources.Load("Rotate", typeof(Texture2D));
-            if (GUI.Button(new Rect(150, 250, 100, 100), "Rotate", Rotate_Button))
-            {
-                string selected_furniture_name = GameObject.Find("FurnitureMovingPad").GetComponent<FurnitureController>().selected_furniture;
-                GameObject.Find(selected_furniture_name).GetComponent<FurnitureCollider>().rotateFurniture(-10.0f);
             }
         }   
     }

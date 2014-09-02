@@ -16,7 +16,7 @@ public class InventoryController : MonoBehaviour
     private List<GameObject> objectInstanceList; // keep the list of instance of inventory items created by user. 
     private bool itemSelected; //status variable for if user is holding the item. 
     private Camera ar_camera;
-    private int making_furniture_count = 1;
+    private int making_furniture_count = 2;
 
     private ContentManager contentManager;
   
@@ -102,7 +102,7 @@ public class InventoryController : MonoBehaviour
             Rect button5Box = new Rect(itemBoxLeftMargin * 5 + itemBoxWidth * 4, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
 
             GUI.Box(button1Box, new GUIContent(images [0]), itemBoxStyle);
-            GUI.Box(button2Box, "item2", itemBoxStyle);
+			GUI.Box(button2Box, new GUIContent(images [1]), itemBoxStyle);
             GUI.Box(button3Box, "item3", itemBoxStyle);
             GUI.Box(button4Box, "item4", itemBoxStyle);
             GUI.Box(button5Box, "item5", itemBoxStyle);
@@ -117,7 +117,15 @@ public class InventoryController : MonoBehaviour
                 curModel = (GameObject)Instantiate(models [0]);
                 curModel.SetActive(true);
                 curModel.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
-            }
+			}
+			//handle box 2 event
+			if (curEvent.type == EventType.mouseDown && button2Box.Contains(Input.mousePosition))
+			{
+				itemSelected = true;
+				curModel = (GameObject)Instantiate(models [1]);
+				curModel.SetActive(true);
+				curModel.transform.localScale = new Vector3(25.0f, 25.0f, 25.0f);
+			}
         }
     }
 

@@ -7,7 +7,8 @@ public class InventoryController : MonoBehaviour
     public GUIStyle itemBoxStyle;
     public GUIStyle inventoryBoxStyle;
 
-    //items for Inventory
+	//items for Inventory
+	public int itemCount;
     public Texture2D[] images;
     public GameObject[] models;
 
@@ -16,8 +17,8 @@ public class InventoryController : MonoBehaviour
     private List<GameObject> objectInstanceList; // keep the list of instance of inventory items created by user. 
     private bool itemSelected; //status variable for if user is holding the item. 
     private Camera ar_camera;
-    private int making_furniture_count = 2;
-
+    private int making_furniture_count = 1;
+	private int listMoving = 0;
     private ContentManager contentManager;
   
     // Use this for initialization
@@ -95,38 +96,41 @@ public class InventoryController : MonoBehaviour
             int itemBoxLeftMargin = 10;
             int itemBoxTopMargin = 10;
 
-            Rect button1Box = new Rect(itemBoxLeftMargin, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-            Rect button2Box = new Rect(itemBoxLeftMargin * 2 + itemBoxWidth, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-            Rect button3Box = new Rect(itemBoxLeftMargin * 3 + itemBoxWidth * 2, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-            Rect button4Box = new Rect(itemBoxLeftMargin * 4 + itemBoxWidth * 3, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-            Rect button5Box = new Rect(itemBoxLeftMargin * 5 + itemBoxWidth * 4, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
+			Rect[] buttonBox = new Rect[itemCount];
+			for(int i = 0;i < itemCount; i++){
+				buttonBox[i] = new Rect(itemBoxLeftMargin * (i+1) + itemBoxWidth * i + listMoving, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
+			}
+//            Rect button1Box = new Rect(itemBoxLeftMargin, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
+//            Rect button2Box = new Rect(itemBoxLeftMargin * 2 + itemBoxWidth, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
+//            Rect button3Box = new Rect(itemBoxLeftMargin * 3 + itemBoxWidth * 2, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
+//            Rect button4Box = new Rect(itemBoxLeftMargin * 4 + itemBoxWidth * 3, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
+//            Rect button5Box = new Rect(itemBoxLeftMargin * 5 + itemBoxWidth * 4, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
 
-            GUI.Box(button1Box, new GUIContent(images [0]), itemBoxStyle);
-			GUI.Box(button2Box, new GUIContent(images [1]), itemBoxStyle);
-            GUI.Box(button3Box, "item3", itemBoxStyle);
-            GUI.Box(button4Box, "item4", itemBoxStyle);
-            GUI.Box(button5Box, "item5", itemBoxStyle);
+            GUI.Box(buttonBox[0], new GUIContent(images [0]), itemBoxStyle);
+			GUI.Box(buttonBox[1], new GUIContent(images [1]), itemBoxStyle);
+            GUI.Box(buttonBox[2], "item3", itemBoxStyle);
+            GUI.Box(buttonBox[3], "item4", itemBoxStyle);
+            GUI.Box(buttonBox[4], "item5", itemBoxStyle);
             GUI.EndGroup();
 
             Event curEvent = Event.current;
-
-            //handle box 1 event
-            if (curEvent.type == EventType.mouseDown && button1Box.Contains(Input.mousePosition))
-            {
-                itemSelected = true;
-                curModel = (GameObject)Instantiate(models [0]);
-                curModel.SetActive(true);
-                curModel.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
-			}
-			//handle box 2 event
-			if (curEvent.type == EventType.mouseDown && button2Box.Contains(Input.mousePosition))
-			{
-				itemSelected = true;
-				curModel = (GameObject)Instantiate(models [1]);
-				curModel.SetActive(true);
-				curModel.transform.localScale = new Vector3(25.0f, 25.0f, 25.0f);
+			Vector3[] itemScales = new Vector3[itemCount];
+			itemScales[0] = new Vector3(5.0f,5.0f,5.0f);
+			itemScales[1] = new Vector3(20.0f,20.0f,20.0f);
+			for(int i = 0;i < itemCount; i++){
+	            //handle box 1 event
+	            if (curEvent.type == EventType.mouseDown && buttonBox[i].Contains(Input.mousePosition))
+	            {
+	                itemSelected = true;
+	                curModel = (GameObject)Instantiate(models [i]);
+	                curModel.SetActive(true);
+	                curModel.transform.localScale = itemScales[i];
+				}
 			}
         }
+		else{
+			listMoving = 0;
+		}
     }
 
     private Texture2D plainColor2DTexture(int width, int height, Color color)

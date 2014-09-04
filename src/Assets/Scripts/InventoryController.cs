@@ -8,7 +8,6 @@ public class InventoryController : MonoBehaviour
     public GUIStyle inventoryBoxStyle;
 
 	//items for Inventory
-	public int itemCount;
     public Texture2D[] images;
     public GameObject[] models;
 
@@ -18,9 +17,15 @@ public class InventoryController : MonoBehaviour
     private bool itemSelected; //status variable for if user is holding the item. 
     private Camera ar_camera;
     private int making_furniture_count = 1;
-	private int listMoving = 0;
-    private ContentManager contentManager;
-  
+	private float listMoving = 0;
+	private ContentManager contentManager;
+	private int itemCount;
+	private Rect[] buttonBox;
+	private Vector3[] itemScales;
+	// Click Event
+	private bool Click_Mouse_down;
+	private int Click_Box_Num;
+	private Vector3 Click_StartPosition;
     // Use this for initialization
     void Start()
     {
@@ -28,43 +33,77 @@ public class InventoryController : MonoBehaviour
         ar_camera = Camera.main;
         objectInstanceList = new List<GameObject>();
         itemSelected = false;
+		itemCount = images.Length;
+		Click_Mouse_down = false;
+		buttonBox = new Rect[itemCount];
+		itemScales = new Vector3[itemCount];
     }
     
     // Update is called once per frame
     void Update()
-    {
-        if (itemSelected)
-        {
-            //follow cursor 
-            if (Input.GetMouseButton(0))
-            {
-                Ray screenray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                curModel.transform.position = screenray.origin + 440 * screenray.direction;
-                Debug.Log("cursor position:" + Input.mousePosition.ToString() + "item position:" + curModel.transform.position.x.ToString());
-            } else
-            { //release
-                Vector3 curPos = curModel.transform.position;
-                curModel.transform.position = CalculatePlanePos();
-                Debug.Log("release item on: " + curModel.transform.position.ToString());
-                if (contentManager.imageTargetName != null)
-                {
-                    GameObject parent = GameObject.Find(contentManager.imageTargetName);
-                    curModel.transform.parent = parent.transform.FindChild("ObjectList");
-                    curModel.transform.name = "furniture_" + making_furniture_count;
-                    making_furniture_count ++;
-                    FurnitureCollider FC = curModel.AddComponent<FurnitureCollider>();
-                    FC.now_position = curModel.transform.localPosition;
-                    FC.now_rotation = curModel.transform.localEulerAngles;
-                    Rigidbody rigid = curModel.AddComponent<Rigidbody>();
-                    rigid.useGravity = true;
-                } else
-                {
-                    Destroy(curModel);
-                }
-                itemSelected = false;
-                curModel = null; 
-            }
-        }
+	{
+		if (contentManager.Mode == ContentManager.MODE.FURNITURE_MODE &&
+		     contentManager.Flag == 0)
+		{
+	        if (itemSelected)
+	        {
+	            //follow cursor 
+	            if (Input.GetMouseButton(0))
+	            {
+	                Ray screenray = Camera.main.ScreenPointToRay(Input.mousePosition);
+	                curModel.transform.position = screenray.origin + 440 * screenray.direction;
+	            } else
+	            { //release
+	                Vector3 curPos = curModel.transform.position;
+	                curModel.transform.position = CalculatePlanePos();
+	                if (contentManager.imageTargetName != null)
+	                {
+	                    GameObject parent = GameObject.Find(contentManager.imageTargetName);
+	                    curModel.transform.parent = parent.transform.FindChild("ObjectList");
+	                    curModel.transform.name = "furniture_" + making_furniture_count;
+	                    making_furniture_count ++;
+	                    FurnitureCollider FC = curModel.AddComponent<FurnitureCollider>();
+	                    FC.now_position = curModel.transform.localPosition;
+	                    FC.now_rotation = curModel.transform.localEulerAngles;
+	                    Rigidbody rigid = curModel.AddComponent<Rigidbody>();
+	                    rigid.useGravity = true;
+	                } else
+	                {
+	                    Destroy(curModel);
+	                }
+	                itemSelected = false;
+	                curModel = null; 
+	            }
+	        }
+			else if(Input.GetMouseButton(0)){
+				if(!Click_Mouse_down){
+					Click_Box_Num = -1;
+					Click_Mouse_down = true;
+					Click_StartPosition = Input.mousePosition;
+					for(int i = 0;i < itemCount; i++){
+						if (buttonBox[i].Contains(Input.mousePosition))
+						{
+							Click_Box_Num = i;
+					 	}
+					}
+				}
+				else{
+					if(Input.mousePosition.y > (Screen.height / 4) - 8 && Click_Box_Num != -1){
+			            itemSelected = true;
+			            curModel = (GameObject)Instantiate(models [Click_Box_Num]);
+		                curModel.SetActive(true);
+	  	                curModel.transform.localScale = itemScales[Click_Box_Num];
+					}
+					else{
+						listMoving += Input.mousePosition.x - Click_StartPosition.x;
+						Click_StartPosition = Input.mousePosition;
+					}
+				}
+			}
+			else{
+				Click_Mouse_down = false;
+			}
+		}
     }
 
     Vector3 CalculatePlanePos()
@@ -95,38 +134,32 @@ public class InventoryController : MonoBehaviour
             
             int itemBoxLeftMargin = 10;
             int itemBoxTopMargin = 10;
-
-			Rect[] buttonBox = new Rect[itemCount];
+			if(listMoving > 0) listMoving = 0;
+			if(listMoving < Screen.width - (itemBoxLeftMargin * (itemCount) + itemBoxWidth * itemCount)){
+			    if(Screen.width - (itemBoxLeftMargin * (itemCount) + itemBoxWidth * itemCount ) < 0)
+					listMoving = Screen.width - (itemBoxLeftMargin * (itemCount) + itemBoxWidth * itemCount );
+				else
+					listMoving = 0;
+			}
+			Debug.Log (listMoving);
 			for(int i = 0;i < itemCount; i++){
 				buttonBox[i] = new Rect(itemBoxLeftMargin * (i+1) + itemBoxWidth * i + listMoving, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
 			}
-//            Rect button1Box = new Rect(itemBoxLeftMargin, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-//            Rect button2Box = new Rect(itemBoxLeftMargin * 2 + itemBoxWidth, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-//            Rect button3Box = new Rect(itemBoxLeftMargin * 3 + itemBoxWidth * 2, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-//            Rect button4Box = new Rect(itemBoxLeftMargin * 4 + itemBoxWidth * 3, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
-//            Rect button5Box = new Rect(itemBoxLeftMargin * 5 + itemBoxWidth * 4, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
 
-            GUI.Box(buttonBox[0], new GUIContent(images [0]), itemBoxStyle);
-			GUI.Box(buttonBox[1], new GUIContent(images [1]), itemBoxStyle);
-            GUI.Box(buttonBox[2], "item3", itemBoxStyle);
-            GUI.Box(buttonBox[3], "item4", itemBoxStyle);
-            GUI.Box(buttonBox[4], "item5", itemBoxStyle);
+			for(int i = 0;i < itemCount; i++){
+				GUI.Box (buttonBox[i],new GUIContent(images [i]), itemBoxStyle);
+			}
             GUI.EndGroup();
-
-            Event curEvent = Event.current;
-			Vector3[] itemScales = new Vector3[itemCount];
 			itemScales[0] = new Vector3(5.0f,5.0f,5.0f);
 			itemScales[1] = new Vector3(20.0f,20.0f,20.0f);
-			for(int i = 0;i < itemCount; i++){
-	            //handle box 1 event
-	            if (curEvent.type == EventType.mouseDown && buttonBox[i].Contains(Input.mousePosition))
-	            {
-	                itemSelected = true;
-	                curModel = (GameObject)Instantiate(models [i]);
-	                curModel.SetActive(true);
-	                curModel.transform.localScale = itemScales[i];
-				}
-			}
+//			itemScales[2] = new Vector3(5.0f,5.0f,5.0f);
+//			itemScales[3] = new Vector3(20.0f,20.0f,20.0f);
+//			itemScales[4] = new Vector3(5.0f,5.0f,5.0f);
+//			itemScales[5] = new Vector3(20.0f,20.0f,20.0f);
+//			itemScales[6] = new Vector3(5.0f,5.0f,5.0f);
+//			itemScales[7] = new Vector3(20.0f,20.0f,20.0f);
+//			itemScales[8] = new Vector3(5.0f,5.0f,5.0f);
+//			itemScales[9] = new Vector3(20.0f,20.0f,20.0f);
         }
 		else{
 			listMoving = 0;

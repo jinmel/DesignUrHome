@@ -91,8 +91,16 @@ public class ButtonController : MonoBehaviour
         }
         if (GUI.Button(new Rect(50, 130, 80, 80), button2_image))
         {
-            contentManager.Mode = ContentManager.MODE.FURNITURE_MODE;
-            contentManager.Flag = 0;
+			if(contentManager.Mode != ContentManager.MODE.FURNITURE_MODE){
+	            contentManager.Mode = ContentManager.MODE.FURNITURE_MODE;
+	            contentManager.Flag = 0;
+			}
+			else if(contentManager.Flag == 0){
+				contentManager.Mode = ContentManager.MODE.DEFAULT_MODE;
+			}
+			else{
+				contentManager.Flag = 0;
+			}
         }
 
         if (GUI.Button(new Rect(50, 220, 80, 80), button3_image))

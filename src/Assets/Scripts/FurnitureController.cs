@@ -48,7 +48,7 @@ public class FurnitureController : MonoBehaviour
         if (contentManager.Mode == ContentManager.MODE.FURNITURE_MODE &&
             contentManager.Flag == 1)
         {
-            if (Time.timeSinceLevelLoad - _time > 0.1)
+            if (Time.timeSinceLevelLoad - _time > 0.1f)
             {
                 if (Input.touchCount == 1)
                 { 
@@ -147,7 +147,7 @@ public class FurnitureController : MonoBehaviour
             }
         } else
         {
-            _time = Time.timeSinceLevelLoad;
+            _time = Time.timeSinceLevelLoad + 0.2f;
         }
     }
 

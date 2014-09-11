@@ -20,8 +20,7 @@ public class FurnitureMaker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (contentManager.Mode == ContentManager.MODE.FURNITURE_MODE &&
-            contentManager.Flag == 0)
+        if (contentManager.Mode == ContentManager.MODE.FURNITURE_MODE)
         {
             if (Input.GetButtonDown("Fire1"))
             {
@@ -32,12 +31,17 @@ public class FurnitureMaker : MonoBehaviour
                 {
                     if (hit.transform.name.Contains("furniture"))
                     {
-                        FurnitureMovingPad.SetActive(true);
-                        FurnitureMovingPad.GetComponent<FurnitureController>().selected_furniture = hit.transform.name;
-                        selected_furniture = hit.transform.name;
-                        GameObject.Find(selected_furniture).GetComponent<FurnitureCollider>().isMoving = true;
-                        setFurnitureLayer(GameObject.Find(selected_furniture), "FurnitureSelectedLayer");
-                        contentManager.Flag = 1;
+						if(contentManager.Flag == 0){
+	                        FurnitureMovingPad.SetActive(true);
+	                        FurnitureMovingPad.GetComponent<FurnitureController>().selected_furniture = hit.transform.name;
+	                        selected_furniture = hit.transform.name;
+	                        GameObject.Find(selected_furniture).GetComponent<FurnitureCollider>().isMoving = true;
+	                        setFurnitureLayer(GameObject.Find(selected_furniture), "FurnitureSelectedLayer");
+	                        contentManager.Flag = 1;
+						}
+						else{
+							contentManager.Flag = 0;
+						}
                     }
                 }
             }

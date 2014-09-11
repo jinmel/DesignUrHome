@@ -22,6 +22,12 @@ public class InventoryController : MonoBehaviour
 	private int itemCount;
 	private Rect[] buttonBox;
 	private Vector3[] itemScales;
+	private int guiContainerLeftMargin;
+	private int guiContainerTopMargin;
+	private int guiContainerWidth;
+	private int guiContainerHeight;
+	private int itemBoxWidth;
+	private int itemBoxHeight;
 	// Click Event
 	private bool Click_Mouse_down;
 	private int Click_Box_Num;
@@ -29,6 +35,15 @@ public class InventoryController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		/* Setting inventory Size */
+		guiContainerLeftMargin = 10;
+		guiContainerTopMargin = Screen.height / 4 * 3;
+		guiContainerWidth = Screen.width - guiContainerLeftMargin * 2;
+		guiContainerHeight = Screen.height / 4 - 10;
+		itemBoxWidth = guiContainerWidth / 5 - 10;
+		itemBoxHeight = guiContainerHeight - 20;
+		/* end */
+
         contentManager = ContentManager.getInstance();
         ar_camera = Camera.main;
         objectInstanceList = new List<GameObject>();
@@ -37,6 +52,12 @@ public class InventoryController : MonoBehaviour
 		Click_Mouse_down = false;
 		buttonBox = new Rect[itemCount];
 		itemScales = new Vector3[itemCount];
+//		for(int i=0;i<itemCount;i++){
+//			images[i] = ScaleTexture(images[i],itemBoxWidth,itemBoxHeight);
+//			images[i] = Texture2D.Instantiate(images[i]) as Texture2D;
+//			Debug.Log (images[i].width+"."+images[i].height);
+//			images[i].Resize(1024,512);
+//		}
     }
     
     // Update is called once per frame
@@ -86,6 +107,8 @@ public class InventoryController : MonoBehaviour
 							Click_Box_Num = i;
 					 	}
 					}
+					if(Click_Box_Num == -1)
+						Click_Mouse_down = false;
 				}
 				else{
 					if(Input.mousePosition.y > (Screen.height / 4) - 8 && Click_Box_Num != -1){
@@ -122,13 +145,7 @@ public class InventoryController : MonoBehaviour
             contentManager.Flag == 0)
         {
             //Inventory Layout - determined dynamically according to screen size
-            int guiContainerLeftMargin = 10;
-            int guiContainerTopMargin = Screen.height / 4 * 3;
-            int guiContainerWidth = Screen.width - guiContainerLeftMargin * 2;
-            int guiContainerHeight = Screen.height / 4 - 10;
-
-            int itemBoxWidth = guiContainerWidth / 5 - 10;
-            int itemBoxHeight = guiContainerHeight - 20;
+            
 
             GUI.BeginGroup(new Rect(guiContainerLeftMargin, guiContainerTopMargin, guiContainerWidth, guiContainerHeight));
             
@@ -141,7 +158,6 @@ public class InventoryController : MonoBehaviour
 				else
 					listMoving = 0;
 			}
-			Debug.Log (listMoving);
 			for(int i = 0;i < itemCount; i++){
 				buttonBox[i] = new Rect(itemBoxLeftMargin * (i+1) + itemBoxWidth * i + listMoving, itemBoxTopMargin, itemBoxWidth, itemBoxHeight);
 			}
@@ -166,6 +182,20 @@ public class InventoryController : MonoBehaviour
 		}
     }
 
+	private Texture2D ScaleTexture(Texture2D source,int targetWidth,int targetHeight) 
+	{
+		Texture2D result=new Texture2D(targetWidth,targetHeight,source.format,true);
+		Debug.Log(result.format);
+		Color[] rpixels=result.GetPixels(0);
+		float incX=(1.0f / (float)targetWidth);
+		float incY=(1.0f / (float)targetHeight); 
+		for(int px=0; px<rpixels.Length; px++){ 
+			rpixels[px] = source.GetPixelBilinear(incX*((float)px%targetWidth), incY*((float)Mathf.Floor(px/targetWidth))); 
+		} 
+		result.SetPixels(rpixels,0); 
+		result.Apply(); 
+		return result; 
+	}
     private Texture2D plainColor2DTexture(int width, int height, Color color)
     {
         Color [] pix = new Color[width * height];

@@ -153,8 +153,8 @@ public class PadController : MonoBehaviour
     
     void OnGUI()
     {
-        Vector3 Cam_pos = main_cam.transform.position;
-        GUI.Label(new Rect(300, 300, 60, 60), "x:" + Cam_pos.x + " y:" + Cam_pos.y + " z:" + Cam_pos.z, this.textStyle);
+        //Vector3 Cam_pos = main_cam.transform.position;
+        //GUI.Label(new Rect(300, 300, 60, 60), "x:" + Cam_pos.x + " y:" + Cam_pos.y + " z:" + Cam_pos.z, this.textStyle);
     }
 }
 

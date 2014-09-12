@@ -109,7 +109,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour,
             component.enabled = false;
         }
 
-        Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
+        //Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
 		ContentManager.getInstance ().imageTargetName = null;
     }
 

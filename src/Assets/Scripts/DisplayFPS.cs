@@ -26,6 +26,6 @@ public class DisplayFPS : MonoBehaviour {
 		}
 
 	void OnGUI(){
-		GUI.Label (new Rect (450, 5, 30, 30), "" + lastFPS, this.textStyle);
+		//GUI.Label (new Rect (450, 5, 30, 30), "" + lastFPS, this.textStyle);
 	}
 }

@@ -48,10 +48,10 @@ public class InventoryController : MonoBehaviour
 		itemScales[3] = new Vector3(20.0f,20.0f,20.0f);
 		itemScales[4] = new Vector3(20.0f,20.0f,20.0f);
 		itemScales[5] = new Vector3(20.0f,20.0f,20.0f);
-		itemScales[6] = new Vector3(5.0f,5.0f,5.0f);
+		itemScales[6] = new Vector3(20.0f,20.0f,20.0f);
 		itemScales[7] = new Vector3(20.0f,20.0f,20.0f);
-		itemScales[8] = new Vector3(5.0f,5.0f,5.0f);
-		itemScales[9] = new Vector3(20.0f,20.0f,20.0f);
+		itemScales[8] = new Vector3(20.0f,20.0f,20.0f);
+//		itemScales[9] = new Vector3(20.0f,20.0f,20.0f);
 
 	}
     void Start()

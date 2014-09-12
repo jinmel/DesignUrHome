@@ -55,7 +55,6 @@ public class ButtonController : MonoBehaviour
     void Update()
     {
 		Screen.orientation = ScreenOrientation.LandscapeRight;
-	
     }
 
     void OnGUI()

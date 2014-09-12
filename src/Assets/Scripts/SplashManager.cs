@@ -25,10 +25,10 @@ public class SplashManager : MonoBehaviour
     }
     
     // Update is called once per frame
-    void Update()
-    {
-    
-    }
+	void Update()
+	{
+		Screen.orientation = ScreenOrientation.LandscapeRight;
+	}
 
     void OnGUI()
     {

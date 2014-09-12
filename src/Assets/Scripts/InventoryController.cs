@@ -33,17 +33,29 @@ public class InventoryController : MonoBehaviour
 	private int Click_Box_Num;
 	private Vector3 Click_StartPosition;
     // Use this for initialization
-    void Start()
-    {
-		/* Setting inventory Size */
+	void initUISize(){
 		guiContainerLeftMargin = 10;
 		guiContainerTopMargin = Screen.height / 4 * 3;
 		guiContainerWidth = Screen.width - guiContainerLeftMargin * 2;
 		guiContainerHeight = Screen.height / 4 - 10;
 		itemBoxWidth = guiContainerWidth / 5 - 10;
 		itemBoxHeight = guiContainerHeight - 20;
-		/* end */
+		// itemSize;
+		itemScales = new Vector3[itemCount];
+		itemScales[0] = new Vector3(7.0f,7.0f,7.0f);
+		itemScales[1] = new Vector3(20.0f,20.0f,20.0f);
+		itemScales[2] = new Vector3(20.0f,20.0f,20.0f);
+		itemScales[3] = new Vector3(20.0f,20.0f,20.0f);
+		itemScales[4] = new Vector3(20.0f,20.0f,20.0f);
+		itemScales[5] = new Vector3(20.0f,20.0f,20.0f);
+		itemScales[6] = new Vector3(5.0f,5.0f,5.0f);
+		itemScales[7] = new Vector3(20.0f,20.0f,20.0f);
+		itemScales[8] = new Vector3(5.0f,5.0f,5.0f);
+		itemScales[9] = new Vector3(20.0f,20.0f,20.0f);
 
+	}
+    void Start()
+    {
         contentManager = ContentManager.getInstance();
         ar_camera = Camera.main;
         objectInstanceList = new List<GameObject>();
@@ -51,13 +63,7 @@ public class InventoryController : MonoBehaviour
 		itemCount = images.Length;
 		Click_Mouse_down = false;
 		buttonBox = new Rect[itemCount];
-		itemScales = new Vector3[itemCount];
-//		for(int i=0;i<itemCount;i++){
-//			images[i] = ScaleTexture(images[i],itemBoxWidth,itemBoxHeight);
-//			images[i] = Texture2D.Instantiate(images[i]) as Texture2D;
-//			Debug.Log (images[i].width+"."+images[i].height);
-//			images[i].Resize(1024,512);
-//		}
+		initUISize();
     }
     
     // Update is called once per frame
@@ -166,16 +172,6 @@ public class InventoryController : MonoBehaviour
 				GUI.Box (buttonBox[i],new GUIContent(images [i]), itemBoxStyle);
 			}
             GUI.EndGroup();
-			itemScales[0] = new Vector3(5.0f,5.0f,5.0f);
-			itemScales[1] = new Vector3(20.0f,20.0f,20.0f);
-			itemScales[2] = new Vector3(5.0f,5.0f,5.0f);
-			itemScales[3] = new Vector3(20.0f,20.0f,20.0f);
-			itemScales[4] = new Vector3(5.0f,5.0f,5.0f);
-			itemScales[5] = new Vector3(20.0f,20.0f,20.0f);
-			itemScales[6] = new Vector3(5.0f,5.0f,5.0f);
-			itemScales[7] = new Vector3(20.0f,20.0f,20.0f);
-			itemScales[8] = new Vector3(5.0f,5.0f,5.0f);
-			itemScales[9] = new Vector3(20.0f,20.0f,20.0f);
         }
 		else{
 			listMoving = 0;

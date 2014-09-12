@@ -206,7 +206,7 @@ public class ButtonController : MonoBehaviour
             }
         }
                 
-        //GUI.Label(new Rect(200, 5, 30, 30), contentManager.imageTargetName, tDebug);
+        GUI.Label(new Rect(200, 5, 30, 30), contentManager.imageTargetName, tDebug);
 
         if (contentManager.Mode == ContentManager.MODE.FURNITURE_MODE && 
             contentManager.Flag == 1)

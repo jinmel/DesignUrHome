@@ -88,11 +88,11 @@ public class SetCamPos : MonoBehaviour
 
 		void OnGUI ()
 		{
-				Vector3 PresentCamRotation = this.transform.localRotation.eulerAngles;
-				GUI.Label (new Rect (450, 5, 30, 30), "" + PresentCamRotation, tDebug);
-				float ZaxisSub = PrevGyro.z - Input.acceleration.z;
-				GUI.Label (new Rect (450, 20, 30, 100), "" + ZaxisSub, tDebug);
-				GUI.Label (new Rect (450, 30, 30, 100), "" + Input.acceleration, tDebug);
+				//Vector3 PresentCamRotation = this.transform.localRotation.eulerAngles;
+				//GUI.Label (new Rect (450, 5, 30, 30), "" + PresentCamRotation, tDebug);
+				//float ZaxisSub = PrevGyro.z - Input.acceleration.z;
+				//GUI.Label (new Rect (450, 20, 30, 100), "" + ZaxisSub, tDebug);
+				//GUI.Label (new Rect (450, 30, 30, 100), "" + Input.acceleration, tDebug);
 		}
 
 }

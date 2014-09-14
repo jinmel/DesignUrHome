@@ -214,7 +214,7 @@ public class ButtonController : MonoBehaviour
             Texture Delete_Button = new Texture();
             Delete_Button = (Texture)Resources.Load("Delete", typeof(Texture));
 
-            if (GUI.Button(new Rect(1150, 40, 80, 80), Delete_Button))
+            if (GUI.Button(new Rect(Screen.width - 130, 40, 80, 80), Delete_Button))
             {
                 contentManager.Mode = ContentManager.MODE.FURNITURE_MODE;
                 contentManager.Flag = 0;

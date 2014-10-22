@@ -14,7 +14,7 @@ public class SplashManager : MonoBehaviour
     void Start()
     {
         //draw texture
-        splashImage = Resources.Load<Texture>("splash");
+        splashImage = Resources.Load<Texture>("splashs");
         StartCoroutine(LoadNextScene());
 
         //Screen orientation

@@ -56,7 +56,7 @@ public class SetCamPos : MonoBehaviour
 						}
 				}
 				//자이로센서에 따라 시야를 변환
-				if (CamRotateFlag == true) {
+				/*if (CamRotateFlag == true) {
 						Vector3 GyroSensor = Input.acceleration;
 						float ZaxisSub = PrevGyro.z - GyroSensor.z;
 						Vector3 PresentCamRotation = this.transform.localRotation.eulerAngles;		
@@ -76,7 +76,7 @@ public class SetCamPos : MonoBehaviour
 												this.transform.localRotation = Quaternion.Euler (PresentCamRotation - CamRotateConst);
 								}
 						}
-				}
+				}*/
 		}
 
 		public void Cam_posSet ()

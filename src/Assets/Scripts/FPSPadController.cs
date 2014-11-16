@@ -27,7 +27,9 @@ public class FPSPadController : MonoBehaviour {
 	float rot_const = 1.0f;
 
     private ContentManager contentManager;
-	
+
+	private float velocity = 1.5f;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -80,7 +82,7 @@ public class FPSPadController : MonoBehaviour {
 				
 				//Move Charecter
 				if(t_angle <= rot_threshold || (180 - rot_threshold) <= t_angle){
-					Character.transform.position += Char_dir;
+					Character.transform.position += velocity * Char_dir;
 				}
 				else{
 					Vector3 t_cross_result = Vector3.Cross (Vector3.up, Screen_vec);
